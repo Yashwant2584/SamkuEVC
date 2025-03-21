@@ -1,1 +1,21 @@
+/* Remove this if you don’t have a custom "tailwindcss" file; it’s likely unnecessary */
 @import "tailwindcss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Add custom animation for the slide-up effect */
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Optional: Add this if you’re using Font Awesome */
+@import '@fortawesome/fontawesome-free/css/all.min.css';
