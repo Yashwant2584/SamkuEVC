@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaBars, FaTimes, FaUserCircle, FaShoppingCart , FaSignOutAlt} from 'react-icons/fa';
 import { Search, ChevronDown, User, Menu, X } from 'lucide-react';
 import logo from "../../images/logo.png";
-import name from "../../images/samkuService.png";
+import name from "../../images/samkuEVC.png";
 import { useNavigate, useLocation, Link} from "react-router-dom";
 import { FcGoogle } from 'react-icons/fc';
 import authImage from "../../images/auth.png";
@@ -81,12 +81,12 @@ const Navbar = () => {
     { name: "Contact", path: "#contact" }
   ];
   
-  const services = [
-    "EV Charger Installation and Maintenance.",
-    "Battery Services.",
-    "Vehicle Maintenance Services.",
-    "Emergency and Roadside Assistance."
-  ];
+  // const services = [
+  //   "EV Charger Installation and Maintenance.",
+  //   "Battery Services.",
+  //   "Vehicle Maintenance Services.",
+  //   "Emergency and Roadside Assistance."
+  // ];
 
   const popularSearches = [
     "EV Charger Installation",
@@ -114,23 +114,23 @@ const Navbar = () => {
   };
 
   // Typewriter Effect for Placeholder
-  useEffect(() => {
-    const currentService = services[serviceIndex];
-    if (charIndex < currentService.length) {
-      const timeout = setTimeout(() => {
-        setPlaceholder((prev) => prev + currentService[charIndex]);
-        setCharIndex((prev) => prev + 1);
-      }, 100);
+  // useEffect(() => {
+  //   const currentService = services[serviceIndex];
+  //   if (charIndex < currentService.length) {
+  //     const timeout = setTimeout(() => {
+  //       setPlaceholder((prev) => prev + currentService[charIndex]);
+  //       setCharIndex((prev) => prev + 1);
+  //     }, 100);
 
-      return () => clearTimeout(timeout);
-    } else {
-      setTimeout(() => {
-        setPlaceholder("");
-        setCharIndex(0);
-        setServiceIndex((prev) => (prev + 1) % services.length);
-      }, 2000);
-    }
-  }, [charIndex, serviceIndex]);
+  //     return () => clearTimeout(timeout);
+  //   } else {
+  //     setTimeout(() => {
+  //       setPlaceholder("");
+  //       setCharIndex(0);
+  //       setServiceIndex((prev) => (prev + 1) % services.length);
+  //     }, 2000);
+  //   }
+  // }, [charIndex, serviceIndex]);
 
   // Track scroll position for navbar styling
   useEffect(() => {
@@ -188,12 +188,12 @@ const Navbar = () => {
     // You would typically trigger a search here
   };
 
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    // Handle search submission
-    console.log("Searching for:", searchQuery);
-    // You would typically navigate to search results page here
-  };
+  // const handleSearchSubmit = (e) => {
+  //   e.preventDefault();
+  //   // Handle search submission
+  //   console.log("Searching for:");
+  //   // You would typically navigate to search results page here
+  // };
 
   return (
     <>
@@ -208,11 +208,11 @@ const Navbar = () => {
             {/* Logo */}
             <div className="flex items-center">
             <Link to="/">
-                <img src={logo} alt="SamkuEvc Logo" className="w-10 h-10 mr-2 cursor-pointer" />
+                <img src={logo} alt="SamkuEvc Logo" className="w-10 h-10 mr-1 cursor-pointer" />
               </Link>
               <div>
-                <img src={name} alt="samkuService.png" className="w-40 h-8 mr-2 cursor-pointer" />
-                <p style={{fontSize: "0.75rem", color: "#6b7280", marginTop: "-4px"}}>Electric Vehicle Care</p>
+                <img src={name} alt="samkuEVC.png" className="w-35 h-14 mr-2 cursor-pointer" />
+                
               </div>
             </div>
             
@@ -226,12 +226,12 @@ const Navbar = () => {
               <div className="relative">
                 <div
                   ref={searchButtonRef}
-                  className="w-[192px] h-9 px-2 flex items-center border-2 border-gray-200 rounded-full bg-gray-100 text-gray-900 cursor-pointer hover:bg-gray-200 transition duration-300"
+                  className="w-[200px] h-9 px-2 flex items-center border-2 border-gray-200 rounded-full bg-gray-100 text-gray-900 cursor-pointer hover:bg-gray-200 transition duration-300"
                   onClick={() => setShowSearchPopup(true)}
                 >
                   <Search className="h-5 w-5 text-gray-500 mr-2" />
                   <span className="text-xs text-gray-500 truncate">
-                    {`Search for "${placeholder}"`}
+                    {`Searching for charger`}
                   </span>
                 </div>
               </div>
@@ -267,7 +267,7 @@ const Navbar = () => {
                 style={{ fontFamily: 'Segoe UI' }}
                 onClick={handleStoreNavigation}
               >
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-500">Ev store</span>
+                {/* <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-500">Ev store</span> */}
                 
               </button>
               <button 
@@ -745,5 +745,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-//auth is almost complete
