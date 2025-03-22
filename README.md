@@ -1,1 +1,0 @@
-# samku-project1
