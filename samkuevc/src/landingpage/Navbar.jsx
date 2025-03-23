@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Menu, X, BatteryCharging } from 'lucide-react';
+import logo from '../images/logo.png'; 
+import name from '../images/samkuEVC.png'; 
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,10 +22,10 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <NavLink to="/" className="flex items-center">
-              <BatteryCharging className="h-8 w-8 text-green-600" />
-              <span className="ml-2 text-xl font-bold text-gray-800">SamkuEVC</span>
-            </NavLink>
+            <div className="flex items-center">
+              <img src={logo} alt="SamkuEvc Logo" className="w-9.5 h-9.5 mr-2" />
+              <img src={name} alt="SamkuEVC" className="w-35 h-15 mr-2 cursor-pointer" />
+            </div>
           </div>
 
           {/* Desktop Navigation */}
