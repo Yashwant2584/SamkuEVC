@@ -9,6 +9,7 @@ import Location from './landingpage/Location';
 // import Enquiry from './landingpage/Enquiry';
 import EVSolutions from './landingpage/EVSolutions';
 
+
 const App = () => {
   return (
     <Router>
