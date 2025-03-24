@@ -2,43 +2,49 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ChevronRight, Zap, Battery, Shield } from 'lucide-react';
-import bgpic from '../images/whitecar.jpeg';
+import Spline from '@splinetool/react-spline';
 
 const Home = () => {
   return (
     <div className="bg-gradient-to-b from-gray-50 to-white">
       {/* Hero Section */}
       <section 
-        className="relative h-screen flex items-center"
-        style={{
-          backgroundImage: `url(${bgpic})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center'
-        }}
-      >
-        <div className="absolute inset-0 border-y-indigo-200"></div>
-        <motion.div 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white z-10 md:w-3/5 md:ml-8"
-        >
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 text-shadow-lg">
-            Powering the Future of <br />
-            Electric Mobility
-          </h1>
-          <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-green-500 mb-6 rounded-full"></div>
-          <p className="text-xl md:text-2xl mb-8 max-w-2xl">
-            Leading the charge with innovative EV charging solutions for a sustainable tomorrow.
-          </p>
-          <Link
-            to="/products"
-            className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-green-500 hover:from-blue-700 hover:to-green-600 rounded-lg text-lg font-semibold transition duration-300"
+        className="relative h-screen flex items-center bg-black">
+        <div className="absolute inset-0 z-0 flex">
+          {/* Fixed Spline Animation on Right */}
+          <div className="w-1/2 h-full">
+            <Spline 
+              scene="https://prod.spline.design/LIRzk53mWPV2M-jf/scene.splinecode" 
+              style={{
+                width: '100%',
+                height: '100%'
+              }}
+            />
+          </div>
+
+          <motion.div 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 px-4 sm:px-6 lg:px-8 text-white z-10 w-1/2"
           >
-            Explore Our Products
-            <ChevronRight className="ml-2 h-5 w-5" />
-          </Link>
-        </motion.div>
+            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+              Powering the Future of <br />
+              Electric Mobility
+            </h1>
+            <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-green-500 mb-6 rounded-full"></div>
+            <p className="text-xl md:text-2xl mb-8 max-w-2xl">
+              Leading the charge with innovative EV charging solutions for a sustainable tomorrow.
+            </p>
+            <Link
+              to="/products"
+              className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-green-500 hover:from-blue-700 hover:to-green-600 rounded-lg text-lg font-semibold transition duration-300"
+            >
+              Explore Our Products
+              <ChevronRight className="ml-2 h-5 w-5" />
+            </Link>
+          </motion.div>
+        </div>
       </section>
 
       {/* Features Section */}
