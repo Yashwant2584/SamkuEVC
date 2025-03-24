@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ChevronRight, Zap, Battery, Shield } from 'lucide-react';
+import bgpic from '../images/whitecar.jpeg';
 
 const Home = () => {
   return (
@@ -10,19 +11,19 @@ const Home = () => {
       <section 
         className="relative h-screen flex items-center"
         style={{
-          backgroundImage: 'url("https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&q=80")',
+          backgroundImage: `url(${bgpic})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center'
         }}
       >
-        <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+        <div className="absolute inset-0 border-y-indigo-200"></div>
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white"
+          className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white z-10 md:w-3/5 md:ml-8"
         >
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 text-shadow-lg">
             Powering the Future of <br />
             Electric Mobility
           </h1>
