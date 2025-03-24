@@ -74,9 +74,9 @@ const Location = () => {
                   <h3 className="text-xl font-bold text-blue-800">Showroom</h3>
                 </div>
                 <address className="text-gray-700 not-italic ml-13 space-y-2">
-                  <p>123 EV Street</p>
-                  <p>Anna Nagar</p>
-                  <p>Chennai, Tamil Nadu 600040</p>
+                  <p>SAMKU E-WORLD PRIVATE LIMITED</p>
+                  <p>Vighnaharta Services Industrial Complex, MW7+67M, Charholi Khurd Rd, Charholi Khurd</p>
+                  <p>Pune, Maharashtra 412105</p>
                   <p>India</p>
                 </address>
                 <div className="mt-6 space-y-2">
