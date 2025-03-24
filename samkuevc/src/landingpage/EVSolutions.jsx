@@ -36,7 +36,7 @@ const EVSolutions = () => {
               {
                 title: 'AC EV Charging',
                 description: 'SAMKU EV provides innovative AC EV charging solutions for home and public use, offering reliable, cost-effective, and safe charging. With a focus on sustainability, SAMKU EVs high-quality stations ensure efficient overnight charging and seamless integration.',
-                icon: 'M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z'
+                icon: 'M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z'
               }
             ].map((card, index) => (
               <motion.div 
@@ -82,12 +82,12 @@ const EVSolutions = () => {
                 { 
                   power: '7 kW', 
                   description: 'Ideal for daily home use. Charges most electric vehicles overnight with efficient power delivery.',
-                  icon: 'M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z' 
+                  icon: 'M21 10.5h.375c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125H21M3.75 18h15A2.25 2.25 0 0021 15.75v-6a2.25 2.25 0 00-2.25-2.25h-15A2.25 2.25 0 001.5 9.75v6A2.25 2.25 0 003.75 18z' 
                 },
                 { 
                   power: '11/22 kW', 
                   description: 'Fast home charging solution. Perfect for households with multiple EVs or for quick top-ups.',
-                  icon: 'M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3' 
+                  icon: 'M21 10.5h.375c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125H21M3.75 18h15A2.25 2.25 0 0021 15.75v-6a2.25 2.25 0 00-2.25-2.25h-15A2.25 2.25 0 001.5 9.75v6A2.25 2.25 0 003.75 18z' 
                 }
               ].map((charger, index) => (
                 <motion.div 
