@@ -1,56 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ChevronRight, Zap, Battery, Shield } from 'lucide-react';
 
 const Home = () => {
-  // Slider images
-  const sliderImages = [
-    "https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&q=80",
-    "https://images.unsplash.com/photo-1676515731235-bd8c12dcea22?auto=format&fit=crop&q=80",
-    "https://images.unsplash.com/photo-1697211193229-3590cd18deda?auto=format&fit=crop&q=80"
-  ];
-
-  // State for current slide
-  const [currentSlide, setCurrentSlide] = useState(0);
-
-  // Auto-slide functionality
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % sliderImages.length);
-    }, 5000); // Change slide every 5 seconds
-
-    return () => clearInterval(interval);
-  }, [sliderImages.length]);
-
   return (
     <div className="bg-gradient-to-b from-gray-50 to-white">
-      {/* Hero Section with Slider */}
-      <section className="relative h-screen flex items-center overflow-hidden">
-        {/* Slider Images */}
-        {sliderImages.map((image, index) => (
-          <div
-            key={index}
-            className="absolute inset-0 transition-opacity duration-1000 ease-in-out"
-            style={{
-              backgroundImage: `url("${image}")`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              opacity: index === currentSlide ? 1 : 0,
-              zIndex: index === currentSlide ? 1 : 0
-            }}
-          ></div>
-        ))}
-
-        {/* Dark overlay */}
-        <div className="absolute inset-0 bg-black bg-opacity-50 z-10"></div>
-
-        {/* Content */}
+      {/* Hero Section */}
+      <section 
+        className="relative h-screen flex items-center"
+        style={{
+          backgroundImage: 'url("https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&q=80")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }}
+      >
+        <div className="absolute inset-0 bg-black bg-opacity-50"></div>
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white z-20"
+          className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white"
         >
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
             Powering the Future of <br />
@@ -67,20 +37,6 @@ const Home = () => {
             Explore Our Products
             <ChevronRight className="ml-2 h-5 w-5" />
           </Link>
-
-          {/* Slider Indicators */}
-          <div className="absolute bottom-8 left-0 right-0 flex justify-center space-x-2 mt-8">
-            {sliderImages.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentSlide(index)}
-                className={`w-3 h-3 rounded-full ${
-                  index === currentSlide ? 'bg-green-500' : 'bg-white bg-opacity-50'
-                } transition-colors duration-300`}
-                aria-label={`Go to slide ${index + 1}`}
-              ></button>
-            ))}
-          </div>
         </motion.div>
       </section>
 

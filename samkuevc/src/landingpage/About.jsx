@@ -19,33 +19,31 @@ const About = () => {
           </p>
         </motion.div>
         
-        {/* Company Description */}
-        <section className="mb-20">
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-            className="bg-white p-8 md:p-10 rounded-2xl shadow-lg max-w-4xl mx-auto border-l-4 border-blue-600 hover:shadow-xl transition duration-300"
-          >
-            <div className="text-gray-700 space-y-4 leading-relaxed">
-              <p>
-                SAMKU EV is an electric vehicle charging station Manufacturer Company based in Pune, India. The company was founded in 2016 with a mission to promote sustainable transportation by providing reliable and affordable electric vehicle charging solutions.
-              </p>
-              <p>
-                SAMKU EV offers a range of electric vehicle charging stations for both residential and commercial applications. The company's charging stations are designed to be user-friendly and compatible with all types of electric vehicles, including cars, motorcycles, and scooters.
-              </p>
-              <p>
-                In addition to manufacturing electric vehicle charging stations, including AC and DC fast chargers, SAMKU EV also has the capability to customize solutions to meet the specific needs of its customers. The company provides installation, maintenance, and support services to ensure that its customers have a seamless and hassle-free charging experience.
-              </p>
-              <p>
-                The company is committed to using high-quality materials and advanced technology in its products, and to providing excellent customer service. SAMKU EV is dedicated to promoting sustainable transportation and reducing carbon emissions through the widespread adoption of electric vehicles.
-              </p>
-              <p>
-                Overall, SAMKU EV is a reliable and innovative electric vehicle charging station Manufacturer Company that is making a significant contribution to the growth of the electric vehicle industry in India and beyond.
-              </p>
-            </div>
-          </motion.div>
-        </section>
+        {/* Company Description - Moved outside of card */}
+        <motion.section 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3, duration: 0.8 }}
+          className="mb-20 max-w-4xl mx-auto"
+        >
+          <div className="text-gray-700 space-y-4 leading-relaxed">
+            <p>
+              SAMKU EV is an electric vehicle charging station Manufacturer Company based in Pune, India. The company was founded in 2016 with a mission to promote sustainable transportation by providing reliable and affordable electric vehicle charging solutions.
+            </p>
+            <p>
+              SAMKU EV offers a range of electric vehicle charging stations for both residential and commercial applications. The company's charging stations are designed to be user-friendly and compatible with all types of electric vehicles, including cars, motorcycles, and scooters.
+            </p>
+            <p>
+              In addition to manufacturing electric vehicle charging stations, including AC and DC fast chargers, SAMKU EV also has the capability to customize solutions to meet the specific needs of its customers. The company provides installation, maintenance, and support services to ensure that its customers have a seamless and hassle-free charging experience.
+            </p>
+            <p>
+              The company is committed to using high-quality materials and advanced technology in its products, and to providing excellent customer service. SAMKU EV is dedicated to promoting sustainable transportation and reducing carbon emissions through the widespread adoption of electric vehicles.
+            </p>
+            <p>
+              Overall, SAMKU EV is a reliable and innovative electric vehicle charging station Manufacturer Company that is making a significant contribution to the growth of the electric vehicle industry in India and beyond.
+            </p>
+          </div>
+        </motion.section>
         
         {/* Mission & Vision */}
         <section className="mb-20">
@@ -72,9 +70,9 @@ const About = () => {
                   <h2 className="text-2xl font-bold text-blue-800">Our Mission</h2>
                 </div>
                 <p className="text-gray-700 leading-relaxed">
-                  To accelerate the world's transition to sustainable energy by providing innovative
-                  and accessible EV charging solutions that empower individuals and businesses to
-                  embrace electric mobility.
+                Mission To develop high-quality, reliable, and eco-friendly EV charging solutions
+                that meet the diverse needs of individuals, businesses, and communities, thereby promoting sustainable
+                transportation and reducing carbon footprint.
                 </p>
               </div>
             </motion.div>
@@ -94,9 +92,8 @@ const About = () => {
                   <h2 className="text-2xl font-bold text-green-700">Our Vision</h2>
                 </div>
                 <p className="text-gray-700 leading-relaxed">
-                  To be the leading provider of EV charging infrastructure, creating a seamless
-                  and sustainable charging network that supports the global shift towards electric
-                  transportation.
+                  To be a global leader in innovative and eco-friendly EV charging solutions, making EV 
+                  charging accessible and convenient while significantly contributing to a greener world.
                 </p>
               </div>
             </motion.div>
