@@ -8,6 +8,7 @@ import Contact from './landingpage/Contact';
 import Location from './landingpage/Location';
 import Enquiry from './landingpage/Enquiry';
 import EVSolutions from './landingpage/EVSolutions';
+import Footer from './landingpage/Footer';
 
 
 const App = () => {
@@ -25,8 +26,10 @@ const App = () => {
         <Route path="/enquiry" element={<Enquiry />} />
         <Route path="/ev-solutions" element={<EVSolutions/>} />
 
-        
+
       </Routes>
+      <Footer/>
+      
     </Router>
   );
 };
