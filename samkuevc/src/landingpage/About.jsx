@@ -181,7 +181,7 @@ const About = () => {
                     </svg>
                   </div>
                   <div>
-                    <span className="font-semibold text-green-700 block mb-1">Innovation</span>
+                    <span className="font-semibold text-green-700 block mb-1">Research</span>
                     <p>Continuous investment in R&D to develop cutting-edge charging technologies that meet evolving industry standards and user needs.</p>
                   </div>
                 </li>

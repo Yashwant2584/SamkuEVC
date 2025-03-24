@@ -25,17 +25,17 @@ const EVSolutions = () => {
             {[
               {
                 title: 'OEM & ODM',
-                description: 'SAMKU EV is revolutionizing the electric vehicle industry with innovative OEM and ODM solutions. Specializing in high-performance EV components and custom vehicle designs, SAMKU EV delivers top-quality batteries, drivetrains, and fully integrated systems. With a focus on sustainability and cutting-edge technology, SAMKU EV provides reliable, eco-friendly solutions that drive the future of electric mobility.',
+                description: 'SAMKU EV is revolutionizing the electric vehicle industry with innovative OEM and ODM solutions. Specializing in high-performance EV components and custom vehicle designs, SAMKU EV delivers top-quality batteries, drivetrains, and fully integrated systems. ',
                 icon: 'M13 10V3L4 14h7v7l9-11h-7z'
               },
               {
                 title: 'DC EV Charging',
-                description: 'SAMKU EV offers high-performance DC fast chargers designed for rapid, efficient, and reliable charging. Perfect for commercial and public spaces, these chargers minimize downtime by powering electric vehicles quickly, using cutting-edge technology and high safety standards. SAMKU EV’s DC charging solutions support the growing EV fleet and accelerate the transition to a sustainable, eco-friendly future.',
+                description: 'SAMKU EV offers high-performance DC fast chargers designed for rapid, efficient, and reliable charging. Perfect for commercial and public spaces, these chargers minimize downtime by powering electric vehicles quickly, using cutting-edge technology and high safety standards.',
                 icon: 'M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z'
               },
               {
                 title: 'AC EV Charging',
-                description: 'SAMKU EV provides innovative AC EV charging solutions for home and public use, offering reliable, cost-effective, and safe charging. With a focus on sustainability, SAMKU EV’s high-quality stations ensure efficient overnight charging and seamless integration, using the latest technology to deliver eco-friendly power for electric vehicles.',
+                description: 'SAMKU EV provides innovative AC EV charging solutions for home and public use, offering reliable, cost-effective, and safe charging. With a focus on sustainability, SAMKU EV’s high-quality stations ensure efficient overnight charging and seamless integration.',
                 icon: 'M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z'
               }
             ].map((card, index) => (
