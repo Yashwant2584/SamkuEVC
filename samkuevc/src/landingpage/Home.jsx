@@ -11,24 +11,27 @@ const Home = () => {
       <section 
         className="relative h-screen flex items-center bg-black">
         <div className="absolute inset-0 z-0 flex">
-          {/* Fixed Spline Animation on Right */}
-          <div className="w-1/2 h-full">
-            <Spline 
-              scene="https://prod.spline.design/LIRzk53mWPV2M-jf/scene.splinecode" 
-              style={{
-                width: '100%',
-                height: '100%'
-              }}
-            />
+          {/* Video on Right */}
+          <div className="w-full h-full">
+            <video 
+              autoPlay 
+              loop 
+              muted 
+              playsInline
+              className="w-full h-full object-cover"
+            >
+              <source src="/ev.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
           </div>
 
           <motion.div 
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 px-4 sm:px-6 lg:px-8 text-white z-10 w-1/2"
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 px-4 sm:px-6 lg:px-8 text-white z-10 w-1/2 bg-black/20 p-8 rounded-xl"
           >
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
               Powering the Future of <br />
               Electric Mobility
             </h1>
