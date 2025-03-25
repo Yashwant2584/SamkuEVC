@@ -10,18 +10,18 @@ const Home = () => {
       {/* Hero Section */}
       {/* CHANGES: Added flex-col-reverse for mobile, adjusted video and text container */}
       <section 
-        className="relative min-h-screen flex items-center bg-black"
+        className="relative min-h-screen"
       >
-        <div className="absolute inset-0 z-0 flex flex-col-reverse md:flex-row">
+        <div className="absolute inset-0 flex flex-col md:flex-row">
           {/* Video on Right */}
           {/* CHANGES: Adjusted height for mobile responsiveness */}
-          <div className="w-full h-1/2 md:h-full">
+          <div className="relative w-full h-1/2 md:h-full order-2 md:order-1">
             <video 
               autoPlay 
               loop 
               muted 
               playsInline
-              className="w-full h-full object-cover"
+              className="absolute inset-0 w-full h-full object-cover"
             >
               <source src="/ev.mp4" type="video/mp4" />
               Your browser does not support the video tag.
