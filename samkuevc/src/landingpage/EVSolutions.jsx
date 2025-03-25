@@ -44,7 +44,7 @@ const EVSolutions = () => {
                 initial={{ opacity: 0, x: index * 50 - 50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.2 * index + 0.3, duration: 0.6 }}
-                className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 border-l-4 border-blue-600"
+                className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 border-l-4 border-blue-600 flex flex-col"
               >
                 <div className="flex items-center mb-4">
                   <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mr-4 flex-shrink-0">
@@ -54,7 +54,15 @@ const EVSolutions = () => {
                   </div>
                   <h3 className="text-xl font-bold text-blue-800">{card.title}</h3>
                 </div>
-                <p className="text-gray-700 text-sm">{card.description}</p>
+                <p className="text-gray-700 text-sm flex-grow">{card.description}</p>
+                <div className="mt-4 pt-4 border-t border-gray-100">
+                  <button className="text-sm font-medium text-blue-600 hover:text-blue-800 flex items-center">
+                    Learn more
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -95,7 +103,7 @@ const EVSolutions = () => {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2 * index + 0.3, duration: 0.6 }}
-                  className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 border-l-4 border-blue-600"
+                  className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 border-l-4 border-blue-600 flex flex-col"
                 >
                   <div className="flex items-center mb-4">
                     <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mr-4">
@@ -105,7 +113,15 @@ const EVSolutions = () => {
                     </div>
                     <h3 className="text-xl font-bold text-blue-800">{charger.power} Charger</h3>
                   </div>
-                  <p className="text-gray-700">{charger.description}</p>
+                  <p className="text-gray-700 flex-grow">{charger.description}</p>
+                  <div className="mt-4 pt-4 border-t border-gray-100">
+                    <button className="text-sm font-medium text-blue-600 hover:text-blue-800 flex items-center">
+                      Learn more
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </button>
+                  </div>
                 </motion.div>
               ))}
             </div>
