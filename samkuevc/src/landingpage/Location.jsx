@@ -45,14 +45,14 @@ const Location = () => {
           {/* Map Embed */}
           <div className="aspect-w-16 aspect-h-9 border-t border-b border-gray-100">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d248849.84916296526!2d80.20901349999999!3d13.047525!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5265ea4f7d3361%3A0x6e61a70b6863d433!2sChennai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1652960879737!5m2!1sen!2sin"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d241316.64302051855!2d73.79392151661174!3d18.624571805425693!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2bf2e67461101%3A0x6a0d04d413475877!2sPune%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1689671044288!5m2!1sen!2sin"
               width="100%"
               height="600"
               style={{ border: 0 }}
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="SamkuEVC Location"
+              title="Pune City, Maharashtra"
             ></iframe>
           </div>
 
@@ -74,9 +74,8 @@ const Location = () => {
                   <h3 className="text-xl font-bold text-blue-800">Showroom</h3>
                 </div>
                 <address className="text-gray-700 not-italic ml-13 space-y-2">
-                  <p>123 EV Street</p>
-                  <p>Anna Nagar</p>
-                  <p>Chennai, Tamil Nadu 600040</p>
+                  <p>Samku E-World Private Limited</p>
+                  <p>Pune, Maharashtra</p>
                   <p>India</p>
                 </address>
                 <div className="mt-6 space-y-2">

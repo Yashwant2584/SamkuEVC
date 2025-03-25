@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Facebook, Twitter, Instagram, Linkedin, BatteryCharging, Leaf } from 'lucide-react';
+import { Facebook, Twitter, Instagram, Linkedin, BatteryCharging, Leaf, MapPin, Phone, Mail } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -31,7 +31,7 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-6 text-navy-700 border-b-2 border-green-500 pb-2">Quick Links</h3>
             <ul className="space-y-4">
-              {['Products', 'EV Solutions', 'About Us', 'Contact'].map((link) => (
+              {['Products', 'EV Solutions', 'About', 'Contact'].map((link) => (
                 <li key={link}>
                   <Link 
                     to={`/${link.toLowerCase().replace(/\s+/g, '-')}`} 
@@ -48,17 +48,17 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold mb-6 text-navy-700 border-b-2 border-green-500 pb-2">Contact Info</h3>
+            <h3 className="text-lg font-semibold mb-6 text-navy-500 border-b-1 border-green-400 pb-1">Contact Info</h3>
             <ul className="space-y-4 text-gray-700">
               {[
-                '123 EV Street',
-                'Chennai, Tamil Nadu',
-                'Phone: +91 123 456 7890',
-                'Email: info@samkuevc.com'
-              ].map((info) => (
-                <li key={info} className="flex items-center space-x-3">
-                  <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                  <span className="hover:text-navy-700 transition-colors">{info}</span>
+                { icon: MapPin, text: '123 EV Street' },
+                { icon: MapPin, text: 'Chennai, Tamil Nadu' },
+                { icon: Phone, text: 'Phone: +91 9561137963' },
+                { icon: Mail, text: 'Email: samkuevservices@gmail.com'}
+              ].map((item) => (
+                <li key={item.text} className="flex items-center space-x-3">
+                  <item.icon className="h-5 w-5 text-green-600" />
+                  <span className="hover:text-navy-700 transition-colors">{item.text}</span>
                 </li>
               ))}
             </ul>
