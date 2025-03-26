@@ -9,7 +9,6 @@ import Location from './landingpage/Location';
 import Enquiry from './landingpage/Enquiry';
 import EVSolutions from './landingpage/EVSolutions';
 import Footer from './landingpage/Footer';
-
 import ProductDetails from './components/ProductDetails';
 
 
