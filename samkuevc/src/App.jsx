@@ -10,6 +10,8 @@ import Enquiry from './landingpage/Enquiry';
 import EVSolutions from './landingpage/EVSolutions';
 import Footer from './landingpage/Footer';
 
+import ProductDetails from './components/ProductDetails';
+
 
 const App = () => {
   return (
@@ -25,6 +27,8 @@ const App = () => {
         <Route path="/location" element={<Location />} />
         <Route path="/enquiry" element={<Enquiry />} />
         <Route path="/ev-solutions" element={<EVSolutions/>} />
+        
+        <Route path="/product/:id" element={<ProductDetails />} />
 
 
       </Routes>
