@@ -5,10 +5,30 @@ import { chargers } from '../data/chargers';
 
 const ProductDetails = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [relatedProducts, setRelatedProducts] = useState([]);
+  const [selectedCharger, setSelectedCharger] = useState(null);
+  const [selectedModelType, setSelectedModelType] = useState(null);
+  const navigate = useNavigate();
+
+  const handleEnquireClick = () => {
+  navigate('/enquiry', { 
+    state: { 
+      product: {
+        name: charger.name,
+        category: charger.category,
+        power: charger.power,
+        id: charger.id,
+      },
+    }
+  });
+};
+
+const handleContactSalesClick = () => {
+  navigate('/contact');
+};
+
 
   const charger = chargers.find((c) => c.id === id);
 
@@ -227,12 +247,18 @@ const ProductDetails = () => {
                   </div>
                   
                   <div className="flex gap-3">
-                    <button className="flex-1 sm:flex-none bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-3 px-6 rounded-lg transition-colors">
-                      Contact Sales
-                    </button>
-                    <button className="flex-1 sm:flex-none bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-lg transition-colors">
-                      Enquire Now
-                    </button>
+                  <button 
+                    onClick={handleContactSalesClick}
+                    className="flex-1 sm:flex-none bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-3 px-6 rounded-lg transition-colors"
+                  >
+                    Contact Sales
+                  </button>
+                  <button 
+                    onClick={handleEnquireClick}
+                    className="flex-1 sm:flex-none bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-lg transition-colors"
+                  >
+                    Enquire Now
+                  </button>
                   </div>
                 </div>
               </div>

@@ -13,7 +13,7 @@ const Products = () => {
 
   const categories = [
     {
-      title: 'EV Bike Chargers',
+      title: 'E-Bike Chargers',
       description: 'Efficient charging solutions for electric bikes',
       image: 'https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&q=80'
     },
@@ -33,12 +33,12 @@ const Products = () => {
       image: 'https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&q=80'
     },
     {
-      title: 'EV Cycle Chargers',
+      title: 'Electric Cycles',
       description: 'Specialized chargers for electric cycles',
       image: 'https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&q=80'
     },   
     {
-      title: 'NEW 1',
+      title: 'Public EV Chargers',
       description: 'Specialized chargers for electric cycles',
       image: 'https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&q=80'
     }

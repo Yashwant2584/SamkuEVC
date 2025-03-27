@@ -1,19 +1,30 @@
 
 export const chargers = [
   {
-    id: "dc-fast-charger-pro",
-    name: "DC Fast Charger Pro",
+    id: "li-Ion-battery-charger",
+    name: "Li-Ion Battery Charger",
     description: "High-power DC fast charging solution for commercial and fleet applications",
     image: "https://images.unsplash.com/photo-1696446702239-e76522a74be6?w=800&auto=format&fit=crop&q=60",
     price: "7,999",
-    power: "30kW",
+    power: "24V-72V",
     compatibility: ["ccs2", "GBT","CHAdeMO"],
     features: ["Dual charging ports", "Touch screen display", "Load balancing"],
-    category: "DC Chargers"
+    category: "E-Bike Chargers"
   },
   {
-    id: "home-flex-charger",
-    name: "Home Flex Charger",
+    id: "lifepo4-battery-charger",
+    name: "Lifepo4 Battery Charger",
+    description: "High-power DC fast charging solution for commercial and fleet applications",
+    image: "https://images.unsplash.com/photo-1696446702239-e76522a74be6?w=800&auto=format&fit=crop&q=60",
+    price: "7,999",
+    power: "24V-72V",
+    compatibility: ["ccs2", "GBT","CHAdeMO"],
+    features: ["Dual charging ports", "Touch screen display", "Load balancing"],
+    category: "E-Bike Chargers"
+  },
+  {
+    id: "3K3-01",
+    name: "AC EVSE Point 3K3-01",
     description: "Smart home charging station with flexible power output",
     image: "https://images.unsplash.com/photo-1697490154588-d5e37c478542?w=800&auto=format&fit=crop&q=60",
     price: "$699",
@@ -23,30 +34,30 @@ export const chargers = [
     category: "AC Chargers"
   },
   {
-    id: "commercial-power-hub",
-    name: "Commercial Power Hub",
+    id: "ac-point-02gun",
+    name: "AC Point-02Gun",
     description: "Multi-vehicle charging solution for businesses and parking lots",
     image: "https://images.unsplash.com/photo-1633025094151-6fc996255e28?w=800&auto=format&fit=crop&q=60",
     price: "$4,999",
     power: "150kW",
     compatibility: ["CCS", "Type 2"],
     features: ["Payment terminal", "4G connectivity", "Power management"],
-    category: "DC Chargers"
+    category: "AC Chargers"
   },
   {
-    id: "portable-ev-charger",
-    name: "Portable EV Charger",
+    id: "ac-lightning-ev-charger",
+    name: "AC Lightning EV Charger",
     description: "Compact and portable Level 2 charging solution",
     image: "https://images.unsplash.com/photo-1647500811408-6cca89dafd4d?w=800&auto=format&fit=crop&q=60",
     price: "$399",
     power: "7.2kW",
     compatibility: ["Type 1", "Type 2"],
     features: ["Travel case", "Multiple adapters", "LED status"],
-    category: "EV Accessories"
+    category: "AC Chargers"
   },
   {
-    id: "urban-street-charger",
-    name: "Urban Street Charger",
+    id: "ac-point-haibrid-ocpp",
+    name: "AC Point-Haibrid-OCPP",
     description: "Sleek street-side charging station for urban environments",
     image: "https://images.unsplash.com/photo-1647427017067-8f33c2b7e381?w=800&auto=format&fit=crop&q=60",
     price: "$2,999",
@@ -56,8 +67,8 @@ export const chargers = [
     category: "AC Chargers"
   },
   {
-    id: "smart-grid-charger",
-    name: "Smart Grid Charger",
+    id: "ac-point-3k3-ieco3",
+    name: "AC Point-3k3-IEC03",
     description: "Grid-aware charging station with dynamic load balancing",
     image: "https://images.unsplash.com/photo-1635598424147-c8a1c0ed0679?w=800&auto=format&fit=crop&q=60",
     price: "$1,499",
@@ -67,30 +78,30 @@ export const chargers = [
     category: "AC Chargers"
   },
   {
-    id: "fleet-master-charger",
-    name: "Fleet Master Charger",
+    id: "ac-point-3k3-ocpp",
+    name: "AC Point-3k3-OCPP",
     description: "Enterprise-grade charging solution for fleet management",
     image: "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=800&auto=format&fit=crop&q=60",
     price: "$5,999",
     power: "150kW",
     compatibility: ["CCS", "CHAdeMO"],
     features: ["Fleet management software", "24/7 support", "Remote monitoring"],
-    category: "DC Chargers"
+    category: "AC Chargers"
   },
   {
-    id: "solar-sync-charger",
-    name: "Solar Sync Charger",
+    id: "dc-single-gun-charger",
+    name: "DC Single Gun Charger",
     description: "Solar-optimized charging station for green energy integration",
     image: "https://images.unsplash.com/photo-1662947995689-ec5165848ad1?w=800&auto=format&fit=crop&q=60",
     price: "$2,499",
     power: "11kW",
     compatibility: ["Type 2"],
     features: ["Solar integration", "Battery storage ready", "Energy export"],
-    category: "AC Chargers"
+    category: "DC Chargers"
   },
   {
-    id: "rapid-charge-elite",
-    name: "Rapid Charge Elite",
+    id: "dc-dual-gun-charger",
+    name: "DC Dual Gun Charger",
     description: "Ultra-fast charging station for premium locations",
     image: "https://images.unsplash.com/photo-1647427017733-13be40b0f254?w=800&auto=format&fit=crop&q=60",
     price: "$9,999",
@@ -100,69 +111,36 @@ export const chargers = [
     category: "DC Chargers"
   },
   {
-    id: "compact-wall-charger",
-    name: "Compact Wall Charger",
+    id: "dc-rapid-ev-charger",
+    name: "DC Rapid EV Charger",
     description: "Space-saving wall-mounted charging solution",
     image: "https://images.unsplash.com/photo-1647427016437-e6d76128d967?w=800&auto=format&fit=crop&q=60",
     price: "$599",
     power: "7.4kW",
     compatibility: ["Type 1", "Type 2"],
     features: ["Slim design", "Easy installation", "LED status ring"],
-    category: "AC Chargers"
+    category: "DC Chargers"
   },
   {
-    id: "workplace-pro-charger",
-    name: "Workplace Pro Charger",
+    id: "dc-rapid-elite-charger",
+    name: "DC Rapid Elite Charger",
     description: "Professional charging solution for office environments",
     image: "https://images.unsplash.com/photo-1647427017139-6e8d943b848e?w=800&auto=format&fit=crop&q=60",
     price: "$3,499",
     power: "22kW",
     compatibility: ["Type 2"],
     features: ["Employee authentication", "Billing integration", "Usage reports"],
-    category: "AC Chargers"
+    category: "DC Chargers"
   },
   {
-    id: "destination-charger-plus",
-    name: "Destination Charger Plus",
-    description: "Premium charging solution for hotels and destinations",
-    image: "https://images.unsplash.com/photo-1647427016752-5cc3abc63371?w=800&auto=format&fit=crop&q=60",
-    price: "$1,999",
-    power: "22kW",
-    compatibility: ["Type 2"],
-    features: ["Guest authentication", "Hotel integration", "Status monitoring"],
-    category: "AC Chargers"
-  },
-  {
-    id: "e-bike-charger-mini",
-    name: "E-Bike Charger Mini",
-    description: "Compact charging solution for electric bicycles",
-    image: "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=800&auto=format&fit=crop&q=60",
-    price: "$129",
-    power: "2kW",
-    compatibility: ["E-Bike Standard Connector"],
-    features: ["Portable design", "Fast charging", "LED indicators"],
-    category: "EV Bike Chargers"
-  },
-  {
-    id: "e-bike-docking-station",
-    name: "E-Bike Docking Station",
-    description: "Multi-bike charging station for public spaces",
-    image: "https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=800&auto=format&fit=crop&q=60",
-    price: "$799",
-    power: "3.6kW",
-    compatibility: ["Universal E-Bike Connector"],
-    features: ["Simultaneous charging", "Theft protection", "Weather resistant"],
-    category: "EV Bike Chargers"
-  },
-  {
-    id: "electric-cycle-charger",
-    name: "Electric Cycle Charger",
+    id: "cargo-e-bike",
+    name: "Cargo E-Bike",
     description: "Versatile charging solution for various electric cycles",
     image: "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=800&auto=format&fit=crop&q=60",
     price: "$199",
     power: "1.5kW",
     compatibility: ["Standard Electric Cycle Ports"],
     features: ["Multiple adapters", "Compact design", "Energy efficient"],
-    category: "EV Cycle Chargers"
+    category: "Electric Cycles"
   }
 ];
