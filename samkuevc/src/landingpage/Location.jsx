@@ -1,7 +1,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const Location = () => {
+  const navigate = useNavigate();
+
+  const handleContactUs = () => {
+    navigate('/contact');
+  };
+
   return (
     <div className="pt-24 pb-16 bg-gradient-to-b from-gray-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -158,7 +165,10 @@ const Location = () => {
           <p className="text-gray-700 mb-6 max-w-2xl mx-auto">
             Visit our showroom today to explore our range of EV charging solutions and speak with our expert team.
           </p>
-          <button className="px-6 py-3 bg-gradient-to-r from-blue-600 to-green-500 text-white font-medium rounded-lg hover:from-blue-700 hover:to-green-600 transition duration-300">
+          <button 
+            onClick={handleContactUs}
+            className="px-6 py-3 bg-gradient-to-r from-blue-600 to-green-500 text-white font-medium rounded-lg hover:from-blue-700 hover:to-green-600 transition duration-300"
+          >
             Contact Us
           </button>
         </motion.div>
