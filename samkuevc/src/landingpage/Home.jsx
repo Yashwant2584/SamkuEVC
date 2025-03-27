@@ -50,7 +50,7 @@ const Home = () => {
                 to="/products"
                 className="inline-flex items-center px-4 py-2 md:px-6 md:py-3 bg-gradient-to-r from-blue-600 to-green-500 hover:from-blue-700 hover:to-green-600 rounded-lg text-base md:text-lg font-semibold transition duration-300 mx-auto md:mx-0"
               >
-                Explore Our Products
+                Explore Our Product
                 <ChevronRight className="ml-2 h-4 w-4 md:h-5 md:w-5" />
               </Link>
             </div>
