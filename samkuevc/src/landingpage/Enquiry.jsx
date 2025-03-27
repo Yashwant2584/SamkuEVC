@@ -10,22 +10,69 @@ const Enquiry = () => {
     message: ''
   });
 
+  const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
+  // Validation function
+  const validateForm = () => {
+    const newErrors = {};
+
+    // Name validation
+    if (!formData.name.trim()) {
+      newErrors.name = 'Name is required';
+    } else if (formData.name.trim().length < 2) {
+      newErrors.name = 'Name must be at least 2 characters';
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!emailRegex.test(formData.email)) {
+      newErrors.email = 'Invalid email format';
+    }
+
+    // Phone validation
+    const phoneRegex = /^[0-9]{10}$/;
+    if (!formData.phone.trim()) {
+      newErrors.phone = 'Phone number is required';
+    } else if (!phoneRegex.test(formData.phone)) {
+      newErrors.phone = 'Phone number must be 10 digits';
+    }
+
+    // Product validation
+    if (!formData.product) {
+      newErrors.product = 'Please select a product';
+    }
+
+    // Message validation
+    if (!formData.message.trim()) {
+      newErrors.message = 'Message is required';
+    } else if (formData.message.trim().length < 10) {
+      newErrors.message = 'Message must be at least 10 characters';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
     
-    // Simulate form submission with a delay
-    setTimeout(() => {
-      console.log('Form submitted:', formData);
-      setIsSubmitting(false);
-      setSubmitSuccess(true);
+    if (validateForm()) {
+      setIsSubmitting(true);
       
-      // Reset success message after 3 seconds
-      setTimeout(() => setSubmitSuccess(false), 3000);
-    }, 1000);
+      // Simulate form submission with a delay
+      setTimeout(() => {
+        console.log('Form submitted:', formData);
+        setIsSubmitting(false);
+        setSubmitSuccess(true);
+        
+        // Reset success message after 3 seconds
+        setTimeout(() => setSubmitSuccess(false), 3000);
+      }, 1000);
+    }
   };
 
   const handleChange = (e) => {
@@ -34,6 +81,14 @@ const Enquiry = () => {
       ...prev,
       [name]: value
     }));
+    
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: ''
+      }));
+    }
   };
 
   return (
@@ -88,11 +143,8 @@ const Enquiry = () => {
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <motion.div 
-                    whileHover={{ scale: 1.01 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                       Full Name
                     </label>
                     <input
@@ -101,17 +153,18 @@ const Enquiry = () => {
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
-                      required
-                      className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-all duration-200"
+                      className={`block w-full rounded-lg border ${
+                        errors.name ? 'border-red-500' : 'border-gray-300'
+                      } shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-all duration-200 py-3 px-4`}
                       placeholder="Your full name"
                     />
-                  </motion.div>
+                    {errors.name && (
+                      <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+                    )}
+                  </div>
 
-                  <motion.div 
-                    whileHover={{ scale: 1.01 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                       Email Address
                     </label>
                     <input
@@ -120,19 +173,20 @@ const Enquiry = () => {
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
-                      required
-                      className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-all duration-200"
+                      className={`block w-full rounded-lg border ${
+                        errors.email ? 'border-red-500' : 'border-gray-300'
+                      } shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-all duration-200 py-3 px-4`}
                       placeholder="your.email@example.com"
                     />
-                  </motion.div>
+                    {errors.email && (
+                      <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+                    )}
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <motion.div 
-                    whileHover={{ scale: 1.01 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                  <div>
+                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
                       Phone Number
                     </label>
                     <input
@@ -141,17 +195,18 @@ const Enquiry = () => {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      required
-                      className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-all duration-200"
-                      placeholder="Your contact number"
+                      className={`block w-full rounded-lg border ${
+                        errors.phone ? 'border-red-500' : 'border-gray-300'
+                      } shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-all duration-200 py-3 px-4`}
+                      placeholder="10-digit phone number"
                     />
-                  </motion.div>
+                    {errors.phone && (
+                      <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
+                    )}
+                  </div>
 
-                  <motion.div 
-                    whileHover={{ scale: 1.01 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <label htmlFor="product" className="block text-sm font-medium text-gray-700 mb-1">
+                  <div>
+                    <label htmlFor="product" className="block text-sm font-medium text-gray-700 mb-2">
                       Product Interest
                     </label>
                     <select
@@ -159,8 +214,9 @@ const Enquiry = () => {
                       name="product"
                       value={formData.product}
                       onChange={handleChange}
-                      required
-                      className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-all duration-200"
+                      className={`block w-full rounded-lg border ${
+                        errors.product ? 'border-red-500' : 'border-gray-300'
+                      } shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-all duration-200 py-3 px-4`}
                     >
                       <option value="">Select a product</option>
                       <option value="ev-bike-charger">EV Bike Charger</option>
@@ -169,14 +225,14 @@ const Enquiry = () => {
                       <option value="accessories">EV Accessories</option>
                       <option value="cycle-charger">EV Cycle Charger</option>
                     </select>
-                  </motion.div>
+                    {errors.product && (
+                      <p className="text-red-500 text-sm mt-1">{errors.product}</p>
+                    )}
+                  </div>
                 </div>
 
-                <motion.div 
-                  whileHover={{ scale: 1.01 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
                     Message
                   </label>
                   <textarea
@@ -185,10 +241,15 @@ const Enquiry = () => {
                     value={formData.message}
                     onChange={handleChange}
                     rows={4}
-                    className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-all duration-200"
+                    className={`block w-full rounded-lg border ${
+                      errors.message ? 'border-red-500' : 'border-gray-300'
+                    } shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-all duration-200 py-3 px-4`}
                     placeholder="Please provide any specific requirements or questions..."
                   ></textarea>
-                </motion.div>
+                  {errors.message && (
+                    <p className="text-red-500 text-sm mt-1">{errors.message}</p>
+                  )}
+                </div>
 
                 <div className="pt-4">
                   <motion.button
@@ -222,7 +283,11 @@ const Enquiry = () => {
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
-            className="border-t-4 border-blue-600 bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300"
+            whileHover={{ 
+              scale: 1.02,
+              boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)"
+            }}
+            className="border-t-4 border-blue-600 bg-white p-6 rounded-xl shadow-md transition duration-300 transform origin-center"
           >
             <div className="flex items-center mb-4">
               <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-3">
@@ -272,7 +337,11 @@ const Enquiry = () => {
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.7, duration: 0.8 }}
-            className="border-t-4 border-green-600 bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300"
+            whileHover={{ 
+              scale: 1.02,
+              boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)"
+            }}
+            className="border-t-4 border-green-600 bg-white p-6 rounded-xl shadow-md transition duration-300 transform origin-center"
           >
             <div className="flex items-center mb-4">
               <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center mr-3">
