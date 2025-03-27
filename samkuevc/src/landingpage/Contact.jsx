@@ -65,7 +65,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <p className="text-gray-700 font-semibold">Phone</p>
-                    <p className="text-gray-600">+91 123 456 7890</p>
+                    <p className="text-gray-600">+91 9561137963</p>
                   </div>
                 </div>
                 <div className="flex items-center">
@@ -76,7 +76,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <p className="text-gray-700 font-semibold">Email</p>
-                    <p className="text-gray-600">info@samkuevc.com</p>
+                    <p className="text-gray-600">samkuevservices@gmail.com</p>
                   </div>
                 </div>
                 <div className="flex items-start">
@@ -89,16 +89,18 @@ const Contact = () => {
                   <div>
                     <p className="text-gray-700 font-semibold">Address</p>
                     <address className="text-gray-600 not-italic">
-                      123 EV Street<br />
-                      Anna Nagar<br />
-                      Chennai, Tamil Nadu 600040<br />
-                      India
+                      <strong>SAMKU EV POWERING PVT. LTD.</strong><br />
+                      Vighnaharta Services Industrial Complex<br />
+                      Charholi Khurd Road<br />
+                      Charholi Khurd, Pune<br />
+                      Maharashtra, India - 412105
                     </address>
                   </div>
                 </div>
               </div>
             </div>
 
+            {/* Rest of the component remains the same */}
             <div className="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-green-600 hover:shadow-xl transition duration-300">
               <div className="flex items-center mb-6">
                 <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center mr-4">
