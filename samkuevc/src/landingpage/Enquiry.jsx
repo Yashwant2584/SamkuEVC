@@ -13,35 +13,23 @@ const Enquiry = () => {
     message:''
   });
 
+  const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
-  useEffect(() => {
-      if (productData) {
-        setFormData(prev => ({
-          ...prev,
-          product: productData.name || ''
-        }));
-      }
-  }, [productData]);
-
-
   const handleSubmit = (e) => {
-      e.preventDefault();
-      setIsSubmitting(true);
+    e.preventDefault();
+    setIsSubmitting(true);
     
     // Simulate form submission with a delay
-      setTimeout(() => {
-        console.log('Form submitted:', {
-          ...formData,
-          productDetails: productData // Include full product details if needed
-        });
-        setIsSubmitting(false);
-        setSubmitSuccess(true);
+    setTimeout(() => {
+      console.log('Form submitted:', formData);
+      setIsSubmitting(false);
+      setSubmitSuccess(true);
       
       // Reset success message after 3 seconds
-        setTimeout(() => setSubmitSuccess(false), 3000);
-      }, 1000);
+      setTimeout(() => setSubmitSuccess(false), 3000);
+    }, 1000);
   };
 
 
@@ -51,6 +39,14 @@ const Enquiry = () => {
       ...prev,
       [name]: value
     }));
+    
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: ''
+      }));
+    }
   };
 
   return (
@@ -105,11 +101,8 @@ const Enquiry = () => {
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <motion.div 
-                    whileHover={{ scale: 1.01 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                       Full Name
                     </label>
                     <input
@@ -118,17 +111,18 @@ const Enquiry = () => {
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
-                      required
-                      className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-all duration-200"
+                      className={`block w-full rounded-lg border ${
+                        errors.name ? 'border-red-500' : 'border-gray-300'
+                      } shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-all duration-200 py-3 px-4`}
                       placeholder="Your full name"
                     />
-                  </motion.div>
+                    {errors.name && (
+                      <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+                    )}
+                  </div>
 
-                  <motion.div 
-                    whileHover={{ scale: 1.01 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                       Email Address
                     </label>
                     <input
@@ -137,19 +131,20 @@ const Enquiry = () => {
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
-                      required
-                      className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-all duration-200"
+                      className={`block w-full rounded-lg border ${
+                        errors.email ? 'border-red-500' : 'border-gray-300'
+                      } shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-all duration-200 py-3 px-4`}
                       placeholder="your.email@example.com"
                     />
-                  </motion.div>
+                    {errors.email && (
+                      <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+                    )}
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <motion.div 
-                    whileHover={{ scale: 1.01 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                  <div>
+                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
                       Phone Number
                     </label>
                     <input
@@ -158,17 +153,18 @@ const Enquiry = () => {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      required
-                      className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-all duration-200"
-                      placeholder="Your contact number"
+                      className={`block w-full rounded-lg border ${
+                        errors.phone ? 'border-red-500' : 'border-gray-300'
+                      } shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-all duration-200 py-3 px-4`}
+                      placeholder="10-digit phone number"
                     />
-                  </motion.div>
+                    {errors.phone && (
+                      <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
+                    )}
+                  </div>
 
-                  <motion.div 
-                    whileHover={{ scale: 1.01 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <label htmlFor="product" className="block text-sm font-medium text-gray-700 mb-1">
+                  <div>
+                    <label htmlFor="product" className="block text-sm font-medium text-gray-700 mb-2">
                       Product Interest
                     </label>
                     <select
@@ -177,7 +173,6 @@ const Enquiry = () => {
                       value={formData.product}
                       onChange={handleChange}
                       required
-                      disabled={productData ? true : false}
                       className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-all duration-200"
                     >
                       <option value="">{productData ? formData.product : "Select a product"}</option>
@@ -191,15 +186,11 @@ const Enquiry = () => {
                         </>
                       )}
                     </select>
-
-                  </motion.div>
+                  </div>
                 </div>
 
-                <motion.div 
-                  whileHover={{ scale: 1.01 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
                     Message
                   </label>
                   <textarea
@@ -208,10 +199,15 @@ const Enquiry = () => {
                     value={formData.message}
                     onChange={handleChange}
                     rows={4}
-                    className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-all duration-200"
+                    className={`block w-full rounded-lg border ${
+                      errors.message ? 'border-red-500' : 'border-gray-300'
+                    } shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-all duration-200 py-3 px-4`}
                     placeholder="Please provide any specific requirements or questions..."
                   ></textarea>
-                </motion.div>
+                  {errors.message && (
+                    <p className="text-red-500 text-sm mt-1">{errors.message}</p>
+                  )}
+                </div>
 
                 <div className="pt-4">
                   <motion.button
@@ -245,7 +241,11 @@ const Enquiry = () => {
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
-            className="border-t-4 border-blue-600 bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300"
+            whileHover={{ 
+              scale: 1.02,
+              boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)"
+            }}
+            className="border-t-4 border-blue-600 bg-white p-6 rounded-xl shadow-md transition duration-300 transform origin-center"
           >
             <div className="flex items-center mb-4">
               <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-3">
@@ -295,7 +295,11 @@ const Enquiry = () => {
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.7, duration: 0.8 }}
-            className="border-t-4 border-green-600 bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300"
+            whileHover={{ 
+              scale: 1.02,
+              boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)"
+            }}
+            className="border-t-4 border-green-600 bg-white p-6 rounded-xl shadow-md transition duration-300 transform origin-center"
           >
             <div className="flex items-center mb-4">
               <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center mr-3">
@@ -358,13 +362,13 @@ const Enquiry = () => {
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-green-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
               </svg>
-              <span><strong>Phone:</strong> +91 123 456 7890</span>
+              <span><strong>Phone:</strong> +91 9561137963</span>
             </div>
             <div className="flex items-center text-gray-700">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-green-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
-              <span><strong>Email:</strong> info@samkuevc.com</span>
+              <span><strong>Email:</strong> samkuevservices@gmail.com</span>
             </div>
           </div>
         </motion.div>

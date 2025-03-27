@@ -1,11 +1,20 @@
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 import { Menu, X, BatteryCharging } from 'lucide-react';
 import logo from '../images/logo.png'; 
 import name from '../images/samkuEVC.png'; 
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+
+  // Scroll to top when route changes
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth' // Optional: adds a smooth scrolling effect
+    });
+  }, [location.pathname]); // Trigger effect when path changes
 
   const navItems = [
     { path: '/', label: 'Home' },

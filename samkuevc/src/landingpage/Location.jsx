@@ -19,9 +19,9 @@ const Location = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h1 className="text-5xl font-bold mb-4 text-blue-800">Our <span className="text-green-600">Locations</span></h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-blue-800">Our <span className="text-green-600">Locations</span></h1>
           <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-green-500 mx-auto mb-6 rounded-full"></div>
-          <p className="text-gray-600 text-xl max-w-3xl mx-auto">
+          <p className="text-gray-600 text-lg md:text-xl max-w-3xl mx-auto">
             Visit our showroom to explore our innovative EV charging solutions or find a charging station near you.
           </p>
         </motion.div>
@@ -33,7 +33,7 @@ const Location = () => {
           transition={{ delay: 0.3, duration: 0.8 }}
           className="bg-white rounded-2xl shadow-lg overflow-hidden border-l-4 border-blue-600 hover:shadow-xl transition duration-300 mb-12"
         >
-          <div className="p-8 md:p-10">
+          <div className="p-6 md:p-10">
             <div className="flex items-center mb-6">
               <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mr-4">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -64,7 +64,7 @@ const Location = () => {
           </div>
 
           {/* Contact Information */}
-          <div className="p-8 md:p-10">
+          <div className="p-6 md:p-10">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               <motion.div 
                 initial={{ opacity: 0, x: -30 }}
@@ -81,22 +81,23 @@ const Location = () => {
                   <h3 className="text-xl font-bold text-blue-800">Showroom</h3>
                 </div>
                 <address className="text-gray-700 not-italic ml-13 space-y-2">
-                  <p>Samku E-World Private Limited</p>
-                  <p>Pune, Maharashtra</p>
-                  <p>India</p>
+                  <p>SAMKU EV POWERING PVT. LTD.</p>
+                  <p>Vighnaharta Services Industrial Complex</p>
+                  <p>Charholi Khurd Road, Charholi Khurd</p>
+                  <p>Pune, Maharashtra, India - 412105</p>
                 </address>
                 <div className="mt-6 space-y-2">
                   <div className="flex items-center text-gray-700">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-green-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                     </svg>
-                    <span><strong>Phone:</strong> +91 123 456 7890</span>
+                    <span><strong>Phone:</strong> +91 9561137963</span>
                   </div>
                   <div className="flex items-center text-gray-700">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-green-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
-                    <span><strong>Email:</strong> info@samkuevc.com</span>
+                    <span><strong>Email:</strong> samkuevservices@gmail.com</span>
                   </div>
                 </div>
               </motion.div>
