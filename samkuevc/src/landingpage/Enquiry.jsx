@@ -1,32 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
 
 const Enquiry = () => {
+  const location = useLocation();
+  const productData = location.state?.product;
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
-    product: '',
-    message: ''
+    product: productData?.name || '',
+    message:''
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
+  useEffect(() => {
+      if (productData) {
+        setFormData(prev => ({
+          ...prev,
+          product: productData.name || ''
+        }));
+      }
+  }, [productData]);
+
+
   const handleSubmit = (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
+      e.preventDefault();
+      setIsSubmitting(true);
     
     // Simulate form submission with a delay
-    setTimeout(() => {
-      console.log('Form submitted:', formData);
-      setIsSubmitting(false);
-      setSubmitSuccess(true);
+      setTimeout(() => {
+        console.log('Form submitted:', {
+          ...formData,
+          productDetails: productData // Include full product details if needed
+        });
+        setIsSubmitting(false);
+        setSubmitSuccess(true);
       
       // Reset success message after 3 seconds
-      setTimeout(() => setSubmitSuccess(false), 3000);
-    }, 1000);
+        setTimeout(() => setSubmitSuccess(false), 3000);
+      }, 1000);
   };
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -160,15 +177,21 @@ const Enquiry = () => {
                       value={formData.product}
                       onChange={handleChange}
                       required
+                      disabled={productData ? true : false}
                       className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-all duration-200"
                     >
-                      <option value="">Select a product</option>
-                      <option value="ev-bike-charger">EV Bike Charger</option>
-                      <option value="ac-charger">AC Charger</option>
-                      <option value="dc-charger">DC Charger</option>
-                      <option value="accessories">EV Accessories</option>
-                      <option value="cycle-charger">EV Cycle Charger</option>
+                      <option value="">{productData ? formData.product : "Select a product"}</option>
+                      {!productData && (
+                        <>
+                          <option value="ev-bike-charger">EV Bike Charger</option>
+                          <option value="ac-charger">AC Charger</option>
+                          <option value="dc-charger">DC Charger</option>
+                          <option value="accessories">EV Accessories</option>
+                          <option value="cycle-charger">EV Cycle Charger</option>
+                        </>
+                      )}
                     </select>
+
                   </motion.div>
                 </div>
 
