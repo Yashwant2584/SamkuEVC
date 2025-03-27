@@ -186,7 +186,7 @@ const Enquiry = () => {
                         </>
                       )}
                     </select>
-                  </motion.div>
+                  </div>
                 </div>
 
                 <div>
