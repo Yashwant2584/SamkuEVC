@@ -1,79 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
 
 const Enquiry = () => {
+  const location = useLocation();
+  const productData = location.state?.product;
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
-    product: '',
-    message: ''
+    product: productData?.name || '',
+    message:''
   });
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
-  // Validation function
-  const validateForm = () => {
-    const newErrors = {};
-
-    // Name validation
-    if (!formData.name.trim()) {
-      newErrors.name = 'Name is required';
-    } else if (formData.name.trim().length < 2) {
-      newErrors.name = 'Name must be at least 2 characters';
-    }
-
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!emailRegex.test(formData.email)) {
-      newErrors.email = 'Invalid email format';
-    }
-
-    // Phone validation
-    const phoneRegex = /^[0-9]{10}$/;
-    if (!formData.phone.trim()) {
-      newErrors.phone = 'Phone number is required';
-    } else if (!phoneRegex.test(formData.phone)) {
-      newErrors.phone = 'Phone number must be 10 digits';
-    }
-
-    // Product validation
-    if (!formData.product) {
-      newErrors.product = 'Please select a product';
-    }
-
-    // Message validation
-    if (!formData.message.trim()) {
-      newErrors.message = 'Message is required';
-    } else if (formData.message.trim().length < 10) {
-      newErrors.message = 'Message must be at least 10 characters';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
     
-    if (validateForm()) {
-      setIsSubmitting(true);
+    // Simulate form submission with a delay
+    setTimeout(() => {
+      console.log('Form submitted:', formData);
+      setIsSubmitting(false);
+      setSubmitSuccess(true);
       
-      // Simulate form submission with a delay
-      setTimeout(() => {
-        console.log('Form submitted:', formData);
-        setIsSubmitting(false);
-        setSubmitSuccess(true);
-        
-        // Reset success message after 3 seconds
-        setTimeout(() => setSubmitSuccess(false), 3000);
-      }, 1000);
-    }
+      // Reset success message after 3 seconds
+      setTimeout(() => setSubmitSuccess(false), 3000);
+    }, 1000);
   };
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -214,21 +172,21 @@ const Enquiry = () => {
                       name="product"
                       value={formData.product}
                       onChange={handleChange}
-                      className={`block w-full rounded-lg border ${
-                        errors.product ? 'border-red-500' : 'border-gray-300'
-                      } shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-all duration-200 py-3 px-4`}
+                      required
+                      className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-all duration-200"
                     >
-                      <option value="">Select a product</option>
-                      <option value="ev-bike-charger">EV Bike Charger</option>
-                      <option value="ac-charger">AC Charger</option>
-                      <option value="dc-charger">DC Charger</option>
-                      <option value="accessories">EV Accessories</option>
-                      <option value="cycle-charger">EV Cycle Charger</option>
+                      <option value="">{productData ? formData.product : "Select a product"}</option>
+                      {!productData && (
+                        <>
+                          <option value="ev-bike-charger">EV Bike Charger</option>
+                          <option value="ac-charger">AC Charger</option>
+                          <option value="dc-charger">DC Charger</option>
+                          <option value="accessories">EV Accessories</option>
+                          <option value="cycle-charger">EV Cycle Charger</option>
+                        </>
+                      )}
                     </select>
-                    {errors.product && (
-                      <p className="text-red-500 text-sm mt-1">{errors.product}</p>
-                    )}
-                  </div>
+                  </motion.div>
                 </div>
 
                 <div>
