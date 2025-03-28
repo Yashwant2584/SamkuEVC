@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 # CORS Configuration
 CORS(app, resources={r"/*": {
-    "origins": ["http://localhost:5173", "https://samku-project1.vercel.app"],
+    "origins": ["http://localhost:5173", "https://samku-evc.vercel.app"],
     "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     "allow_headers": ["Content-Type", "Authorization"]
 }})
