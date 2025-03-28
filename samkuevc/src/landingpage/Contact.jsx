@@ -9,9 +9,56 @@ const Contact = () => {
     message: ''
   });
 
-  const handleSubmit = (e) => {
+  const validateForm = () => {
+    // Basic validation to ensure all fields are filled
+    return (
+      formData.name.trim() !== '' &&
+      formData.email.trim() !== '' &&
+      formData.subject.trim() !== '' &&
+      formData.message.trim() !== '' &&
+      /\S+@\S+\.\S+/.test(formData.email) // Simple email validation
+    );
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
+    if (validateForm()) {
+      try {
+        const formDataToSubmit = new FormData();
+        
+        // Append form data matching backend keys
+        formDataToSubmit.append('name', formData.name);
+        formDataToSubmit.append('email', formData.email);
+        formDataToSubmit.append('subject', formData.subject);
+        formDataToSubmit.append('message', formData.message);
+
+        const response = await fetch('http://localhost:5000/api/contact', {
+          method: 'POST',
+          body: formDataToSubmit,
+        });
+  
+        const result = await response.json();
+        
+        if (response.ok) {
+          console.log('Form submitted:', result);
+          alert('Message sent successfully!');
+          // Reset form
+          setFormData({
+            name: '',
+            email: '',
+            subject: '',
+            message: '',
+          });
+        } else {
+          throw new Error(result.error || 'Submission failed');
+        }
+      } catch (error) {
+        console.error('Submission error:', error);
+        alert('Error submitting message. Please try again.');
+      }
+    } else {
+      alert('Please fill all fields correctly.');
+    }
   };
 
   const handleChange = (e) => {
@@ -100,7 +147,6 @@ const Contact = () => {
               </div>
             </div>
 
-            {/* Rest of the component remains the same */}
             <div className="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-green-600 hover:shadow-xl transition duration-300">
               <div className="flex items-center mb-6">
                 <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center mr-4">

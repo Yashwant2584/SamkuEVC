@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
 
@@ -10,28 +10,70 @@ const Enquiry = () => {
     email: '',
     phone: '',
     product: productData?.name || '',
-    message:''
+    message: ''
   });
-
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    // Simulate form submission with a delay
-    setTimeout(() => {
-      console.log('Form submitted:', formData);
-      setIsSubmitting(false);
-      setSubmitSuccess(true);
-      
-      // Reset success message after 3 seconds
-      setTimeout(() => setSubmitSuccess(false), 3000);
-    }, 1000);
+  const validateForm = () => {
+    let tempErrors = {};
+    if (!formData.name.trim()) tempErrors.name = 'Name is required';
+    if (!formData.email) tempErrors.email = 'Email is required';
+    else if (!/\S+@\S+\.\S+/.test(formData.email)) tempErrors.email = 'Email is invalid';
+    if (!formData.phone) tempErrors.phone = 'Phone number is required';
+    else if (!/^\d{10}$/.test(formData.phone)) tempErrors.phone = 'Phone number must be 10 digits';
+    if (!formData.product) tempErrors.product = 'Product is required';
+    setErrors(tempErrors);
+    return Object.keys(tempErrors).length === 0;
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      setIsSubmitting(true);
+      try {
+        const formDataToSubmit = new FormData();
+        
+        // Append all form data
+        formDataToSubmit.append('name', formData.name);
+        formDataToSubmit.append('email', formData.email);
+        formDataToSubmit.append('phone', formData.phone);
+        formDataToSubmit.append('product', formData.product);
+        formDataToSubmit.append('message', formData.message);
+  
+        const response = await fetch('http://localhost:5000/api/enquiry', {
+          method: 'POST',
+          body: formDataToSubmit,
+        });
+  
+        const result = await response.json();
+        
+        if (response.ok) {
+          console.log('Form submitted:', result);
+          setSubmitSuccess(true);
+          // Reset form after a short delay
+          setTimeout(() => {
+            setFormData({
+              name: '',
+              email: '',
+              phone: '',
+              product: productData?.name || '',
+              message: '',
+            });
+            setSubmitSuccess(false);
+          }, 2000);
+        } else {
+          throw new Error(result.error || 'Submission failed');
+        }
+      } catch (error) {
+        console.error('Submission error:', error);
+        alert('Error submitting enquiry. Please try again.');
+      } finally {
+        setIsSubmitting(false);
+      }
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -39,7 +81,6 @@ const Enquiry = () => {
       ...prev,
       [name]: value
     }));
-    
     // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({
