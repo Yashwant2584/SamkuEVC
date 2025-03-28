@@ -1,6 +1,6 @@
 import React from 'react';
 import ProductCard from './ProductCard';
-import { chargers } from '../data/Charger';
+import { chargers } from '../data/chargers.js';
 import { useParams } from 'react-router-dom';
 
 const ProductGrid = () => {
