@@ -13,6 +13,7 @@ import ProductDetails from './components/ProductDetails';
 import FranchiseApplication from './landingpage/FranchiseApplication';
 import ChargingStationApplication from './landingpage/ChargingStationApplication';
 import Franchise from './landingpage/Franchise';
+import Dashboard from "./admin/admin-dashboard.jsx"
 
 
 const App = () => {
@@ -34,6 +35,7 @@ const App = () => {
         <Route path="/FranchiseApplication" element={<FranchiseApplication />} />
         <Route path="/ChargingStationApplication" element={<ChargingStationApplication />} />
         <Route path="/Franchise" element={<Franchise />} />
+        <Route path="/admin" element={<Dashboard />} />
         
 
 
