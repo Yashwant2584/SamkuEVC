@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ChevronRight, Zap, Battery, Shield } from 'lucide-react';
-import Spline from '@splinetool/react-spline';
 import Marquee from '../components/Marquee';
 
 const Home = () => {
