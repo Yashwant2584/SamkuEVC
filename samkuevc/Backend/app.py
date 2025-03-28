@@ -23,6 +23,8 @@ db = client.samku_applications
 contact_collection = db.contacts
 enquiry_collection = db.enquiries
 careers_collection = db.careers
+charging_stations_collection = db.charging_stations
+service_centers_collection = db.franchises
 
 # JSON Encoder for ObjectId
 class JSONEncoder(json.JSONEncoder):
@@ -32,6 +34,125 @@ class JSONEncoder(json.JSONEncoder):
         return json.JSONEncoder.default(self, o)
 
 app.json_encoder = JSONEncoder
+
+
+# Service Center Franchise Endpoint
+@app.route('/api/franchise-application', methods=['POST'])
+def submit_franchise_application():
+    try:
+        data = request.form.to_dict()
+        files = request.files
+
+        application_data = {
+            'personalInfo': {
+                'fullName': data.get('personalInfo.fullName', ''),
+                'email': data.get('personalInfo.email', ''),
+                'phone': data.get('personalInfo.phone', ''),
+                'address': data.get('personalInfo.address', ''),
+                'city': data.get('personalInfo.city', ''),
+                'state': data.get('personalInfo.state', ''),
+                'pincode': data.get('personalInfo.pincode', '')
+            },
+            'businessInfo': {
+                'businessExperience': data.get('businessInfo.businessExperience', ''),
+                'companyName': data.get('businessInfo.companyName', ''),
+                'gstNumber': data.get('businessInfo.gstNumber', ''),
+                'investmentCapacity': data.get('businessInfo.investmentCapacity', ''),
+                'preferredLocation': data.get('businessInfo.preferredLocation', ''),
+                'propertySize': data.get('businessInfo.propertySize', '')
+            },
+            'technicalInfo': {
+                'technicalBackground': data.get('technicalInfo.technicalBackground', ''),
+                'automobileExperience': data.get('technicalInfo.automobileExperience', ''),
+                'evKnowledge': data.get('technicalInfo.evKnowledge', ''),
+                'certifications': data.get('technicalInfo.certifications', '')
+            },
+            'financialInfo': {
+                'expectedInvestment': data.get('financialInfo.expectedInvestment', ''),
+                'fundingSource': data.get('financialInfo.fundingSource', ''),
+                'timelineToStart': data.get('financialInfo.timelineToStart', '')
+            },
+            'additionalInfo': {
+                'whyJoinUs': data.get('additionalInfo.whyJoinUs', ''),
+                'references': data.get('additionalInfo.references', '')
+            },
+            'status': 'Pending',
+            'createdAt': datetime.utcnow(),
+            'updatedAt': datetime.utcnow()
+        }
+
+        result = service_centers_collection.insert_one(application_data)
+        
+        return jsonify({
+            "message": "Franchise application submitted successfully",
+            "application_id": str(result.inserted_id)
+        }), 201
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+
+# Charging Station Application Endpoint
+@app.route('/api/charging-station-application', methods=['POST'])
+def submit_charging_station_application():
+    try:
+        # Get form data
+        data = request.form.to_dict()
+        files = request.files
+
+        # Prepare application data
+        application_data = {
+            'personalInfo': {
+                'fullName': data.get('personalInfo.fullName', ''),
+                'email': data.get('personalInfo.email', ''),
+                'phone': data.get('personalInfo.phone', ''),
+                'address': data.get('personalInfo.address', ''),
+                'city': data.get('personalInfo.city', ''),
+                'state': data.get('personalInfo.state', ''),
+                'pincode': data.get('personalInfo.pincode', '')
+            },
+            'businessInfo': {
+                'businessExperience': data.get('businessInfo.businessExperience', ''),
+                'gstNumber': data.get('businessInfo.gstNumber', ''),
+                'investmentCapacity': data.get('businessInfo.investmentCapacity', ''),
+                'preferredLocation': data.get('businessInfo.preferredLocation', ''),
+                'propertySize': data.get('businessInfo.propertySize', ''),
+                'companyName': data.get('businessInfo.companyName', '')
+            },
+            'technicalInfo': {
+                'electricalInfrastructure': data.get('technicalInfo.electricalInfrastructure', ''),
+                'gridConnectivity': data.get('technicalInfo.gridConnectivity', ''),
+                'powerAvailability': data.get('technicalInfo.powerAvailability', ''),
+                'certifications': data.get('technicalInfo.certifications', '')
+            },
+            'financialInfo': {
+                'expectedInvestment': data.get('financialInfo.expectedInvestment', ''),
+                'fundingSource': data.get('financialInfo.fundingSource', ''),
+                'timelineToStart': data.get('financialInfo.timelineToStart', '')
+            },
+            'additionalInfo': {
+                'whyJoinUs': data.get('additionalInfo.whyJoinUs', ''),
+                'additionalComments': data.get('additionalInfo.additionalComments', ''),
+                'references': data.get('additionalInfo.references', '')
+            },
+            'status': 'Pending',
+            'createdAt': datetime.utcnow(),
+            'updatedAt': datetime.utcnow()
+        }
+
+        # Insert into MongoDB
+        result = charging_stations_collection.insert_one(application_data)
+        
+        return jsonify({
+            "message": "Charging station application submitted successfully",
+            "application_id": str(result.inserted_id)
+        }), 201
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+
 
 # Contact Endpoint (Updated for Contact Component)
 @app.route('/api/contact', methods=['POST'])
