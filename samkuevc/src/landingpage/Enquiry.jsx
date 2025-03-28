@@ -42,7 +42,7 @@ const Enquiry = () => {
         formDataToSubmit.append('product', formData.product);
         formDataToSubmit.append('message', formData.message);
   
-        const response = await fetch('http://localhost:5000/api/enquiry', {
+        const response = await fetch('https://samku-evc-backend.vercel.app/api/enquiry', {
           method: 'POST',
           body: formDataToSubmit,
         });

@@ -32,7 +32,7 @@ const Contact = () => {
         formDataToSubmit.append('subject', formData.subject);
         formDataToSubmit.append('message', formData.message);
 
-        const response = await fetch('http://localhost:5000/api/contact', {
+        const response = await fetch('https://samku-evc-backend.vercel.app/api/contact', {
           method: 'POST',
           body: formDataToSubmit,
         });
