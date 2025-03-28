@@ -3,58 +3,58 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ChevronRight, Zap, Battery, Shield } from 'lucide-react';
 import Marquee from '../components/Marquee';
-
+import ImgMOB3 from '../images/ImgMob3.png';
 const Home = () => {
   return (
     <div className="bg-gradient-to-b from-gray-50 to-white">
-      {/* Hero Section */}
-      {/* CHANGES: Added flex-col-reverse for mobile, adjusted video and text container */}
-      <section 
-        className="relative min-h-screen"
-      >
-        <div className="absolute inset-0 flex flex-col md:flex-row">
-          {/* Video on Right */}
-          {/* CHANGES: Adjusted height for mobile responsiveness */}
-          <div className="relative w-full h-1/2 md:h-full order-2 md:order-1">
-            <video 
-              autoPlay 
-              loop 
-              muted 
-              playsInline
-              className="absolute inset-0 w-full h-full object-cover"
-            >
-              <source src="/ev.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </div>
-
-          {/* CHANGES: Added mobile-specific styling, centered content, adjusted background */}
-          <motion.div 
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 px-4 sm:px-6 lg:px-8 text-white z-10 
-      flex items-center justify-center md:justify-end md:w-1/2 bg-black/40 md:bg-black/20 p-4 md:p-8 md:rounded-xl"
+      <section className="relative min-h-screen">
+        {/* Desktop Video */}
+        <div className="hidden md:block absolute inset-0">
+          <video 
+            autoPlay 
+            loop 
+            muted 
+            playsInline
+            className="w-full h-full object-cover"
           >
-            <div className="text-center md:text-right max-w-xl">
-              <h1 className="text-3xl md:text-6xl font-bold mb-4 md:mb-6 leading-tight">
-                Powering the Future of 
-                Electric Mobility
-              </h1>
-              <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-green-500 mx-auto md:mx-0 mb-4 md:mb-6 rounded-full"></div>
-              <p className="text-base md:text-2xl mb-6 max-w-2xl">
-                Leading the charge with innovative EV charging solutions for a sustainable tomorrow.
-              </p>
-              <Link
-                to="/products"
-                className="inline-flex items-center px-4 py-2 md:px-6 md:py-3 bg-gradient-to-r from-blue-600 to-green-500 hover:from-blue-700 hover:to-green-600 rounded-lg text-base md:text-lg font-semibold transition duration-300 mx-auto md:mx-0"
-              >
-                Explore Our Product
-                <ChevronRight className="ml-2 h-4 w-4 md:h-5 md:w-5" />
-              </Link>
-            </div>
-          </motion.div>
+            <source src="/ev.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
         </div>
+
+        {/* Mobile Full-Screen Image */}
+        <div className="block md:hidden absolute inset-0">
+          <img 
+            src={ImgMOB3} 
+            alt="Electric Vehicle"
+            className="w-full h-full object-cover"
+          />
+        </div>
+
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="absolute inset-0 flex items-center justify-center px-4 sm:px-6 lg:px-8 text-white z-10 
+            bg-black/40 md:bg-black/20 p-4 md:p-8 md:rounded-xl"
+        >
+          <div className="text-center max-w-xl">
+            <h1 className="text-3xl md:text-6xl font-bold mb-4 md:mb-6 leading-tight">
+              Powering the Future of Electric Mobility
+            </h1>
+            <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-green-500 mx-auto mb-4 md:mb-6 rounded-full"></div>
+            <p className="text-base md:text-2xl mb-6 max-w-2xl">
+              Leading the charge with innovative EV charging solutions for a sustainable tomorrow.
+            </p>
+            <Link
+              to="/products"
+              className="inline-flex items-center px-4 py-2 md:px-6 md:py-3 bg-gradient-to-r from-blue-600 to-green-500 hover:from-blue-700 hover:to-green-600 rounded-lg text-base md:text-lg font-semibold transition duration-300"
+            >
+              Explore Our Product
+              <ChevronRight className="ml-2 h-4 w-4 md:h-5 md:w-5" />
+            </Link>
+          </div>
+        </motion.div>
       </section>
 
       {/* Marquee Section */}
