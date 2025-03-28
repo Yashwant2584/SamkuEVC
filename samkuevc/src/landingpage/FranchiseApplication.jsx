@@ -1,6 +1,6 @@
 import React, { useRef, useState, useCallback, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import logo from '../images/logo.png'; 
+import logo from '../images/logo.png';
 import { Upload, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 

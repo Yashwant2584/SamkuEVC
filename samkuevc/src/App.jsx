@@ -13,7 +13,7 @@ import ProductDetails from './components/ProductDetails';
 import FranchiseApplication from './landingpage/FranchiseApplication';
 import ChargingStationApplication from './landingpage/ChargingStationApplication';
 import Franchise from './landingpage/Franchise';
-
+ // Import the WhatsApp button component
 
 const App = () => {
   return (
@@ -34,6 +34,7 @@ const App = () => {
         <Route path="/FranchiseApplication" element={<FranchiseApplication />} />
         <Route path="/ChargingStationApplication" element={<ChargingStationApplication />} />
         <Route path="/Franchise" element={<Franchise />} />
+        
 
 
       </Routes>
