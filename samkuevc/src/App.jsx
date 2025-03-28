@@ -10,6 +10,9 @@ import Enquiry from './landingpage/Enquiry';
 import EVSolutions from './landingpage/EVSolutions';
 import Footer from './landingpage/Footer';
 import ProductDetails from './components/ProductDetails';
+import FranchiseApplication from './landingpage/FranchiseApplication';
+import ChargingStationApplication from './landingpage/ChargingStationApplication';
+import Franchise from './landingpage/Franchise';
 
 
 const App = () => {
@@ -28,6 +31,9 @@ const App = () => {
         <Route path="/ev-solutions" element={<EVSolutions/>} />
         
         <Route path="/product/:id" element={<ProductDetails />} />
+        <Route path="/FranchiseApplication" element={<FranchiseApplication />} />
+        <Route path="/ChargingStationApplication" element={<ChargingStationApplication />} />
+        <Route path="/Franchise" element={<Franchise />} />
 
 
       </Routes>

@@ -143,12 +143,12 @@ const Home = () => {
               },
               {
                 title: 'DC Fast Chargers',
-                image: 'https://images.unsplash.com/photo-1697800653529-dcc0f1b78f88?auto=format&fit=crop&q=80',
+                image: '/30-DC.png',
                 description: 'High-power DC charging for quick turnaround when you need to get back on the road fast.'
               },
               {
                 title: 'Home Charging Solutions',
-                image: 'https://images.unsplash.com/photo-1697800653529-dcc0f1b78f88?auto=format&fit=crop&q=80',
+                image: '/30-DC.png',
                 description: 'Convenient and safe charging at home that integrates seamlessly with your lifestyle.'
               }
             ].map((product, index) => (

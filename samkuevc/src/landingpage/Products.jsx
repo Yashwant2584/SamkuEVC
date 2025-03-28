@@ -15,7 +15,7 @@ const Products = () => {
     {
       title: 'E-Bike Chargers',
       description: 'Efficient charging solutions for electric bikes',
-      image: 'https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&q=80'
+      image: '/30-DC.png'
     },
     {
       title: 'AC Chargers',
@@ -25,7 +25,7 @@ const Products = () => {
     {
       title: 'DC Chargers',
       description: 'High-power DC fast charging solutions',
-      image: 'https://images.unsplash.com/photo-1697800653529-dcc0f1b78f88?auto=format&fit=crop&q=80'
+      image: '/30-DC.png'
     },
     {
       title: 'EV Accessories',
