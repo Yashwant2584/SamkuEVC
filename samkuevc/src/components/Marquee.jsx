@@ -56,7 +56,7 @@ const Marquee = () => {
   return (
     <div className="py-8">
       {/* Styled Heading */}
-      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-16  tracking-wide text-gray-800 ">
+      <h1 className="text-2xl sm:text-3xl md:text-3xl font-bold text-center mb-16  tracking-wide text-gray-800 ">
       Your Vehicles, Our Priority.
       </h1>
 
