@@ -50,15 +50,18 @@ const Marquee = () => {
     { name: "Gemopai", logo: gemopaiLogo },
     { name: "Nissan", logo: nissanLogo },
     // { name: "tata", logo: tataloLogo },
-
   ];
 
   return (
-    <div className="py-8">
+    <div className="py-8 bg-gradient-to-b from-gray-50 to-white">
       {/* Styled Heading */}
-      <h1 className="text-2xl sm:text-3xl md:text-3xl font-bold text-center mb-16  tracking-wide text-gray-800 ">
-      Your Vehicles, Our Priority.
-      </h1>
+      <div className="text-center mb-16">
+        <h1 className="text-2xl sm:text-3xl md:text-3xl font-bold tracking-wide inline-block relative">
+          <span className="text-blue-800">Your Vehicles, </span>
+          <span className="text-green-600">Our Priority.</span>
+        </h1>
+        <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-green-500 mx-auto mt-3 rounded-full"></div>
+      </div>
 
       {/* Marquee Container */}
       <div className="relative overflow-hidden px-4 sm:px-6 md:px-8 max-w-full sm:max-w-lg md:max-w-3xl lg:max-w-5xl mx-auto">
