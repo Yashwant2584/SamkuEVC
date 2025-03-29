@@ -11,7 +11,7 @@ import LocationsSection from "./Get-location"
 
 const Home = () => {
   return (
-    <div className="bg-gradient-to-b from-gray-50 to-white">
+    <div className="bg-white">
       <section className="relative min-h-screen">
         {/* Desktop Video */}
         <div className="hidden md:block absolute inset-0">
@@ -69,7 +69,7 @@ const Home = () => {
 
       {/* Features Section */}
       {/* CHANGES: Reduced padding, adjusted mobile styles */}
-      <section className="py-12 md:py-16">
+      <section className="py-12 md:py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
             initial={{ opacity: 0, y: -20 }}
@@ -129,7 +129,7 @@ const Home = () => {
 
       {/* Products Preview Section */}
       {/* CHANGES: Adjusted padding, grid, and text sizes */}
-      <section className="py-12 md:py-16 bg-gradient-to-b from-white to-gray-50">
+      <section className="py-12 md:py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
             initial={{ opacity: 0, y: -20 }}
@@ -190,7 +190,7 @@ const Home = () => {
 
       {/* CTA Section */}
       {/* CHANGES: Adjusted padding, text sizes, and button styles */}
-      <section className="py-12 md:py-16">
+      <section className="py-12 md:py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
