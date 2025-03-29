@@ -1,11 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ChevronRight, Zap, Battery, Shield } from 'lucide-react';
+import { ChevronRight, Zap, Battery, Shield, Bike } from 'lucide-react';
 import Marquee from '../components/Marquee';
 import ImgMOB3 from '../images/ImgMob3.png';
 import Modelslider from "./model";
 import LocationsSection from "./Get-location"
+import bike from '../images/C-Images/bike.png';
+import dc_charge from '../images/C-Images/dc_chargers.png';
+import ev_accessories from '../images/C-Images/accessories.jpg';
 // import WhatsAppButton from '../landingpage/WhatsAppButton';;
 
 
@@ -145,17 +148,17 @@ const Home = () => {
             {[
               {
                 title: 'EV Bike Chargers',
-                image: 'https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&q=80',
+                image: bike,
                 description: 'Efficient charging solutions for electric bikes with smart connectivity features.'
               },
               {
                 title: 'DC Fast Chargers',
-                image: '/30-DC.png',
+                image: dc_charge,
                 description: 'High-power DC charging for quick turnaround when you need to get back on the road fast.'
               },
               {
-                title: 'Home Charging Solutions',
-                image: '/30-DC.png',
+                title: 'EV Accessories',
+                image: ev_accessories,
                 description: 'Convenient and safe charging at home that integrates seamlessly with your lifestyle.'
               }
             ].map((product, index) => (
