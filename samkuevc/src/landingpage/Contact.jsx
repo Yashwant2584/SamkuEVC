@@ -136,7 +136,7 @@ const Contact = () => {
                   <div>
                     <p className="text-gray-700 font-semibold">Address</p>
                     <address className="text-gray-600 not-italic">
-                      <strong>SAMKU EV POWERING PVT. LTD.</strong><br />
+                      <strong>Samku Technology & Consultancy</strong><br />
                       Vighnaharta Services Industrial Complex<br />
                       Charholi Khurd Road<br />
                       Charholi Khurd, Pune<br />

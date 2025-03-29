@@ -81,7 +81,7 @@ const Location = () => {
                   <h3 className="text-xl font-bold text-blue-800">Showroom</h3>
                 </div>
                 <address className="text-gray-700 not-italic ml-13 space-y-2">
-                  <p>SAMKU EV POWERING PVT. LTD.</p>
+                  <p>Samku Technology & Consultancy</p>
                   <p>Vighnaharta Services Industrial Complex</p>
                   <p>Charholi Khurd Road, Charholi Khurd</p>
                   <p>Pune, Maharashtra, India - 412105</p>
