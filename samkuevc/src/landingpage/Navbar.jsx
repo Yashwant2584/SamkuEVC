@@ -22,7 +22,8 @@ const Navbar = () => {
     { path: '/ev-solutions', label: 'EV Solutions' },
     { path: '/about', label: 'About Us' },
     { path: '/location', label: 'Location' },
-    { path: '/enquiry', label: 'Enquiry' },
+    // { path: '/enquiry', label: 'Enquiry' },
+    { path: '/franchise', label: 'Franchise' },
     { path: '/contact', label: 'Contact' },
   ];
 

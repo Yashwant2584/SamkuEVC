@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Facebook, Instagram, Linkedin, Youtube, Leaf, MapPin, Phone, Mail } from 'lucide-react';
+import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube, FaMapMarkerAlt, FaPhone, FaEnvelope, FaArrowRight } from "react-icons/fa";
 import PrivacyPolicyModal from "../footer files/privacy";
 import RefundPolicyModal from "../footer files/refund";
 import TermsAndConditionsModal from "../footer files/terms";
@@ -33,10 +33,10 @@ const Footer = () => {
   ];
 
   const socialLinks = [
-    { icon: Facebook, link: "https://www.facebook.com/share/1GiTeUp6tb/" },
-    { icon: Instagram, link: "https://www.instagram.com/samkuevservice?igsh=cHE1NHp2b3JmNDl4" },
-    { icon: Linkedin, link: "https://www.linkedin.com/in/mahesh-shingare-225151176/" },
-    { icon: Youtube, link: "https://www.youtube.com/@samkuevc8267" },
+    { icon: <FaFacebook size={16} />, bgColor: "bg-blue-600", link: "https://www.facebook.com/share/1GiTeUp6tb/", label: "Facebook" },
+    { icon: <FaInstagram size={16} />, bgColor: "bg-pink-600", link: "https://www.instagram.com/samkuevservice?igsh=cHE1NHp2b3JmNDl4", label: "Instagram" },
+    { icon: <FaLinkedin size={16} />, bgColor: "bg-blue-700", link: "https://www.linkedin.com/in/mahesh-shingare-225151176/", label: "LinkedIn" },
+    { icon: <FaYoutube size={16} />, bgColor: "bg-red-600", link: "https://www.youtube.com/@samkuevc8267", label: "YouTube" },
   ];
 
   return (
@@ -60,34 +60,41 @@ const Footer = () => {
               Leading the electric vehicle revolution with premium service, maintenance, and charging solutions.
             </p>
             <div className="flex items-center space-x-2 bg-green-50 p-2 rounded-lg border border-green-100">
-              <Leaf className="h-6 w-6 text-green-600" />
+              <FaArrowRight className="text-green-600" />
               <span className="text-sm text-green-800 font-semibold">
                 Electric Vehicle Care
               </span>
+            </div>
+            <div className="flex space-x-3 md:space-x-4">
+              {socialLinks.map((social, index) => (
+                <a key={index} href={social.link} target="_blank" rel="noopener noreferrer" aria-label={social.label}>
+                  <div className="w-8 h-8 md:w-9 md:h-9 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:text-white hover:bg-blue-600 transition-all duration-300">
+                    {social.icon}
+                  </div>
+                </a>
+              ))}
             </div>
           </div>
 
           <div>
             <h3 className="text-lg font-semibold mb-4 md:mb-6 text-navy-700 border-b-2 border-green-500 pb-2">Quick Links</h3>
-            <ul className="grid grid-cols-2 gap-2 md:grid-cols-1 md:space-y-4">
+            <ul className="grid grid-cols-2 gap-2 md:grid-cols-2 md:gap-x-4 md:gap-y-4">
               {quickLinks.map((link) => (
-                <li key={link.name}>
+                <li key={link.name} className="flex">
                   {link.modal ? (
                     <button 
                       onClick={() => toggleModal(link.modal, true)}
-                      className="text-gray-700 hover:text-green-700 transition-colors duration-300 flex items-center text-sm md:text-base"
+                      className="text-gray-700 hover:text-green-700 transition-colors duration-300 flex items-center text-sm md:text-base md:whitespace-nowrap"
                     >
-                      <span className="w-3 h-3 bg-green-500 mr-3 rounded-full"></span>
-                      {link.name}
+                      <FaArrowRight className="text-blue-600 text-xs mr-2" /> {link.name}
                     </button>
                   ) : (
                     <Link 
                       to={link.path}
                       onClick={() => handleNavigation(link.path)}
-                      className="text-gray-700 hover:text-green-700 transition-colors duration-300 flex items-center text-sm md:text-base"
+                      className="text-gray-700 hover:text-green-700 transition-colors duration-300 flex items-center text-sm md:text-base md:whitespace-nowrap"
                     >
-                      <span className="w-3 h-3 bg-green-500 mr-3 rounded-full"></span>
-                      {link.name}
+                      <FaArrowRight className="text-blue-600 text-xs mr-2" /> {link.name}
                     </Link>
                   )}
                 </li>
@@ -98,52 +105,53 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4 md:mb-6 text-navy-500 border-b-2 border-green-400 pb-2">Contact Info</h3>
             <ul className="space-y-3 md:space-y-4 text-gray-700 text-sm md:text-base">
-              <li className="flex items-start space-x-3">
-                <MapPin className="h-5 w-5 text-green-600 flex-shrink-0 mt-1" />
+              <li className="flex items-start">
+                <FaMapMarkerAlt className="text-blue-600 mt-1 mr-2 md:mr-3 flex-shrink-0" />
                 <span className="hover:text-navy-700 transition-colors">
                   SAMKU EV POWERING PVT. LTD.<br />
-                  Vighnaharta Services Industrial Complex,<br />
-                  Charholi Khurd Road, Charholi Khurd,<br />
-                  Pune, Maharashtra, India - 412105
+                  Vighnaharta Services Industrial Complex, Charholi Khurd Road,<br />
+                  Charholi Khurd, Pune,<br />
+                  Maharashtra, India - 412105
                 </span>
               </li>
-              <li className="flex items-center space-x-3">
-                <Phone className="h-5 w-5 text-green-600" />
+              <li className="flex items-center">
+                <FaPhone className="text-blue-600 mr-2 md:mr-3 flex-shrink-0" />
                 <a href="tel:+919561137963" className="hover:text-navy-700 transition-colors">
                   +91 9561137963
                 </a>
               </li>
-              <li className="flex items-center space-x-3">
-                <Mail className="h-5 w-5 text-green-600" />
+              <li className="flex items-center">
+                <FaEnvelope className="text-blue-600 mr-2 md:mr-3 flex-shrink-0" />
                 <a href="mailto:samkuevservices@gmail.com" className="hover:text-navy-700 transition-colors">
                   samkuevservices@gmail.com
                 </a>
               </li>
             </ul>
-            <div className="mt-4 md:mt-6">
-              <h4 className="text-sm font-semibold text-navy-700 mb-2">Business Hours:</h4>
-              <p className="text-sm text-gray-700">
-                Mon-Fri: 8:00 AM - 6:00 PM<br />
-                Sat: 9:00 AM - 5:00 PM<br />
-                Sun: Closed
-              </p>
-            </div>
           </div>
 
           <div>
             <h3 className="text-lg font-semibold mb-4 md:mb-6 text-navy-700 border-b-2 border-green-500 pb-2">Connect With Us</h3>
             <div className="flex space-x-6 mt-4 justify-center md:justify-start">
-              {socialLinks.map((social, index) => (
-                <a 
-                  key={index} 
-                  href={social.link} 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-600 hover:text-green-600 transition-colors duration-300"
-                >
-                  <social.icon className="h-7 w-7" />
-                </a>
-              ))}
+              <a href="https://www.facebook.com/share/1GiTeUp6tb/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                <div className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-blue-600 hover:text-white transition-all duration-300">
+                  <FaFacebook size={16} />
+                </div>
+              </a>
+              <a href="https://www.instagram.com/samkuevservice?igsh=cHE1NHp2b3JmNDl4" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <div className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-pink-600 hover:text-white transition-all duration-300">
+                  <FaInstagram size={16} />
+                </div>
+              </a>
+              <a href="https://www.linkedin.com/in/mahesh-shingare-225151176/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <div className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-blue-700 hover:text-white transition-all duration-300">
+                  <FaLinkedin size={16} />
+                </div>
+              </a>
+              <a href="https://www.youtube.com/@samkuevc8267" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                <div className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-red-600 hover:text-white transition-all duration-300">
+                  <FaYoutube size={16} />
+                </div>
+              </a>
             </div>
             <div className="mt-4 md:mt-6 bg-green-50 p-3 rounded-lg border border-green-100 text-center">
               <p className="text-sm text-green-800 font-medium">

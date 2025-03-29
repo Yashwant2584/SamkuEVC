@@ -1,21 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ArrowRight, Battery, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const ProductCard = ({ charger }) => {
-  const [isHovered, setIsHovered] = useState(false);
-
   return (
     <div 
       className="bg-white rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:shadow-xl h-full flex flex-col"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
       <Link to={`/product/${charger.id}`} className="block relative overflow-hidden h-48">
         <img
-          src={charger.image}
+          src={charger.image[0] || 'https://via.placeholder.com/800x500?text=No+Image'}
           alt={charger.name}
-          className={`w-full h-full object-cover transition-transform duration-700 ${isHovered ? 'scale-110' : 'scale-100'}`}
+          className="w-full h-full object-cover" // Removed transition-transform and scale classes
           loading="lazy"
         />
         <div className="absolute top-0 right-0 bg-blue-600 text-white text-xs font-bold px-2 py-1 m-2 rounded">
