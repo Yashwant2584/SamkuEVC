@@ -13,37 +13,45 @@ const ProductDetails = () => {
   const [showDetails, setShowDetails] = useState(false);
   const navigate = useNavigate();
   const [displayImages, setDisplayImages] = useState([]);
+  const [currentPrice, setCurrentPrice] = useState('');
 
   const charger = chargers.find((c) => c.id === id);
 
+ 
   const updateImagesBasedOnPower = (power) => {
     if (!charger) return;
     
-    // Create a mapping of power options to first images
-    const powerToImageMap = {};
-    
-    // Map each power option to a different first image
-    charger.powerOptions.forEach((option, index) => {
-      if (index < charger.image.length) {
-        powerToImageMap[option] = charger.image[index];
-      } else {
-        powerToImageMap[option] = charger.image[0];
-      }
-    });
-    
-    // Create a new array of images with the first image based on selected power
-    const newImages = [...charger.image];
-    if (powerToImageMap[power]) {
-      newImages[0] = powerToImageMap[power];
+    // If we have powerImages mapping in our data
+    if (charger.powerImages && charger.powerImages[power]) {
+      const powerImageData = charger.powerImages[power];
+      // Combine the main image with additional images
+      setDisplayImages([
+        powerImageData.main,
+        ...(powerImageData.additional || [])
+      ]);
+    } else {
+      // Fallback to the current behavior if no power-specific images
+      setDisplayImages([...charger.image]);
     }
+  };
+
+  const updatePriceBasedOnPower = (power) => {
+    if (!charger) return;
     
-    setDisplayImages(newImages);
+    // If we have powerPrices mapping in our data
+    if (charger.powerPrices && charger.powerPrices[power]) {
+      setCurrentPrice(charger.powerPrices[power]);
+    } else {
+      // Fallback to the default price if no power-specific price
+      setCurrentPrice(charger.price);
+    }
   };
 
   const handlePowerChange = (e) => {
     const newPower = e.target.value;
     setSelectedPower(newPower);
     updateImagesBasedOnPower(newPower);
+    updatePriceBasedOnPower(newPower);
   };
 
   const handleEnquireClick = () => {
@@ -54,6 +62,7 @@ const ProductDetails = () => {
           category: charger.category,
           power: selectedPower || charger.powerOptions[0],
           ratedCurrent: selectedratedCurrent || charger.ratedCurrent[0],
+          price: currentPrice,
           id: charger.id,
         },
       }
@@ -84,6 +93,9 @@ const ProductDetails = () => {
       
       // Initialize display images based on the initial power selection
       updateImagesBasedOnPower(initialPower);
+
+      // Initialize price based on the initial power selection
+      updatePriceBasedOnPower(initialPower);
       
       setActiveImageIndex(0); // Ensure the first image is shown on load
     }
@@ -306,7 +318,7 @@ const ProductDetails = () => {
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                   <div className="flex flex-col">
                     <span className="text-sm text-gray-500">Price</span>
-                    <span className="text-3xl font-bold text-blue-600">{charger.price}</span>
+                    <span className="text-3xl font-bold text-blue-600">{currentPrice}</span>
                   </div>
                   <div className="flex gap-3">
                     <button
