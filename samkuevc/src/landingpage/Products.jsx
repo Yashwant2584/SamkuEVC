@@ -3,6 +3,12 @@ import { Link } from 'react-router-dom';
 import { chargers } from '../data/chargers.js';
 import ProductCard from '../components/ProductCard';
 import { ChevronLeft, Filter, Search } from 'lucide-react';
+import bike from '../images/C-Images/bike.png';
+import ac_charge from '../images/C-Images/ac_chargers.png';
+import dc_charge from '../images/C-Images/dc_chargers.png';
+import cycle from '../images/C-Images/cycle.png';
+import public_charge from '../images/C-Images/public_chaege.png';
+
 
 const Products = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -15,17 +21,17 @@ const Products = () => {
     {
       title: 'E-Bike Chargers',
       description: 'Efficient charging solutions for electric bikes',
-      image: '/30-DC.png'
+      image: bike
     },
     {
       title: 'AC Chargers',
       description: 'Reliable AC charging for all electric vehicles',
-      image: 'https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&q=80'
+      image: ac_charge
     },
     {
       title: 'DC Chargers',
       description: 'High-power DC fast charging solutions',
-      image: '/30-DC.png'
+      image: dc_charge
     },
     {
       title: 'EV Accessories',
@@ -35,12 +41,12 @@ const Products = () => {
     {
       title: 'Electric Cycles',
       description: 'Specialized chargers for electric cycles',
-      image: 'https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&q=80'
+      image: cycle
     },   
     {
       title: 'Public EV Chargers',
       description: 'Specialized chargers for electric cycles',
-      image: 'https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&q=80'
+      image: public_charge
     }
   ];
 
