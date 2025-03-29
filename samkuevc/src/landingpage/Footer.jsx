@@ -108,7 +108,7 @@ const Footer = () => {
               <li className="flex items-start">
                 <FaMapMarkerAlt className="text-blue-600 mt-1 mr-2 md:mr-3 flex-shrink-0" />
                 <span className="hover:text-navy-700 transition-colors">
-                  SAMKU EV POWERING PVT. LTD.<br />
+                Samku Technology & Consultancy <br />
                   Vighnaharta Services Industrial Complex, Charholi Khurd Road,<br />
                   Charholi Khurd, Pune,<br />
                   Maharashtra, India - 412105
