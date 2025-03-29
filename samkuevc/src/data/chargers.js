@@ -1,3 +1,16 @@
+import detailimages30DC from "../images/C-Images/30-DC-d.png"
+import detailimages30DC2 from "../images/C-Images/30DC2.png"
+
+import detailimages120DC from "../images/C-Images/60-120-180-DC-d.png"
+import detailimages120DC2b from "../images/C-Images/30DC2.png"
+
+import detailimages40DC from "../images/C-Images/240-DC-d.png"
+
+
+import detailimages360DC from "../images/C-Images/360-720-DC-d.png"
+import detailimages360DC2 from "../images/C-Images/30DC2.png"
+
+
 export const chargers = [
   {
     id: "li-Ion-battery-charger",
@@ -7,7 +20,7 @@ export const chargers = [
     image: ["/30-DC.png", "/img1.png", "/img2.png"],
     price: "₹7,999",
     powerOptions: ["24V", "36V", "48V", "60V", "72V"],
-    compatibility: ["CCS2", "GBT", "CHAdeMO"],
+    ratedCurrent: ["CCS2", "GBT", "CHAdeMO"],
     features: ["Dual charging ports", "Touch screen display", "Load balancing"],
     category: "E-Bike Chargers",
     colours: []
@@ -20,7 +33,7 @@ export const chargers = [
     image: ["/30-DC.png", "/img1.png", "/img2.png"],
     price: "₹7,999",
     powerOptions: ["24V", "36V", "48V", "60V", "72V"],
-    compatibility: ["CCS2", "GBT", "CHAdeMO"],
+    ratedCurrent: ["CCS2", "GBT", "CHAdeMO"],
     features: ["Dual charging ports", "Touch screen display", "Load balancing"],
     category: "E-Bike Chargers",
     colours: []
@@ -33,7 +46,7 @@ export const chargers = [
     image: ["/30-DC.png", "/img1.png", "/img2.png"],
     price: "₹699/-",
     powerOptions: ["3.3 kW", "7.4 kW"],
-    compatibility: ["Type 2"],
+    ratedCurrent: ["Type 2"],
     features: ["Wi-Fi connectivity", "Smartphone app", "Schedule charging"],
     category: "AC Chargers",
     colours: ["Green", "Orange", "Pink"]
@@ -46,7 +59,7 @@ export const chargers = [
     image: ["/30-DC.png", "/img1.png", "/img2.png"],
     price: "₹4,999",
     powerOptions: ["100kW", "150kW", "200kW"],
-    compatibility: ["CCS", "Type 2"],
+    ratedCurrent: ["CCS", "Type 2"],
     features: ["Payment terminal", "4G connectivity", "Power management"],
     category: "AC Chargers",
     colours: []
@@ -59,7 +72,7 @@ export const chargers = [
     image: ["/30-DC.png", "/img1.png", "/img2.png"],
     price: "₹399/-",
     powerOptions: ["7.4kW", "11kW", "22kW"],
-    compatibility: ["Type 1", "Type 2"],
+    ratedCurrent: ["Type 1", "Type 2"],
     features: ["Travel case", "Multiple adapters", "LED status"],
     category: "AC Chargers",
     colours: ["Pink", "Green"]
@@ -72,7 +85,7 @@ export const chargers = [
     image: ["/30-DC.png", "/img1.png", "/img2.png"],
     price: "₹2,999",
     powerOptions: ["11kW", "22kW", "43kW"],
-    compatibility: ["Type 2"],
+    ratedCurrent: ["Type 2"],
     features: ["Vandal resistant", "Public access", "RFID reader"],
     category: "AC Chargers",
     colours: []
@@ -85,7 +98,7 @@ export const chargers = [
     image: ["/30-DC.png", "/img1.png", "/img2.png"],
     price: "₹1,499",
     powerOptions: ["11kW", "22kW", "33kW"],
-    compatibility: ["Type 2"],
+    ratedCurrent: ["Type 2"],
     features: ["Smart grid integration", "Energy monitoring", "Over-the-air updates"],
     category: "AC Chargers",
     colours: []
@@ -98,7 +111,7 @@ export const chargers = [
     image: ["/30-DC.png", "/img1.png", "/img2.png"],
     price: "₹5,999",
     powerOptions: ["100kW", "150kW", "200kW"],
-    compatibility: ["CCS", "CHAdeMO"],
+    ratedCurrent: ["CCS", "CHAdeMO"],
     features: ["Fleet management software", "24/7 support", "Remote monitoring"],
     category: "AC Chargers",
     colours: []
@@ -108,10 +121,10 @@ export const chargers = [
     name: "DC Single Gun Charger",
     description: "Solar-optimized charging station for green energy integration",
     detailedDescription: "Optimized for solar power systems, this charger supports sustainable energy solutions with efficient power delivery.",
-    image: ["/30-DC.png", "/img1.png", "/img2.png"],
+    image: ["/30-DC.png",detailimages30DC2, detailimages30DC],
     price: "₹2,499",
     powerOptions: ["20kW"],
-    compatibility: ["Type 1", "Type 2", "Type 3"],
+    ratedCurrent: ["Type 1", "Type 2", "Type 3"],
     features: ["Solar integration", "Battery storage ready", "Energy export"],
     category: "DC Chargers",
     colours: []
@@ -121,10 +134,10 @@ export const chargers = [
     name: "DC Dual Gun Charger",
     description: "Ultra-fast charging station for premium locations",
     detailedDescription: "A high-performance charger designed for premium locations, offering rapid charging with advanced cooling technology.",
-    image: ["/60-120-180-DC.png", "/img1.png", "/img2.png"],
+    image: ["/60-120-180-DC.png" , detailimages120DC2b,detailimages120DC],
     price: "₹9,999",
     powerOptions: ["60kW", "120kW", "180kW"],
-    compatibility: ["CCS2", "GBT", "CHAdeMO"],
+    ratedCurrent: ["CCS2", "GBT", "CHAdeMO"],
     features: ["Premium display", "Liquid-cooled cable", "Advanced diagnostics"],
     category: "DC Chargers",
     colours: []
@@ -134,10 +147,10 @@ export const chargers = [
     name: "DC Rapid EV Charger",
     description: "Space-saving wall-mounted charging solution",
     detailedDescription: "A compact, wall-mounted charger perfect for tight spaces, delivering fast charging without compromising on power.",
-    image: ["/240-DC.png", "/img1.png", "/img2.png"],
+    image: ["/240-DC.png", detailimages120DC2b,detailimages40DC],
     price: "₹599",
     powerOptions: ["240kW"],
-    compatibility: ["CCS2", "CHAdeMO"],
+    ratedCurrent: ["CCS2", "CHAdeMO"],
     features: ["Slim design", "Easy installation", "LED status ring"],
     category: "DC Chargers",
     colours: []
@@ -147,10 +160,10 @@ export const chargers = [
     name: "DC Rapid Elite Charger",
     description: "Professional charging solution for office environments",
     detailedDescription: "Designed for workplace use, this charger offers advanced features like employee authentication and usage tracking.",
-    image: ["/360-720-DC.png", "/img1.png", "/img2.png"],
+    image: ["/360-720-DC.png",  detailimages360DC2, detailimages360DC],
     price: "₹3,499",
     powerOptions: ["360kW", "720kW"],
-    compatibility: ["CCS2", "CHAdeMO"],
+    ratedCurrent: ["CCS2", "CHAdeMO"],
     features: ["Employee authentication", "Billing integration", "Usage reports"],
     category: "DC Chargers",
     colours: []
@@ -159,11 +172,11 @@ export const chargers = [
     id: "cargo-e-bike",
     name: "Cargo E-Bike",
     description: "Versatile charging solution for various electric cycles",
-    detailedDescription: "A flexible charger for cargo e-bikes, offering reliable performance and compatibility with various cycle models.",
+    detailedDescription: "A flexible charger for cargo e-bikes, offering reliable performance and ratedCurrent with various cycle models.",
     image: ["/30-DC.png", "/img1.png", "/img2.png"],
     price: "₹199",
     powerOptions: ["1.5kW", "2kW", "3kW"],
-    compatibility: ["Standard Electric Cycle Ports"],
+    ratedCurrent: ["Standard Electric Cycle Ports"],
     features: ["Multiple adapters", "Compact design", "Energy efficient"],
     category: "Electric Cycles",
     colours: []
