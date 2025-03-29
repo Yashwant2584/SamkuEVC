@@ -9,9 +9,42 @@ const ProductDetails = () => {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [selectedPower, setSelectedPower] = useState(null);
-  const [selectedCompatibility, setSelectedCompatibility] = useState(null);
+  const [selectedratedCurrent, setSelectedratedCurrent] = useState(null);
   const [showDetails, setShowDetails] = useState(false);
   const navigate = useNavigate();
+  const [displayImages, setDisplayImages] = useState([]);
+
+  const charger = chargers.find((c) => c.id === id);
+
+  const updateImagesBasedOnPower = (power) => {
+    if (!charger) return;
+    
+    // Create a mapping of power options to first images
+    const powerToImageMap = {};
+    
+    // Map each power option to a different first image
+    charger.powerOptions.forEach((option, index) => {
+      if (index < charger.image.length) {
+        powerToImageMap[option] = charger.image[index];
+      } else {
+        powerToImageMap[option] = charger.image[0];
+      }
+    });
+    
+    // Create a new array of images with the first image based on selected power
+    const newImages = [...charger.image];
+    if (powerToImageMap[power]) {
+      newImages[0] = powerToImageMap[power];
+    }
+    
+    setDisplayImages(newImages);
+  };
+
+  const handlePowerChange = (e) => {
+    const newPower = e.target.value;
+    setSelectedPower(newPower);
+    updateImagesBasedOnPower(newPower);
+  };
 
   const handleEnquireClick = () => {
     navigate('/enquiry', { 
@@ -20,7 +53,7 @@ const ProductDetails = () => {
           name: charger.name,
           category: charger.category,
           power: selectedPower || charger.powerOptions[0],
-          compatibility: selectedCompatibility || charger.compatibility[0],
+          ratedCurrent: selectedratedCurrent || charger.ratedCurrent[0],
           id: charger.id,
         },
       }
@@ -30,8 +63,6 @@ const ProductDetails = () => {
   const handleContactSalesClick = () => {
     navigate('/contact');
   };
-
-  const charger = chargers.find((c) => c.id === id);
 
   useEffect(() => {
     setIsLoading(true);
@@ -45,13 +76,20 @@ const ProductDetails = () => {
         .filter(c => c.id !== id && c.category === charger.category)
         .slice(0, 3);
       setRelatedProducts(related);
-      setSelectedPower(charger.powerOptions[0]);
-      setSelectedCompatibility(charger.compatibility[0]);
+      
+      // Initialize selected values
+      const initialPower = charger.powerOptions[0];
+      setSelectedPower(initialPower);
+      setSelectedratedCurrent(charger.ratedCurrent[0]);
+      
+      // Initialize display images based on the initial power selection
+      updateImagesBasedOnPower(initialPower);
+      
       setActiveImageIndex(0); // Ensure the first image is shown on load
     }
 
     return () => clearTimeout(timer);
-  }, [id, charger]);
+  }, [id]);
 
   const handlePrevious = () => {
     navigate(`/product/${getPreviousProductId()}`);
@@ -70,10 +108,6 @@ const ProductDetails = () => {
     const currentIndex = chargers.findIndex(c => c.id === id);
     return currentIndex < chargers.length - 1 ? chargers[currentIndex + 1].id : chargers[0].id;
   };
-
-  const productImages = charger?.image.length > 0 
-    ? charger.image 
-    : ['https://via.placeholder.com/800x500?text=No+Image+Available'];
 
   const getColorStyle = (color) => {
     const colorMap = {
@@ -128,12 +162,12 @@ const ProductDetails = () => {
             <div className="bg-gray-100">
               <div className="relative">
                 <img
-                  src={productImages[activeImageIndex]}
+                  src={displayImages[activeImageIndex]}
                   alt={`${charger.name} - Image ${activeImageIndex + 1}`}
                   className="w-full h-[300px] sm:h-[400px] md:h-[450px] lg:h-[500px] object-contain p-4"
                 />
                 <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
-                  {productImages.map((_, index) => (
+                  {displayImages.map((_, index) => (
                     <button
                       key={index}
                       onClick={() => setActiveImageIndex(index)}
@@ -152,7 +186,7 @@ const ProductDetails = () => {
                 </div>
               </div>
               <div className="flex justify-center gap-2 p-4 border-t">
-                {productImages.map((img, index) => (
+                {displayImages.map((img, index) => (
                   <button
                     key={index}
                     onClick={() => setActiveImageIndex(index)}
@@ -180,7 +214,7 @@ const ProductDetails = () => {
                       {charger.powerOptions.length > 1 ? (
                         <select
                           value={selectedPower}
-                          onChange={(e) => setSelectedPower(e.target.value)}
+                          onChange={handlePowerChange}
                           className="mt-1 block w-full rounded-lg border border-gray-200 bg-white py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-200 appearance-none"
                         >
                           {charger.powerOptions.map((power, index) => (
@@ -196,19 +230,19 @@ const ProductDetails = () => {
                   <div className="flex items-start gap-3">
                     <Battery className="text-blue-600 flex-shrink-0" size={22} />
                     <div className="w-full">
-                      <h3 className="font-semibold text-sm text-gray-500">Compatibility</h3>
-                      {charger.compatibility.length > 1 ? (
+                      <h3 className="font-semibold text-sm text-gray-500">Rated Current</h3>
+                      {charger.ratedCurrent.length > 1 ? (
                         <select
-                          value={selectedCompatibility}
-                          onChange={(e) => setSelectedCompatibility(e.target.value)}
+                          value={selectedratedCurrent}
+                          onChange={(e) => setSelectedratedCurrent(e.target.value)}
                           className="mt-1 block w-full rounded-lg border border-gray-200 bg-white py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-200 appearance-none"
                         >
-                          {charger.compatibility.map((comp, index) => (
+                          {charger.ratedCurrent.map((comp, index) => (
                             <option key={index} value={comp}>{comp}</option>
                           ))}
                         </select>
                       ) : (
-                        <p className="mt-1 font-medium text-gray-700">{charger.compatibility[0]}</p>
+                        <p className="mt-1 font-medium text-gray-700">{charger.ratedCurrent[0]}</p>
                       )}
                     </div>
                   </div>
