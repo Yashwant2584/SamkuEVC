@@ -30,7 +30,7 @@ const Products = () => {
     {
       title: 'EV Accessories',
       description: 'Essential accessories for your EV charging needs',
-      image: 'https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&q=80'
+      image: '/accessories.jpg'
     },
     {
       title: 'Electric Cycles',

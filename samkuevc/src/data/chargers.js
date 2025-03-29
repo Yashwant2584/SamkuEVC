@@ -167,5 +167,44 @@ export const chargers = [
     features: ["Multiple adapters", "Compact design", "Energy efficient"],
     category: "Electric Cycles",
     colours: []
+  },
+  {
+    id: "type-02-charging-gun",
+    name: "Type-02 Charging Gun",
+    description: "The Type-02 Charging Gun is a versatile and reliable charging solution designed for efficient and safe charging across various e-bike models",
+    detailedDescription: "Crafted for compatibility with standard electric bicycle charging ports, the Type-02 Charging Gun offers a seamless charging experience. Its compact and ergonomic design allows for easy handling and storage, while the inclusion of multiple adapters ensures broad compatibility with different e-bike models. Built with safety in mind, this charging gun incorporates features such as overvoltage and overcurrent protection, safeguarding both the charger and the e-bike's battery during the charging process.",
+    image: ["/type 2.webp", "/type 2 2.jpg"],
+    price: "₹199",
+    powerOptions: [],
+    compatibility: ["Standard Electric Cycle Ports"],
+    features: ["Multiple adapters", "Compact and Lightweight Design", "Energy efficient", "Safety Protections"],
+    category: "EV Accessories",
+    colours: []
+  },
+  {
+    id: "type-06-charging-gun",
+    name: "Type-06 Charging Gun",
+    description: "​The Type-06 Charging Gun is a robust and efficient charging solution tailored for electric two- and three-wheelers, ensuring rapid and safe charging across various compatible models.",
+    detailedDescription: "Designed in compliance with the IEC 62196-6 standard, the Type-06 Charging Gun supports DC fast charging with a rated voltage of up to 120V and current options ranging from 60A to 120A. Its compact and ergonomic design facilitates easy handling and storage, making it suitable for both personal and commercial use. The charging gun incorporates advanced safety features, including overvoltage, overcurrent, and short-circuit protection, ensuring a secure charging experience.",
+    image: ["/type 6.webp", "/type 06.webp"],
+    price: "₹199",
+    powerOptions: [],
+    compatibility: ["Standard Electric Cycle Ports"],
+    features: ["High Current Capacity", "Durable Build", "Waterproof Design", "Safety Protections"],
+    category: "EV Accessories",
+    colours: []
+  },
+  {
+    id: "type-07-charging-gun",
+    name: "Type-07 Charging Gun",
+    description: "​The Type-07 Charging Gun is a versatile and efficient charging solution designed for reliable performance and broad compatibility across various e-bike models.",
+    detailedDescription: "Engineered to support charging capacities ranging from 1kW to 7kW with a charging current of 32A, the Type-07 Charging Gun accommodates diverse charging needs. Its compact and ergonomic design facilitates easy handling and storage, making it suitable for both personal and commercial use. The charging gun incorporates advanced safety features, including overvoltage, overcurrent, and short-circuit protection, ensuring a secure charging experience.​",
+    image: ["/type 7.jpg"],
+    price: "₹199",
+    powerOptions: [],
+    compatibility: ["Standard Electric Cycle Ports"],
+    features: ["High Power Capacity", "Durable Build", "Energy efficient", "Safety Protections"],
+    category: "EV Accessories",
+    colours: []
   }
 ];
