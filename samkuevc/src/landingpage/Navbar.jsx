@@ -34,7 +34,7 @@ const Navbar = () => {
           <div className="flex items-center">
             <div className="flex items-center">
               <img src={logo} alt="SamkuEvc Logo" className="w-9.5 h-9.5 mr-2" />
-              <img src={name} alt="SamkuEVC" className="w-35 h-15 mr-2 cursor-pointer" />
+              <img src={name} alt="SamkuEVC" className="w-38 h-20 mr-2 cursor-pointer" />
             </div>
           </div>
 

@@ -576,7 +576,7 @@ const ChargingStationApplication = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 py-8 px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <div ref={formRef} className="bg-white shadow-2xl rounded-2xl p-8 relative">
+        <div ref={formRef} className="bg-white shadow-2xl mt-11 rounded-2xl p-8 relative">
           {/* Close button */}
           <button
             onClick={() => navigate(-1)}
@@ -586,7 +586,7 @@ const ChargingStationApplication = () => {
           </button>
 
           {/* Header - Enhanced styling */}
-          <div className="flex items-center justify-between mb-8 border-b border-gray-100 pb-6">
+          <div className="flex items-center justify-between  mb-8 border-b border-gray-100 pb-6">
             <div className="flex items-center space-x-6">
               <img src={logo} alt="SAMKU SERVICE Logo" className="h-14 object-contain" />
               <div>
