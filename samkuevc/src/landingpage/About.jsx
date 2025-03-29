@@ -212,7 +212,7 @@ const About = () => {
           </div>
         </section>
 
-        {/* Team Section */}
+        {/* Team Section 
         <section>
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-blue-800 inline-block relative">
@@ -267,7 +267,8 @@ const About = () => {
               </motion.div>
             ))}
           </div>
-        </section>
+        </section >*/}
+        
       </div>
     </div>
   );
