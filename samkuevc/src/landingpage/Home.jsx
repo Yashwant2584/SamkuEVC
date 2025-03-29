@@ -4,12 +4,13 @@ import { motion } from 'framer-motion';
 import { ChevronRight, Zap, Battery, Shield } from 'lucide-react';
 import Marquee from '../components/Marquee';
 import ImgMOB3 from '../images/ImgMob3.png';
-// import WhatsAppButton from '../landingpage/WhatsAppButton';
+import WhatsAppButton from '../landingpage/WhatsAppButton';
 
 
 const Home = () => {
   return (
     <div className="bg-gradient-to-b from-gray-50 to-white">
+      <WhatsAppButton />
       <section className="relative min-h-screen">
         {/* Desktop Video */}
         <div className="hidden md:block absolute inset-0">

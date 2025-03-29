@@ -300,6 +300,68 @@ def get_careers():
         return jsonify(applications), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+
+# Update Status Endpoints
+@app.route('/api/admin/<collection>/<id>', methods=['PUT'])
+def update_application_status(collection, id):
+    try:
+        data = request.get_json()
+        status = data.get('status')
+        
+        valid_collections = {
+            'careers': careers_collection,
+            'franchises': service_centers_collection,
+            'charging-stations': charging_stations_collection,
+            'enquiries': enquiry_collection,
+            'contacts': contact_collection
+        }
+        
+        if collection not in valid_collections:
+            return jsonify({"error": "Invalid collection"}), 400
+            
+        if status not in ['Pending', 'Accepted', 'Rejected']:
+            return jsonify({"error": "Invalid status"}), 400
+
+        result = valid_collections[collection].update_one(
+            {'_id': ObjectId(id)},
+            {'$set': {
+                'status': status,
+                'updatedAt': datetime.utcnow()
+            }}
+        )
+        
+        if result.modified_count:
+            return jsonify({"message": "Status updated successfully"}), 200
+        return jsonify({"error": "Application not found"}), 404
+        
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+# Add GET endpoints for missing collections
+@app.route('/api/admin/franchises', methods=['GET'])
+def get_franchises():
+    try:
+        applications = list(service_centers_collection.find().sort('createdAt', -1))
+        for app in applications:
+            app['_id'] = str(app['_id'])
+            app['createdAt'] = app['createdAt'].isoformat()
+            app['updatedAt'] = app['updatedAt'].isoformat()
+        return jsonify(applications), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/admin/charging-stations', methods=['GET'])
+def get_charging_stations():
+    try:
+        applications = list(charging_stations_collection.find().sort('createdAt', -1))
+        for app in applications:
+            app['_id'] = str(app['_id'])
+            app['createdAt'] = app['createdAt'].isoformat()
+            app['updatedAt'] = app['updatedAt'].isoformat()
+        return jsonify(applications), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)

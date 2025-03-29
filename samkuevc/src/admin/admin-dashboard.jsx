@@ -1,521 +1,433 @@
-import React, { useState, useEffect } from "react";
-import {
-  FaChartLine,
-  FaShoppingCart,
-  FaFileInvoiceDollar,
-  FaBoxes,
-  FaWarehouse,
-  FaBox,
-  FaCalendarCheck,
-  FaBell,
-  FaChargingStation,
-  FaTools,
-  FaUserTie,
-} from "react-icons/fa";
-import { IoMdArrowDropdown, IoMdArrowDropright } from 'react-icons/io';
-// import NewItem from '../components/NewItem';
-import Recruitment from "./recruitment";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const Dashboard = () => {
-  const [openDropdown, setOpenDropdown] = useState(null);
-  const [activeContent, setActiveContent] = useState('dashboard');
-  const [isAddingItem, setIsAddingItem] = useState(false);
-  const [notifications, setNotifications] = useState(3);
+const AdminDashboard = () => {
+  const [activeSection, setActiveSection] = useState('careers');
+  const [data, setData] = useState({
+    careers: [],
+    franchises: [],
+    chargingStations: [],
+    enquiries: [],
+    contacts: []
+  });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [selectedApplication, setSelectedApplication] = useState(null);
 
-  const toggleDropdown = (dropdown) => {
-    if (openDropdown === dropdown) {
-      setOpenDropdown(null);
-    } else {
-      setOpenDropdown(dropdown);
+  // Define the API base URL - adjust based on your backend location
+  // Update this to match your backend server URL
+  const API_BASE_URL = 'http://localhost:5000'; // Change this to your actual backend URL
+
+  useEffect(() => {
+    fetchAllData();
+  }, []);
+
+  const fetchAllData = async () => {
+    setLoading(true);
+    setError(null);
+    
+    try {
+      // Fetch the data sequentially to avoid breaking if some endpoints are missing
+      const dataMap = {
+        careers: [],
+        franchises: [],
+        chargingStations: [],
+        enquiries: [],
+        contacts: []
+      };
+
+      try {
+        console.log('Fetching careers data...');
+        const careersRes = await axios.get(`${API_BASE_URL}/api/admin/careers`);
+        console.log('Careers data:', careersRes.data);
+        dataMap.careers = careersRes.data || [];
+      } catch (error) {
+        console.error('Could not fetch careers data:', error.response || error.message);
+      }
+
+      try {
+        console.log('Fetching franchises data...');
+        const franchisesRes = await axios.get(`${API_BASE_URL}/api/admin/franchises`);
+        console.log('Franchises data:', franchisesRes.data);
+        dataMap.franchises = franchisesRes.data || [];
+      } catch (franchiseError) {
+        console.error('Could not fetch franchises data, trying service-centers:', franchiseError.response || franchiseError.message);
+        
+        // If franchises fails, try service-centers as an alternative
+        try {
+          const serviceCentersRes = await axios.get(`${API_BASE_URL}/api/admin/service-centers`);
+          console.log('Service centers data:', serviceCentersRes.data);
+          dataMap.franchises = serviceCentersRes.data || [];
+        } catch (scError) {
+          console.error('Could not fetch service-centers data either:', scError.response || scError.message);
+        }
+      }
+
+      try {
+        console.log('Fetching charging stations data...');
+        const chargingRes = await axios.get(`${API_BASE_URL}/api/admin/charging-stations`);
+        console.log('Charging stations data:', chargingRes.data);
+        dataMap.chargingStations = chargingRes.data || [];
+      } catch (error) {
+        console.error('Could not fetch charging-stations data:', error.response || error.message);
+      }
+
+      try {
+        console.log('Fetching enquiries data...');
+        const enquiriesRes = await axios.get(`${API_BASE_URL}/api/admin/enquiries`);
+        console.log('Enquiries data:', enquiriesRes.data);
+        dataMap.enquiries = enquiriesRes.data || [];
+      } catch (error) {
+        console.error('Could not fetch enquiries data:', error.response || error.message);
+      }
+
+      try {
+        console.log('Fetching contacts data...');
+        const contactsRes = await axios.get(`${API_BASE_URL}/api/admin/contacts`);
+        console.log('Contacts data:', contactsRes.data);
+        dataMap.contacts = contactsRes.data || [];
+      } catch (error) {
+        console.error('Could not fetch contacts data:', error.response || error.message);
+      }
+
+      // Ensure all data arrays are properly initialized
+      Object.keys(dataMap).forEach(key => {
+        if (!Array.isArray(dataMap[key])) {
+          dataMap[key] = [];
+        }
+      });
+
+      console.log('Final data map:', dataMap);
+      
+      // Update the state with whatever data we could fetch
+      setData(dataMap);
+      
+      // If all sections are empty, display error message
+      const totalItems = Object.values(dataMap).reduce((sum, arr) => sum + arr.length, 0);
+      if (totalItems === 0) {
+        setError('No data could be retrieved from the server. Please check your backend configuration and network connection.');
+      }
+      
+    } catch (error) {
+      console.error('Error in fetch operation:', error);
+      setError('Failed to fetch data. Please check your connection and try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
-  const setContent = (content) => {
-    setActiveContent(content);
-    setIsAddingItem(false);
+  const handleStatusUpdate = async (id, section, status) => {
+    try {
+      console.log(`Updating ${section} item ${id} to status: ${status}`);
+      
+      // Mapping of frontend sections to backend API endpoints
+      const sectionToEndpoint = {
+        careers: 'careers',
+        franchises: 'franchises', // Try the same name first
+        chargingStations: 'charging-stations',
+        enquiries: 'enquiries',
+        contacts: 'contacts'
+      };
+
+      // Try updating with the mapped endpoint
+      try {
+        const response = await axios.put(
+          `${API_BASE_URL}/api/admin/${sectionToEndpoint[section]}/${id}`, 
+          { status },
+          { headers: { 'Content-Type': 'application/json' } }
+        );
+        console.log('Update response:', response.data);
+      } catch (err) {
+        console.error('Error in first update attempt:', err.response || err.message);
+        
+        // If franchises fails, try service-centers
+        if (section === 'franchises') {
+          const response = await axios.put(
+            `${API_BASE_URL}/api/admin/service-centers/${id}`, 
+            { status },
+            { headers: { 'Content-Type': 'application/json' } }
+          );
+          console.log('Update response (service-centers):', response.data);
+        } else {
+          throw err;
+        }
+      }
+      
+      // Refresh data after successful update
+      fetchAllData();
+    } catch (error) {
+      console.error('Error updating status:', error.response || error.message);
+      alert(`Failed to update status: ${error.response?.data?.error || error.message}`);
+    }
   };
 
-  const handleAddNewItem = () => {
-    setIsAddingItem(true);
-  };
-
-  const handleCancelAddItem = () => {
-    setIsAddingItem(false);
-  };
-
-  const stockData = [
-    { id: 1, itemCode: 'EV001', itemName: 'Charging Cable Type 2', category: 'Cables', quantity: 25, unit: 'Pcs', rate: 1200 },
-    { id: 2, itemCode: 'EV002', itemName: 'Wall Charger 7.4kW', category: 'Chargers', quantity: 15, unit: 'Pcs', rate: 8500 },
-    { id: 3, itemCode: 'EV003', itemName: 'Portable Charger 3.3kW', category: 'Chargers', quantity: 10, unit: 'Pcs', rate: 4500 },
-    { id: 4, itemCode: 'EV004', itemName: 'Charging Station Mount', category: 'Accessories', quantity: 30, unit: 'Pcs', rate: 2200 },
-    { id: 5, itemCode: 'EV005', itemName: 'EV Battery Pack', category: 'Batteries', quantity: 5, unit: 'Pcs', rate: 35000 },
+  const sidebarItems = [
+    { id: 'careers', label: 'Careers', count: Array.isArray(data.careers) ? data.careers.length : 0 },
+    { id: 'franchises', label: 'Franchises', count: Array.isArray(data.franchises) ? data.franchises.length : 0 },
+    { id: 'chargingStations', label: 'Charging Stations', count: Array.isArray(data.chargingStations) ? data.chargingStations.length : 0 },
+    { id: 'enquiries', label: 'Enquiries', count: Array.isArray(data.enquiries) ? data.enquiries.length : 0 },
+    { id: 'contacts', label: 'Contacts', count: Array.isArray(data.contacts) ? data.contacts.length : 0 },
   ];
 
-  const renderContent = () => {
-    if (isAddingItem) {
-      return <NewItem onCancel={handleCancelAddItem} />;
-    }
-
-    switch (activeContent) {
-      case 'dashboard':
-        return (
-          <div className="p-6">
-            <h2 className="text-2xl font-bold mb-6">Admin Dashboard Overview</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="bg-blue-100 p-4 rounded-lg shadow">
-                <h3 className="text-lg font-semibold mb-2">Total Sales</h3>
-                <p className="text-3xl font-bold">₹125,000</p>
-                <p className="text-sm text-green-600">+15% from last month</p>
-              </div>
-              <div className="bg-green-100 p-4 rounded-lg shadow">
-                <h3 className="text-lg font-semibold mb-2">Total Inventory</h3>
-                <p className="text-3xl font-bold">85 items</p>
-                <p className="text-sm text-blue-600">5 categories</p>
-              </div>
-              <div className="bg-purple-100 p-4 rounded-lg shadow">
-                <h3 className="text-lg font-semibold mb-2">Recent Orders</h3>
-                <p className="text-3xl font-bold">24</p>
-                <p className="text-sm text-orange-600">12 pending</p>
-              </div>
-            </div>
-          </div>
-        );
-      case 'salesInvoice':
-        return (
-          <div className="p-6">
-            <h2 className="text-2xl font-bold mb-6">Sales Invoice</h2>
-            <div className="bg-white rounded-lg shadow p-4">
-              <div className="mb-4">
-                <input 
-                  type="text" 
-                  placeholder="Search invoices..." 
-                  className="w-full p-2 border rounded"
-                />
-              </div>
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Invoice #</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  <tr>
-                    <td className="px-6 py-4 whitespace-nowrap">INV-001</td>
-                    <td className="px-6 py-4 whitespace-nowrap">John Doe</td>
-                    <td className="px-6 py-4 whitespace-nowrap">2023-03-15</td>
-                    <td className="px-6 py-4 whitespace-nowrap">₹12,500</td>
-                    <td className="px-6 py-4 whitespace-nowrap"><span className="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">Paid</span></td>
-                  </tr>
-                  <tr>
-                    <td className="px-6 py-4 whitespace-nowrap">INV-002</td>
-                    <td className="px-6 py-4 whitespace-nowrap">Jane Smith</td>
-                    <td className="px-6 py-4 whitespace-nowrap">2023-03-14</td>
-                    <td className="px-6 py-4 whitespace-nowrap">₹8,750</td>
-                    <td className="px-6 py-4 whitespace-nowrap"><span className="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs">Pending</span></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        );
-      case 'purchaseInvoice':
-        return (
-          <div className="p-6">
-            <h2 className="text-2xl font-bold mb-6">Purchase Invoice</h2>
-            <div className="bg-white rounded-lg shadow p-4">
-              <div className="mb-4">
-                <input 
-                  type="text" 
-                  placeholder="Search purchase invoices..." 
-                  className="w-full p-2 border rounded"
-                />
-              </div>
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Invoice #</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Supplier</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  <tr>
-                    <td className="px-6 py-4 whitespace-nowrap">PUR-001</td>
-                    <td className="px-6 py-4 whitespace-nowrap">EV Supplies Ltd.</td>
-                    <td className="px-6 py-4 whitespace-nowrap">2023-03-10</td>
-                    <td className="px-6 py-4 whitespace-nowrap">₹45,000</td>
-                    <td className="px-6 py-4 whitespace-nowrap"><span className="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">Received</span></td>
-                  </tr>
-                  <tr>
-                    <td className="px-6 py-4 whitespace-nowrap">PUR-002</td>
-                    <td className="px-6 py-4 whitespace-nowrap">Charging Solutions Inc.</td>
-                    <td className="px-6 py-4 whitespace-nowrap">2023-03-05</td>
-                    <td className="px-6 py-4 whitespace-nowrap">₹32,800</td>
-                    <td className="px-6 py-4 whitespace-nowrap"><span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">In Transit</span></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        );
-      case 'stock':
-        return (
-          <div className="p-6">
-            <h2 className="text-2xl font-bold mb-6">Stock Management</h2>
-            <div className="bg-white rounded-lg shadow">
-              <div className="p-4 flex justify-between items-center border-b">
-                <div>
-                  <h3 className="text-lg font-semibold">Current Stock</h3>
-                  <p className="text-sm text-gray-500">Manage your inventory items</p>
-                </div>
-                <button 
-                  className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-                  onClick={handleAddNewItem}
-                >
-                  + Add New Item
-                </button>
-              </div>
-              
-              <div className="p-4 flex flex-wrap gap-4 border-b">
-                <div className="flex-1 min-w-[200px]">
-                  <input 
-                    type="text" 
-                    placeholder="Search items..." 
-                    className="w-full p-2 border rounded"
-                  />
-                </div>
-                <div className="flex-1 min-w-[200px]">
-                  <select className="w-full p-2 border rounded">
-                    <option value="">All Categories</option>
-                    <option value="cables">Cables</option>
-                    <option value="chargers">Chargers</option>
-                    <option value="accessories">Accessories</option>
-                    <option value="batteries">Batteries</option>
-                  </select>
-                </div>
-                <div className="flex-1 min-w-[200px]">
-                  <select className="w-full p-2 border rounded">
-                    <option value="">Sort By</option>
-                    <option value="name">Name</option>
-                    <option value="quantity">Quantity</option>
-                    <option value="price">Price</option>
-                  </select>
-                </div>
-              </div>
-              
-              <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Item Code</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Item Name</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Unit</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rate (₹)</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
-                    {stockData.map((item) => (
-                      <tr key={item.id}>
-                        <td className="px-6 py-4 whitespace-nowrap">{item.itemCode}</td>
-                        <td className="px-6 py-4 whitespace-nowrap">{item.itemName}</td>
-                        <td className="px-6 py-4 whitespace-nowrap">{item.category}</td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span className={`px-2 py-1 rounded-full text-xs ${
-                            item.quantity > 20 ? 'bg-green-100 text-green-800' : 
-                            item.quantity > 10 ? 'bg-yellow-100 text-yellow-800' : 
-                            'bg-red-100 text-red-800'
-                          }`}>
-                            {item.quantity}
-                          </span>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">{item.unit}</td>
-                        <td className="px-6 py-4 whitespace-nowrap">₹{item.rate.toLocaleString()}</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm">
-                          <button className="text-blue-600 hover:text-blue-900 mr-3">Edit</button>
-                          <button className="text-red-600 hover:text-red-900">Delete</button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              
-              <div className="p-4 border-t flex justify-between items-center">
-                <div className="text-sm text-gray-500">
-                  Showing {stockData.length} of {stockData.length} items
-                </div>
-                <div className="flex gap-2">
-                  <button className="px-3 py-1 border rounded bg-gray-50 text-gray-600">Previous</button>
-                  <button className="px-3 py-1 border rounded bg-blue-600 text-white">1</button>
-                  <button className="px-3 py-1 border rounded bg-gray-50 text-gray-600">Next</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        );
-      case 'item':
-        return (
-          <div className="p-6">
-            <h2 className="text-2xl font-bold mb-6">Item Management</h2>
-            <div className="bg-white rounded-lg shadow p-4">
-              <div className="mb-4 flex justify-between">
-                <h3 className="text-lg font-semibold">Item List</h3>
-                <button 
-                  className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-                  onClick={handleAddNewItem}
-                >
-                  + Add New Item
-                </button>
-              </div>
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Item Code</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Item Name</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Unit</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rate (₹)</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {stockData.map((item) => (
-                    <tr key={item.id}>
-                      <td className="px-6 py-4 whitespace-nowrap">{item.itemCode}</td>
-                      <td className="px-6 py-4 whitespace-nowrap">{item.itemName}</td>
-                      <td className="px-6 py-4 whitespace-nowrap">{item.category}</td>
-                      <td className="px-6 py-4 whitespace-nowrap">{item.unit}</td>
-                      <td className="px-6 py-4 whitespace-nowrap">₹{item.rate.toLocaleString()}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm">
-                        <button className="text-blue-600 hover:text-blue-900 mr-3">Edit</button>
-                        <button className="text-red-600 hover:text-red-900">Delete</button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        );
-      case 'chargingStations':
-        return <Recruitment />;
-      case 'franchises':
-        return <Recruitment />;
-      case 'careers':
-        return <Recruitment />;
-      default:
-        return (
-          <div className="p-6">
-            <h2 className="text-2xl font-bold">Select an option from the sidebar</h2>
-          </div>
-        );
+  const getFormattedDate = (dateString) => {
+    if (!dateString) return 'N/A';
+    
+    try {
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) return dateString; // Return original if invalid date
+      return date.toLocaleString();
+    } catch (error) {
+      console.error('Error formatting date:', error);
+      return dateString;
     }
   };
 
-  return (
-    <div className="flex h-screen bg-gray-100 font-['Roboto',sans-serif]">
-      {/* Left Sidebar */}
-      <div className="w-64 bg-gradient-to-b from-gray-900 to-gray-800 text-white shadow-lg fixed h-screen overflow-hidden">
-        <div className="p-4 border-b border-gray-700/50 flex justify-between items-center">
-          <h1 className="text-xl font-bold bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
-            Admin Panel
-          </h1>
-          <div className="relative">
-            <button className="p-2 rounded-full hover:bg-gray-700 transition-colors duration-200">
-              <FaBell className="text-lg" />
-              {notifications > 0 && (
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
-                  {notifications}
-                </span>
-              )}
-            </button>
-          </div>
+  const getSafeValue = (obj, path, defaultValue = 'N/A') => {
+    if (!obj) return defaultValue;
+    
+    try {
+      const parts = path.split('.');
+      let value = obj;
+      
+      for (const part of parts) {
+        value = value?.[part];
+        if (value === undefined || value === null) return defaultValue;
+      }
+      
+      return value;
+    } catch (error) {
+      console.error(`Error getting value at path ${path}:`, error);
+      return defaultValue;
+    }
+  };
+
+  const renderCardContent = (item, section) => {
+    if (!item) return null;
+    
+    switch (section) {
+      case 'careers':
+        return (
+          <>
+            <p><strong>Name:</strong> {getSafeValue(item, 'fullName')}</p>
+            <p><strong>Email:</strong> {getSafeValue(item, 'email')}</p>
+            <p><strong>Phone:</strong> {getSafeValue(item, 'phone')}</p>
+            <p><strong>Position:</strong> {getSafeValue(item, 'position')}</p>
+            <p><strong>Status:</strong> <span className={getStatusClass(getSafeValue(item, 'status'))}>{getSafeValue(item, 'status')}</span></p>
+            <p><strong>Applied:</strong> {getFormattedDate(getSafeValue(item, 'createdAt'))}</p>
+          </>
+        );
+      case 'franchises':
+      case 'chargingStations':
+        return (
+          <>
+            <p><strong>Name:</strong> {getSafeValue(item, 'personalInfo.fullName')}</p>
+            <p><strong>Email:</strong> {getSafeValue(item, 'personalInfo.email')}</p>
+            <p><strong>Phone:</strong> {getSafeValue(item, 'personalInfo.phone')}</p>
+            <p><strong>Location:</strong> {getSafeValue(item, 'businessInfo.preferredLocation')}</p>
+            <p><strong>Status:</strong> <span className={getStatusClass(getSafeValue(item, 'status'))}>{getSafeValue(item, 'status')}</span></p>
+            <p><strong>Applied:</strong> {getFormattedDate(getSafeValue(item, 'createdAt'))}</p>
+          </>
+        );
+      case 'enquiries':
+        return (
+          <>
+            <p><strong>Name:</strong> {getSafeValue(item, 'name')}</p>
+            <p><strong>Email:</strong> {getSafeValue(item, 'email')}</p>
+            {getSafeValue(item, 'phone') !== 'N/A' && <p><strong>Phone:</strong> {getSafeValue(item, 'phone')}</p>}
+            {getSafeValue(item, 'product') !== 'N/A' && <p><strong>Product:</strong> {getSafeValue(item, 'product')}</p>}
+            <p><strong>Status:</strong> <span className={getStatusClass(getSafeValue(item, 'status'))}>{getSafeValue(item, 'status')}</span></p>
+            <p><strong>Date:</strong> {getFormattedDate(getSafeValue(item, 'createdAt'))}</p>
+          </>
+        );
+      case 'contacts':
+        return (
+          <>
+            <p><strong>Name:</strong> {getSafeValue(item, 'name')}</p>
+            <p><strong>Email:</strong> {getSafeValue(item, 'email')}</p>
+            {getSafeValue(item, 'subject') !== 'N/A' && <p><strong>Subject:</strong> {getSafeValue(item, 'subject')}</p>}
+            <p><strong>Status:</strong> <span className={getStatusClass(getSafeValue(item, 'status'))}>{getSafeValue(item, 'status')}</span></p>
+            <p><strong>Date:</strong> {getFormattedDate(getSafeValue(item, 'createdAt'))}</p>
+          </>
+        );
+      default:
+        return null;
+    }
+  };
+
+  const getStatusClass = (status) => {
+    switch (status) {
+      case 'Accepted':
+        return 'text-green-600 font-semibold';
+      case 'Rejected':
+        return 'text-red-600 font-semibold';
+      default:
+        return 'text-yellow-600 font-semibold';
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex h-screen items-center justify-center bg-gray-100">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-900 mx-auto"></div>
+          <p className="mt-4 text-lg">Loading dashboard data...</p>
         </div>
-        <nav className="mt-4">
-          <ul>
-            <li className="mb-1">
-              <button
-                className={`flex items-center w-full px-4 py-2 text-left ${
-                  activeContent === "dashboard" ? "bg-blue-600" : "hover:bg-gray-700"
-                }`}
-                onClick={() => setContent("dashboard")}
-              >
-                <FaChartLine className="mr-2" />
-                <span>Dashboard</span>
-              </button>
-            </li>
+      </div>
+    );
+  }
 
-            <li className="mb-1">
-              <button
-                className={`flex items-center justify-between w-full px-4 py-2 text-left hover:bg-gray-700`}
-                onClick={() => toggleDropdown("sales")}
-              >
-                <div className="flex items-center">
-                  <FaFileInvoiceDollar className="mr-2" />
-                  <span>Sales</span>
-                </div>
-                {openDropdown === "sales" ? <IoMdArrowDropdown /> : <IoMdArrowDropright />}
-              </button>
-              {openDropdown === "sales" && (
-                <ul className="bg-gray-700 py-1">
-                  <li>
-                    <button
-                      className={`flex items-center w-full px-8 py-2 text-left text-sm ${
-                        activeContent === "salesInvoice" ? "bg-blue-600" : "hover:bg-gray-600"
-                      }`}
-                      onClick={() => setContent("salesInvoice")}
-                    >
-                      Sales Invoice
-                    </button>
-                  </li>
-                </ul>
-              )}
-            </li>
+  if (error) {
+    return (
+      <div className="flex h-screen items-center justify-center bg-gray-100">
+        <div className="text-center p-8 bg-white rounded-lg shadow-lg">
+          <h2 className="text-2xl font-bold text-red-600 mb-4">Error Loading Data</h2>
+          <p className="mb-4">{error}</p>
+          <button 
+            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+            onClick={fetchAllData}
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
 
-            <li className="mb-1">
-              <button
-                className={`flex items-center justify-between w-full px-4 py-2 text-left hover:bg-gray-700`}
-                onClick={() => toggleDropdown("purchase")}
-              >
-                <div className="flex items-center">
-                  <FaShoppingCart className="mr-2" />
-                  <span>Purchase</span>
-                </div>
-                {openDropdown === "purchase" ? <IoMdArrowDropdown /> : <IoMdArrowDropright />}
-              </button>
-              {openDropdown === "purchase" && (
-                <ul className="bg-gray-700 py-1">
-                  <li>
-                    <button
-                      className={`flex items-center w-full px-8 py-2 text-left text-sm ${
-                        activeContent === "purchaseInvoice" ? "bg-blue-600" : "hover:bg-gray-600"
-                      }`}
-                      onClick={() => setContent("purchaseInvoice")}
-                    >
-                      Purchase Invoice
-                    </button>
-                  </li>
-                </ul>
-              )}
+  return (
+    <div className="flex h-screen bg-gray-100">
+      {/* Sidebar */}
+      <div className="w-64 bg-blue-900 text-white p-5">
+        <h2 className="text-2xl font-bold mb-6">Admin Dashboard</h2>
+        <ul>
+          {sidebarItems.map(item => (
+            <li
+              key={item.id}
+              className={`mb-4 p-2 rounded cursor-pointer ${activeSection === item.id ? 'bg-blue-700' : 'hover:bg-blue-800'}`}
+              onClick={() => setActiveSection(item.id)}
+            >
+              {item.label} ({item.count})
             </li>
-
-            <li className="mb-1">
-              <button
-                className={`flex items-center justify-between w-full px-4 py-2 text-left hover:bg-gray-700`}
-                onClick={() => toggleDropdown("inventory")}
-              >
-                <div className="flex items-center">
-                  <FaBoxes className="mr-2" />
-                  <span>Inventory</span>
-                </div>
-                {openDropdown === "inventory" ? <IoMdArrowDropdown /> : <IoMdArrowDropright />}
-              </button>
-              {openDropdown === "inventory" && (
-                <ul className="bg-gray-700 py-1">
-                  <li>
-                    <button
-                      className={`flex items-center w-full px-8 py-2 text-left text-sm ${
-                        activeContent === "stock" ? "bg-blue-600" : "hover:bg-gray-600"
-                      }`}
-                      onClick={() => setContent("stock")}
-                    >
-                      <FaWarehouse className="mr-2" />
-                      Stock
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      className={`flex items-center w-full px-8 py-2 text-left text-sm ${
-                        activeContent === "item" ? "bg-blue-600" : "hover:bg-gray-600"
-                      }`}
-                      onClick={() => setContent("item")}
-                    >
-                      <FaBox className="mr-2" />
-                      Item
-                    </button>
-                  </li>
-                </ul>
-              )}
-            </li>
-
-            <li className="mb-1">
-              <button
-                className={`flex items-center w-full px-4 py-2 text-left ${
-                  activeContent === "serviceBookings" ? "bg-blue-600" : "hover:bg-gray-700"
-                }`}
-                onClick={() => setContent("serviceBookings")}
-              >
-                <FaCalendarCheck className="mr-2" />
-                <span>Service Bookings</span>
-              </button>
-            </li>
-
-            {/* Applications Dropdown */}
-            <li className="mb-1">
-              <button
-                className={`flex items-center justify-between w-full px-4 py-2 text-left hover:bg-gray-700`}
-                onClick={() => toggleDropdown("applications")}
-              >
-                <div className="flex items-center">
-                  <FaBoxes className="mr-2" />
-                  <span>Applications</span>
-                </div>
-                {openDropdown === "applications" ? <IoMdArrowDropdown /> : <IoMdArrowDropright />}
-              </button>
-              {openDropdown === "applications" && (
-                <ul className="bg-gray-700 py-1">
-                  <li>
-                    <button
-                      className={`flex items-center w-full px-8 py-2 text-left text-sm ${
-                        activeContent === "chargingStations" ? "bg-blue-600" : "hover:bg-gray-600"
-                      }`}
-                      onClick={() => setContent("chargingStations")}
-                    >
-                      <FaChargingStation className="mr-2" />
-                      Charging Stations
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      className={`flex items-center w-full px-8 py-2 text-left text-sm ${
-                        activeContent === "franchises" ? "bg-blue-600" : "hover:bg-gray-600"
-                      }`}
-                      onClick={() => setContent("franchises")}
-                    >
-                      <FaTools className="mr-2" />
-                      Service Center
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      className={`flex items-center w-full px-8 py-2 text-left text-sm ${
-                        activeContent === "careers" ? "bg-blue-600" : "hover:bg-gray-600"
-                      }`}
-                      onClick={() => setContent("careers")}
-                    >
-                      <FaUserTie className="mr-2" />
-                      Recruitment
-                    </button>
-                  </li>
-                </ul>
-              )}
-            </li>
-          </ul>
-        </nav>
+          ))}
+        </ul>
       </div>
 
-      <div className="flex-1 ml-64 overflow-y-auto">{renderContent()}</div>
+      {/* Main Content */}
+      <div className="flex-1 p-6 overflow-auto">
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-6">
+          {sidebarItems.map(item => (
+            <div 
+              key={item.id} 
+              className={`bg-white p-4 rounded-lg shadow cursor-pointer transition-all duration-200 ${activeSection === item.id ? 'ring-2 ring-blue-500' : 'hover:shadow-md'}`}
+              onClick={() => setActiveSection(item.id)}
+            >
+              <h3 className="text-lg font-semibold">{item.label}</h3>
+              <p className="text-2xl">{item.count}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Applications List */}
+        <div className="bg-white rounded-lg shadow p-6">
+          <h2 className="text-xl font-bold mb-4 capitalize">
+            {activeSection === 'chargingStations' ? 'Charging Stations' : activeSection} Applications
+          </h2>
+          
+          {!data[activeSection] || data[activeSection].length === 0 ? (
+            <div className="text-center p-8 text-gray-500">
+              <p>No {activeSection} applications found.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {Array.isArray(data[activeSection]) && data[activeSection].map(item => (
+                <div key={item._id} className="border rounded-lg p-4 hover:shadow-lg transition">
+                  {renderCardContent(item, activeSection)}
+                  <div className="mt-4 flex justify-between">
+                    <button
+                      className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+                      onClick={() => setSelectedApplication(item)}
+                    >
+                      View Details
+                    </button>
+                    <div className="space-x-2">
+                      {getSafeValue(item, 'status') !== 'Accepted' && (
+                        <button
+                          className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600"
+                          onClick={() => handleStatusUpdate(item._id, activeSection, 'Accepted')}
+                        >
+                          Accept
+                        </button>
+                      )}
+                      {getSafeValue(item, 'status') !== 'Rejected' && (
+                        <button
+                          className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                          onClick={() => handleStatusUpdate(item._id, activeSection, 'Rejected')}
+                        >
+                          Reject
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Modal for Details */}
+        {selectedApplication && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white rounded-lg p-6 w-full max-w-2xl max-h-[80vh] overflow-auto">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-bold">Application Details</h2>
+                <button
+                  className="text-gray-500 hover:text-gray-700"
+                  onClick={() => setSelectedApplication(null)}
+                >
+                  ✕
+                </button>
+              </div>
+              <pre className="bg-gray-100 p-4 rounded overflow-auto">
+                {JSON.stringify(selectedApplication, null, 2)}
+              </pre>
+              <div className="mt-4 flex justify-between">
+                <button
+                  className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+                  onClick={() => setSelectedApplication(null)}
+                >
+                  Close
+                </button>
+                <div className="space-x-2">
+                  {getSafeValue(selectedApplication, 'status') !== 'Accepted' && (
+                    <button
+                      className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                      onClick={() => {
+                        handleStatusUpdate(selectedApplication._id, activeSection, 'Accepted');
+                        setSelectedApplication(null);
+                      }}
+                    >
+                      Accept
+                    </button>
+                  )}
+                  {getSafeValue(selectedApplication, 'status') !== 'Rejected' && (
+                    <button
+                      className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                      onClick={() => {
+                        handleStatusUpdate(selectedApplication._id, activeSection, 'Rejected');
+                        setSelectedApplication(null);
+                      }}
+                    >
+                      Reject
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
 
-export default Dashboard;
+export default AdminDashboard;
