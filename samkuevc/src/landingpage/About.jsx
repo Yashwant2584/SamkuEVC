@@ -12,7 +12,7 @@ const About = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h1 className="text-5xl font-bold mb-4 text-blue-800">About <span className="text-green-600">SamkuEVC</span></h1>
+          <h1 className="text-3xl font-bold mb-4 text-blue-800">About <span className="text-green-600">SamkuEVC</span></h1>
           <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-green-500 mx-auto mb-6 rounded-full"></div>
           <p className="text-gray-600 text-xl max-w-3xl mx-auto">
             Powering the future of sustainable transportation through innovative EV charging solutions.
