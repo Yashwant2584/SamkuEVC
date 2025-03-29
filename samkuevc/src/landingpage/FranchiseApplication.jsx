@@ -374,7 +374,7 @@ const FranchiseApplication = () => {
             <X className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
 
-          <div className="p-4 sm:p-6 mt-11 lg:p-8">
+          <div className="p-4 sm:p-6 mt-15 lg:p-8">
             <div className="flex flex-col sm:flex-row items-center justify-between mb-6 border-b border-gray-100 pb-4">
               <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4 w-full sm:w-auto">
                 <img src={logo} alt="SAMKU SERVICE Logo" className="h-10 sm:h-14 header-logo object-contain" />

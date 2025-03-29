@@ -4,8 +4,9 @@ import { motion } from 'framer-motion';
 import { ChevronRight, Zap, Battery, Shield } from 'lucide-react';
 import Marquee from '../components/Marquee';
 import ImgMOB3 from '../images/ImgMob3.png';
-import Modelslider from "./model"
-// import WhatsAppButton from '../landingpage/WhatsAppButton';
+import Modelslider from "./model";
+import LocationsSection from "./Get-location"
+// import WhatsAppButton from '../landingpage/WhatsAppButton';;
 
 
 const Home = () => {

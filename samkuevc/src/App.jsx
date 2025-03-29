@@ -5,7 +5,7 @@ import Home from './landingpage/Home';
 import Products from './landingpage/Products'
 import About from './landingpage/About';
 import Contact from './landingpage/Contact';
-import Location from './landingpage/Location';
+import LocationsSection from './landingpage/Get-location.jsx';
 import Enquiry from './landingpage/Enquiry';
 import EVSolutions from './landingpage/EVSolutions';
 import Footer from './landingpage/Footer';
@@ -27,7 +27,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<Products />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/location" element={<Location />} />
+        <Route path="/location" element={<LocationsSection />} />
         <Route path="/enquiry" element={<Enquiry />} />
         <Route path="/ev-solutions" element={<EVSolutions/>} />
         
