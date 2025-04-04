@@ -9,12 +9,13 @@ import LocationsSection from "./Get-location"
 import bike from '../images/C-Images/bike.png';
 import dc_charge from '../images/C-Images/dc_chargers.png';
 import ev_accessories from '../images/C-Images/accessories.jpg';
-// import WhatsAppButton from '../landingpage/WhatsAppButton';;
+import WhatsAppButton from '../landingpage/WhatsAppButton';
 
 
 const Home = () => {
   return (
     <div className="bg-white">
+      <WhatsAppButton />
       <section className="relative min-h-screen">
         {/* Desktop Video */}
         <div className="hidden md:block absolute inset-0">
