@@ -9,7 +9,8 @@ const ProductDetails = () => {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [selectedPower, setSelectedPower] = useState(null);
-  const [selectedratedCurrent, setSelectedratedCurrent] = useState(null);
+  const [selectedRatedCurrent, setSelectedRatedCurrent] = useState(null);
+  const [availableRatedCurrents, setAvailableRatedCurrents] = useState([]);
   const [showDetails, setShowDetails] = useState(false);
   const navigate = useNavigate();
   const [displayImages, setDisplayImages] = useState([]);
@@ -17,6 +18,14 @@ const ProductDetails = () => {
 
   const charger = chargers.find((c) => c.id === id);
 
+  // Define the mapping between power options and their available rated currents
+  const powerToRatedCurrentMap = {
+    '24V': ['3A', '5A'],
+    '36V': ['5A', '8A', '10A'],
+    '48V': ['8A', '10A'],
+    '60V': ['6A', '8A', '10A'],
+    '72V': ['6A', '8A', '10A', '12A']
+  };
  
   const updateImagesBasedOnPower = (power) => {
     if (!charger) return;
@@ -35,14 +44,19 @@ const ProductDetails = () => {
     }
   };
 
-  const updatePriceBasedOnPower = (power) => {
+  const updatePriceBasedOnSelection = (power, ratedCurrent) => {
     if (!charger) return;
     
-    // If we have powerPrices mapping in our data
-    if (charger.powerPrices && charger.powerPrices[power]) {
+    // Check if we have price data for this specific combination
+    if (charger.combinedPrices && charger.combinedPrices[power] && charger.combinedPrices[power][ratedCurrent]) {
+      setCurrentPrice(charger.combinedPrices[power][ratedCurrent]);
+    } 
+    // If no combined price, fallback to power-based price
+    else if (charger.powerPrices && charger.powerPrices[power]) {
       setCurrentPrice(charger.powerPrices[power]);
-    } else {
-      // Fallback to the default price if no power-specific price
+    } 
+    // Default fallback
+    else {
       setCurrentPrice(charger.price);
     }
   };
@@ -50,8 +64,26 @@ const ProductDetails = () => {
   const handlePowerChange = (e) => {
     const newPower = e.target.value;
     setSelectedPower(newPower);
+    
+    // Update available rated currents based on selected power
+    const availableOptions = powerToRatedCurrentMap[newPower] || charger.ratedCurrent;
+    setAvailableRatedCurrents(availableOptions);
+    
+    // Select the first available rated current by default
+    const newRatedCurrent = availableOptions[0];
+    setSelectedRatedCurrent(newRatedCurrent);
+    
+    // Update images and price
     updateImagesBasedOnPower(newPower);
-    updatePriceBasedOnPower(newPower);
+    updatePriceBasedOnSelection(newPower, newRatedCurrent);
+  };
+
+  const handleRatedCurrentChange = (e) => {
+    const newRatedCurrent = e.target.value;
+    setSelectedRatedCurrent(newRatedCurrent);
+    
+    // Update price based on the new rated current
+    updatePriceBasedOnSelection(selectedPower, newRatedCurrent);
   };
 
   const handleEnquireClick = () => {
@@ -60,8 +92,8 @@ const ProductDetails = () => {
         product: {
           name: charger.name,
           category: charger.category,
-          power: selectedPower || charger.powerOptions[0],
-          ratedCurrent: selectedratedCurrent || charger.ratedCurrent[0],
+          power: selectedPower,
+          ratedCurrent: selectedRatedCurrent,
           price: currentPrice,
           id: charger.id,
         },
@@ -89,13 +121,20 @@ const ProductDetails = () => {
       // Initialize selected values
       const initialPower = charger.powerOptions[0];
       setSelectedPower(initialPower);
-      setSelectedratedCurrent(charger.ratedCurrent[0]);
+      
+      // Set available rated currents based on the initial power
+      const initialAvailableRatedCurrents = powerToRatedCurrentMap[initialPower] || charger.ratedCurrent;
+      setAvailableRatedCurrents(initialAvailableRatedCurrents);
+      
+      // Set the initial rated current to the first available option
+      const initialRatedCurrent = initialAvailableRatedCurrents[0];
+      setSelectedRatedCurrent(initialRatedCurrent);
       
       // Initialize display images based on the initial power selection
       updateImagesBasedOnPower(initialPower);
 
-      // Initialize price based on the initial power selection
-      updatePriceBasedOnPower(initialPower);
+      // Initialize price based on initial selections
+      updatePriceBasedOnSelection(initialPower, initialRatedCurrent);
       
       setActiveImageIndex(0); // Ensure the first image is shown on load
     }
@@ -243,18 +282,18 @@ const ProductDetails = () => {
                     <Battery className="text-blue-600 flex-shrink-0" size={22} />
                     <div className="w-full">
                       <h3 className="font-semibold text-sm text-gray-500">Rated Current</h3>
-                      {charger.ratedCurrent.length > 1 ? (
+                      {availableRatedCurrents.length > 1 ? (
                         <select
-                          value={selectedratedCurrent}
-                          onChange={(e) => setSelectedratedCurrent(e.target.value)}
+                          value={selectedRatedCurrent}
+                          onChange={handleRatedCurrentChange}
                           className="mt-1 block w-full rounded-lg border border-gray-200 bg-white py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-200 appearance-none"
                         >
-                          {charger.ratedCurrent.map((comp, index) => (
-                            <option key={index} value={comp}>{comp}</option>
+                          {availableRatedCurrents.map((current, index) => (
+                            <option key={index} value={current}>{current}</option>
                           ))}
                         </select>
                       ) : (
-                        <p className="mt-1 font-medium text-gray-700">{charger.ratedCurrent[0]}</p>
+                        <p className="mt-1 font-medium text-gray-700">{availableRatedCurrents[0]}</p>
                       )}
                     </div>
                   </div>
