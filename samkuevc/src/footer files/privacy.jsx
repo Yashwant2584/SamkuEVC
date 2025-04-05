@@ -34,65 +34,110 @@ const PrivacyPolicyModal = ({ isOpen, onClose }) => {
         <div 
             className="flex-1 overflow-y-auto px-4 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100"
             onScroll={handleScroll}
-            >
-            <p className="text-sm text-gray-700 mb-4">
+        >
+            <h2 className="text-xl font-bold text-gray-800 mb-1">Privacy Policy</h2>
+            <p className="text-sm italic text-gray-700 mb-2">
                 [In terms of Rule 4 of the Information Technology (Reasonable Security Practices and Procedures and Sensitive Personal Data or Information) Rules, 2011]
             </p>
             
+            <p className="text-sm font-semibold text-gray-700 mb-4">
+                Effective Date: 20.03.2025
+            </p>
+            
             <p className="text-sm text-gray-700 mb-4">
-                This Privacy Policy effective from 20.03.2025 outlines the policies and procedures followed by SAMKU EV POWERING PRIVATE LIMITED (hereinafter referred to as "we," "us," or "our") regarding the collection, use, storage, and protection of personal data or information provided by the users of our electric vehicle servicing solutions. We are committed to protecting your privacy and complying with applicable Indian laws, including the Information Technology Act, 2000, (hereinafter referred to as "Act") and the Information Technology (Reasonable Security Practices and Procedures and Sensitive Personal Data or Information) Rules, 2011 ("IT Rules"), concerning the collection and processing of personal information. By using our EV servicing solutions, you agree to the terms and practices described in this Privacy Policy.
+                This Privacy Policy outlines the policies and procedures followed by <strong>SAMKU EV</strong> (hereinafter referred to as "we," "us," or "our") regarding the collection, use, storage, and protection of personal data or information provided by users visiting our website, making product enquiries, or using our EV solutions.
+            </p>
+            
+            <p className="text-sm text-gray-700 mb-4">
+                We are committed to protecting your privacy and ensuring transparency while complying with applicable Indian laws, including the <strong>Information Technology Act, 2000</strong> and the <strong>Information Technology (Reasonable Security Practices and Procedures and Sensitive Personal Data or Information) Rules, 2011</strong> ("IT Rules"). By interacting with our website, submitting a query, or availing our EV services and solutions, you agree to the terms set forth in this Privacy Policy.
             </p>
             
             <h3 className="text-md font-medium text-gray-800 mb-2">Definitions</h3>
             <p className="text-sm text-gray-700 mb-4">
-                (a) Service Profile - Date and time of service, type of service, parts replaced, payment method, and amount of payment.
+                <strong>(a) Service Profile</strong> – Refers to the date and time of service, type of service or product purchased/enquired, parts or accessories involved, payment method, and amount of payment.
+                <br />
+                <strong>(b) Enquiry Data</strong> – Information shared by the user through the website for product or service-related enquiries.
             </p>
             
             <h3 className="text-md font-medium text-gray-800 mb-2">Information We Collect</h3>
             <p className="text-sm text-gray-700 mb-2">
-                We collect the following personal information from users:
+                We may collect the following personal and product-related information through our website, email, or service interactions:
             </p>
             <ul className="list-disc pl-6 mb-4 text-sm text-gray-700">
-                <li>Name of the User</li>
+                <li>Name of the user</li>
                 <li>Phone number</li>
                 <li>Email address</li>
-                <li>Service profile</li>
+                <li>Enquiry message or description of interest</li>
+                <li>Service profile (as defined above)</li>
                 <li>Vehicle make / Company name</li>
                 <li>Vehicle model</li>
                 <li>Vehicle RTO Registration number</li>
+                <li>User's preferences and feedback</li>
+                <li>IP address and browser information (for website analytics)</li>
             </ul>
             
             <h3 className="text-md font-medium text-gray-800 mb-2">Purpose of Collection</h3>
             <p className="text-sm text-gray-700 mb-2">
-                We collect this information for the following purposes:
+                We collect and use this information for the following purposes:
             </p>
             <ul className="list-disc pl-6 mb-4 text-sm text-gray-700">
-                <li>Facilitating the servicing process and ensuring a seamless user experience</li>
-                <li>Communicating with users regarding their service sessions</li>
-                <li>Providing customer support and assistance</li>
-                <li>Complying with legal obligations and resolving any disputes or grievances</li>
+                <li>To respond to enquiries and provide accurate information about our products and services</li>
+                <li>To facilitate service appointments or product purchases</li>
+                <li>To improve user experience on our website</li>
+                <li>To provide customer support and resolve issues</li>
+                <li>To personalize recommendations and communication</li>
+                <li>To comply with legal and regulatory obligations</li>
+                <li>To manage internal operations such as analytics, security checks, and quality control</li>
             </ul>
             
             <h3 className="text-md font-medium text-gray-800 mb-2">Consent</h3>
             <p className="text-sm text-gray-700 mb-4">
-                By providing your personal information during the EV servicing process, you consent to the collection, use, and processing of your information as described in this Privacy Policy. You have the right to withdraw your consent at any time by contacting us using the information provided in Section 8 (Contact Us).
+                By voluntarily submitting your information via our website or other communication channels, you consent to the collection, storage, and processing of your personal data in accordance with this Privacy Policy. You may withdraw your consent at any time by contacting us (see Section 8 – Contact Us). Please note that withdrawal of consent may limit our ability to provide services or respond to certain enquiries.
+            </p>
+            
+            <h3 className="text-md font-medium text-gray-800 mb-2">Data Retention</h3>
+            <p className="text-sm text-gray-700 mb-4">
+                We retain your personal data for as long as necessary to fulfill the purposes for which it was collected or as required under applicable laws. We take reasonable steps to ensure your data is stored securely and deleted once it is no longer needed.
+            </p>
+            
+            <h3 className="text-md font-medium text-gray-800 mb-2">Data Security</h3>
+            <p className="text-sm text-gray-700 mb-4">
+                We implement industry-standard security practices and procedures to safeguard your personal information from unauthorized access, misuse, or disclosure. This includes physical, technical, and administrative controls.
+            </p>
+            
+            <h3 className="text-md font-medium text-gray-800 mb-2">Third-Party Disclosure</h3>
+            <p className="text-sm text-gray-700 mb-4">
+                We do not sell or rent your personal information to third parties. However, we may share information with trusted vendors or partners solely for the purpose of delivering our services, under strict confidentiality agreements.
+            </p>
+            
+            <h3 className="text-md font-medium text-gray-800 mb-2">Your Rights</h3>
+            <p className="text-sm text-gray-700 mb-2">
+                You have the right to:
+            </p>
+            <ul className="list-disc pl-6 mb-4 text-sm text-gray-700">
+                <li>Access your personal data</li>
+                <li>Request correction or deletion of your data</li>
+                <li>Withdraw your consent</li>
+                <li>Lodge a complaint with a data protection authority (as applicable)</li>
+            </ul>
+            <p className="text-sm text-gray-700 mb-4">
+                To exercise these rights, please contact us using the details below.
             </p>
             
             <h3 className="text-md font-medium text-gray-800 mb-2">Contact Us</h3>
             <p className="text-sm text-gray-700 mb-4">
-                If you have any questions, concerns, or requests regarding this Privacy Policy or the handling of your personal information, please contact us at:
+                If you have any questions, concerns, or requests related to this Privacy Policy or the use of your personal data, please contact our Grievance Officer:
             </p>
             <p className="text-sm text-gray-700 mb-4 font-medium">
-                Grievance officer<br />
-                Email: <a href="mailto:samkuevservices@gmail.com" className="text-blue-500 hover:underline">
+                <strong>Grievance Officer</strong><br />
+                <strong>Email:</strong> <a href="mailto:samkuevservices@gmail.com" className="text-blue-500 hover:underline">
                 samkuevservices@gmail.com
                 </a>
             </p>
-
-            </div>
+        </div>
             
-            {/* Footer */}
-            <div className="flex-shrink-0 pt-4 border-t border-gray-400 border-opacity-50 pb-2">
+        {/* Footer */}
+        <div className="flex-shrink-0 pt-4 border-t border-gray-400 border-opacity-50 pb-2">
             <div className="flex justify-between items-center">
                 <div>
                 <label className="flex items-center text-sm ml-2">
@@ -109,13 +154,11 @@ const PrivacyPolicyModal = ({ isOpen, onClose }) => {
                 >
                 Close
                 </button>
-                </div>
             </div>
         </div>
+      </div>
     </div>
-    );
+  );
 };
 
 export default PrivacyPolicyModal;
-
-//.

@@ -34,55 +34,53 @@ const RefundPolicyModal = ({ isOpen, onClose }) => {
           className="flex-1 overflow-y-auto px-4 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100"
           onScroll={handleScroll}
         >
-          <h3 className="text-md font-medium text-gray-800 mb-2">Refund Policy for EV Charging and Vehicle Services</h3>
+          <h3 className="text-md font-medium text-gray-800 mb-2">Refund Policy for EV Products and Solutions</h3>
           <p className="text-sm text-gray-700 mb-4">
-            At SAMKU EV POWERING PVT. LTD., we strive to provide high-quality electric vehicle charging services and EV-related solutions. This refund policy outlines the terms and conditions for refunds related to our EV charging stations and vehicle services. Please read this policy carefully before using our services.
+            At <strong>SAMKU EV</strong>, we are dedicated to delivering high-quality electric vehicle products, accessories, and cutting-edge <strong>EV solutions</strong>. This Refund Policy outlines the terms and conditions for refunds related to purchases made through our website or directly via our official representatives.
+            Please read this policy carefully before purchasing any EV product or opting for our EV solutions.
           </p>
           
           <h3 className="text-md font-medium text-gray-800 mb-2">Refund Eligibility</h3>
           <ul className="list-disc pl-6 mb-4 text-sm text-gray-700">
-            <li>Refunds will be provided for charging sessions that failed due to technical issues on our end.</li>
-            <li>Refunds are available if a charging station was inaccessible due to malfunction or unavailability.</li>
-            <li>Refunds will not be issued for charging sessions interrupted due to external factors such as power outages or network disruptions.</li>
-            <li>For EV vehicle services, refunds are applicable only if the service was not provided as per the agreed terms.</li>
-            <li>Refunds for EV vehicle repairs or maintenance are only eligible if the service was not performed as promised or if there was a defect in the service provided.</li>
+            <li>The EV product received is defective, damaged during delivery, or not as described on our platform.</li>
+            <li>The EV solution provided does not meet the promised specifications or expectations as agreed during the enquiry or purchase process.</li>
+            <li>A cancellation request is raised <strong>within [number of days]</strong> of purchase, provided the EV product has not been dispatched or the EV solution has not been initiated.</li>
+            <li>For digital or consultation-based EV solutions, refunds are only applicable if the solution has not been activated or utilized in any form.</li>
           </ul>
           
           <h3 className="text-md font-medium text-gray-800 mb-2">Refund Process</h3>
-          <ul className="list-disc pl-6 mb-4 text-sm text-gray-700">
-            <li>To request a refund, you must contact our customer support team within **[number of days]** days from the service date.</li>
-            <li>Provide details of the issue, including the date, time, location, and supporting documentation.</li>
-            <li>Our customer support team will review your request and determine eligibility within a reasonable timeframe.</li>
-            <li>If approved, refunds will be processed through the original payment method.</li>
-          </ul>
+          <ol className="list-decimal pl-6 mb-4 text-sm text-gray-700">
+            <li>Contact our support team within <strong>[number of days]</strong> of the purchase or delivery date.</li>
+            <li>Share your order ID, date of purchase, detailed reason for the refund, and any necessary proof (such as images of the product or delivery slip).</li>
+            <li>Our team will assess the request and respond with a resolution within a reasonable timeframe.</li>
+            <li>If approved, the refund will be processed to the original payment method within <strong>7–10 business days</strong>.</li>
+          </ol>
           
           <h3 className="text-md font-medium text-gray-800 mb-2">Non-Refundable Situations</h3>
           <ul className="list-disc pl-6 mb-4 text-sm text-gray-700">
-            <li>Refunds will not be provided for successfully completed charging sessions.</li>
-            <li>Service fees for vehicle repairs, diagnostics, and routine maintenance are non-refundable once the service has been performed.</li>
-            <li>No refunds will be issued for scheduled maintenance work that caused temporary unavailability of charging stations or services.</li>
+            <li>EV products that are used, tampered with, damaged due to mishandling, or altered post-delivery.</li>
+            <li>EV solutions that have been fully or partially implemented according to agreed terms.</li>
+            <li>Orders canceled after dispatch of the product or after the EV solution work has begun.</li>
+            <li>Any EV product or solution purchased from unauthorized third-party vendors.</li>
+            <li>Custom-built solutions or specially configured EV packages designed specifically for individual clients or businesses.</li>
           </ul>
           
           <h3 className="text-md font-medium text-gray-800 mb-2">Limitations</h3>
           <ul className="list-disc pl-6 mb-4 text-sm text-gray-700">
-            <li>This refund policy applies only to fees paid directly to SAMKU EV POWERING PVT. LTD.</li>
-            <li>Third-party fees or charges incurred through external payment providers are not covered.</li>
-            <li>We reserve the right to modify this refund policy at any time, effective immediately upon update.</li>
+            <li>This Refund Policy is applicable <strong>only for direct purchases</strong> made through SAMKU EV's official website or authorized communication channels.</li>
+            <li>Charges levied by third-party platforms, marketplaces, or external payment providers are <strong>not covered</strong> under this policy.</li>
+            <li>SAMKU EV reserves the right to amend this policy at any time. All updates will be effective immediately upon being published on our website.</li>
           </ul>
           
           <h3 className="text-md font-medium text-gray-800 mb-2">Contact Information</h3>
           <p className="text-sm text-gray-700 mb-4">
-            If you have any questions about our refund policy, please contact our support team at:
+            If you have any questions about this policy or need assistance with a refund:
           </p>
           <p className="text-sm text-gray-700 mb-4 font-medium">
-                Grievance officer<br />
-                Email: <a href="mailto:samkuevservices@gmail.com" className="text-blue-500 hover:underline">
-                samkuevservices@gmail.com
-                </a>
-          </p>
-          
-          <p className="text-sm text-gray-700 mb-4">
-            By using our charging stations and EV services, you agree to this refund policy.
+            <strong>Grievance Officer</strong><br />
+            📧 <strong>Email:</strong> <a href="mailto:samkuevservices@gmail.com" className="text-blue-500 hover:underline">
+            samkuevservices@gmail.com
+            </a>
           </p>
         </div>
         
@@ -103,5 +101,3 @@ const RefundPolicyModal = ({ isOpen, onClose }) => {
 };
 
 export default RefundPolicyModal;
-
-//.
