@@ -46,107 +46,41 @@ const FranchiseApplication = () => {
   const [photoPreview, setPhotoPreview] = useState(null);
   const [errors, setErrors] = useState({});
 
-  // Enhanced responsive classes
   const inputClasses = "w-full px-3 py-2 rounded-lg border border-gray-300 outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-500 transition-all text-sm md:text-base";
   const textareaClasses = "w-full px-3 py-2 rounded-lg border border-gray-300 outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-500 transition-all resize-none text-sm md:text-base";
 
-  // Comprehensive responsive styles
   const styles = `
     /* Base styles */
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     /* Mobile-first approach */
     @media (max-width: 640px) {
-      .container {
-        padding: 1rem;
-      }
-      
-      .form-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-      }
-
-      .section {
-        padding: 1rem;
-        margin-bottom: 1rem;
-      }
-
-      .section-title {
-        font-size: 1.125rem;
-        margin-bottom: 1rem;
-      }
-
-      .field-grid {
-        grid-template-columns: 1fr;
-        gap: 0.75rem;
-      }
-
-      .input-group {
-        margin-bottom: 1rem;
-      }
-
-      .photo-container {
-        margin: 1rem auto;
-        width: 100%;
-        max-width: 150px;
-      }
-
-      .buttons-container {
-        flex-direction: column;
-        gap: 0.75rem;
-      }
-
-      .button {
-        width: 100%;
-        padding: 0.75rem;
-        font-size: 0.875rem;
-      }
-
-      .header-logo {
-        height: 2.5rem;
-      }
-
-      .header-title {
-        font-size: 1.25rem;
-      }
-
-      .header-subtitle {
-        font-size: 0.75rem;
-      }
+      .container { padding: 1rem; }
+      .form-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .section { padding: 1rem; margin-bottom: 1rem; }
+      .section-title { font-size: 1.125rem; margin-bottom: 1rem; }
+      .field-grid { grid-template-columns: 1fr; gap: 0.75rem; }
+      .input-group { margin-bottom: 1rem; }
+      .photo-container { margin: 1rem auto; width: 100%; max-width: 150px; }
+      .buttons-container { flex-direction: column; gap: 0.75rem; }
+      .button { width: 100%; padding: 0.75rem; font-size: 0.875rem; }
+      .header-logo { height: 2.5rem; }
+      .header-title { font-size: 1.25rem; }
+      .header-subtitle { font-size: 0.75rem; }
     }
 
     /* Tablet and above */
     @media (min-width: 641px) and (max-width: 1024px) {
-      .container {
-        padding: 1.5rem;
-      }
-
-      .form-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 1.5rem;
-      }
-
-      .section {
-        padding: 1.5rem;
-      }
-
-      .button {
-        padding: 0.75rem 1.5rem;
-      }
+      .container { padding: 1.5rem; }
+      .form-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+      .section { padding: 1.5rem; }
+      .button { padding: 0.75rem 1.5rem; }
     }
 
     /* Desktop */
     @media (min-width: 1025px) {
-      .form-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 2rem;
-      }
-
-      .section {
-        padding: 2rem;
-      }
+      .form-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+      .section { padding: 2rem; }
     }
   `;
 
@@ -201,113 +135,158 @@ const FranchiseApplication = () => {
             <style>
               @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
               
-              * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-              }
+              * { margin: 0; padding: 0; box-sizing: border-box; }
               
-              body {
-                font-family: 'Inter', sans-serif;
-                font-size: 12pt;
-                line-height: 1.6;
-                color: #1f2937;
-              }
+              body { font-family: 'Inter', sans-serif; font-size: 12pt; line-height: 1.6; color: #1f2937; }
               
-              .page {
-                width: 210mm;
-                min-height: 297mm;
-                padding: 20mm;
-                margin: 0 auto;
-                position: relative;
-                page-break-after: always;
-              }
+              .page { width: 210mm; min-height: 297mm; padding: 20mm; margin: 0 auto; position: relative; page-break-after: always; }
               
-              .print-header {
-                text-align: center;
-                margin-bottom: 2rem;
-                padding-bottom: 1rem;
-                border-bottom: 2px solid #2563eb;
-              }
+              .print-header { text-align: center; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid #2563eb; }
               
-              .print-header img {
-                height: 60px;
-                margin-bottom: 1rem;
-              }
+              .print-header img { height: 60px; margin-bottom: 1rem; }
               
-              .section {
-                margin-bottom: 1.5rem;
-              }
+              .section { margin-bottom: 1.5rem; }
               
-              .section-title {
-                font-size: 14pt;
-                font-weight: 600;
-                margin-bottom: 1rem;
-                color: #2563eb;
-              }
+              .section-title { font-size: 14pt; font-weight: 600; margin-bottom: 1rem; color: #2563eb; }
               
-              .field-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-                gap: 1rem;
-              }
+              .field-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
               
-              .field-group {
-                margin-bottom: 0.75rem;
-              }
+              .field-group { margin-bottom: 0.75rem; }
               
-              .field-label {
-                font-weight: 500;
-                font-size: 10pt;
-                color: #4b5563;
-              }
+              .field-label { font-weight: 500; font-size: 10pt; color: #4b5563; }
               
-              .field-value {
-                margin-top: 0.25rem;
-                padding: 0.5rem;
-                background: #f9fafb;
-                border: 1px solid #e5e7eb;
-                min-height: 24px;
-              }
+              .field-value { margin-top: 0.25rem; padding: 0.5rem; background: #f9fafb; border: 1px solid #e5e7eb; min-height: 24px; white-space: pre-wrap; }
               
-              .photo-container img {
-                width: 35mm;
-                height: 45mm;
-                object-fit: cover;
-                border: 1px solid #e5e7eb;
-              }
+              .photo-container { margin-top: 1rem; }
               
-              .footer {
-                position: absolute;
-                bottom: 20mm;
-                left: 20mm;
-                right: 20mm;
-                text-align: center;
-                font-size: 8pt;
-                color: #6b7280;
-              }
+              .photo-container img { width: 35mm; height: 45mm; object-fit: cover; border: 1px solid #e5e7eb; }
+              
+              .footer { position: absolute; bottom: 20mm; left: 20mm; right: 20mm; text-align: center; font-size: 8pt; color: #6b7280; }
             </style>
           </head>
           <body>
             <div class="page">
-              <div class="application-id">Application ID: ${applicationId}</div>
+              <div style="text-align: right; font-size: 10pt; margin-bottom: 1rem;">
+                Application ID: ${applicationId}
+              </div>
               <div class="print-header">
                 <img src="${logo}" alt="SAMKU SERVICE Logo" />
                 <h1>Franchise Application Form</h1>
               </div>
-              <!-- Rest of the print content remains similar -->
+
+              <div class="section">
+                <h2 class="section-title">Personal Information</h2>
+                <div class="field-grid">
+                  <div class="field-group">
+                    <div class="field-label">Full Name</div>
+                    <div class="field-value">${formData.personalInfo.fullName || '-'}</div>
+                  </div>
+                  <div class="field-group">
+                    <div class="field-label">Email</div>
+                    <div class="field-value">${formData.personalInfo.email || '-'}</div>
+                  </div>
+                  <div class="field-group">
+                    <div class="field-label">Phone</div>
+                    <div class="field-value">${formData.personalInfo.phone || '-'}</div>
+                  </div>
+                </div>
+                <div class="field-group">
+                  <div class="field-label">Address</div>
+                  <div class="field-value">${formData.personalInfo.address || '-'}</div>
+                </div>
+                <div class="field-grid">
+                  <div class="field-group">
+                    <div class="field-label">City</div>
+                    <div class="field-value">${formData.personalInfo.city || '-'}</div>
+                  </div>
+                  <div class="field-group">
+                    <div class="field-label">State</div>
+                    <div class="field-value">${formData.personalInfo.state || '-'}</div>
+                  </div>
+                  <div class="field-group">
+                    <div class="field-label">Pincode</div>
+                    <div class="field-value">${formData.personalInfo.pincode || '-'}</div>
+                  </div>
+                </div>
+                ${photoPreview ? `
+                  <div class="photo-container">
+                    <div class="field-label">Photo</div>
+                    <img src="${photoPreview}" alt="Applicant Photo" />
+                  </div>
+                ` : ''}
+              </div>
+
+              <div class="section">
+                <h2 class="section-title">Business Information</h2>
+                <div class="field-group">
+                  <div class="field-label">Business Experience</div>
+                  <div class="field-value">${formData.businessInfo.businessExperience || '-'}</div>
+                </div>
+                <div class="field-grid">
+                  <div class="field-group">
+                    <div class="field-label">Company Name</div>
+                    <div class="field-value">${formData.businessInfo.companyName || '-'}</div>
+                  </div>
+                  <div class="field-group">
+                    <div class="field-label">GST Number</div>
+                    <div class="field-value">${formData.businessInfo.gstNumber || '-'}</div>
+                  </div>
+                  <div class="field-group">
+                    <div class="field-label">Investment Capacity</div>
+                    <div class="field-value">${formData.businessInfo.investmentCapacity || '-'}</div>
+                  </div>
+                  <div class="field-group">
+                    <div class="field-label">Preferred Location</div>
+                    <div class="field-value">${formData.businessInfo.preferredLocation || '-'}</div>
+                  </div>
+                  <div class="field-group">
+                    <div class="field-label">Property Size</div>
+                    <div class="field-value">${formData.businessInfo.propertySize || '-'}</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="section">
+                <h2 class="section-title">Technical Background</h2>
+                <div class="field-group">
+                  <div class="field-label">Technical Background</div>
+                  <div class="field-value">${formData.technicalInfo.technicalBackground || '-'}</div>
+                </div>
+                <div class="field-group">
+                  <div class="field-label">EV Knowledge</div>
+                  <div class="field-value">${formData.technicalInfo.evKnowledge || '-'}</div>
+                </div>
+              </div>
+
+              <div class="section">
+                <h2 class="section-title">Additional Information</h2>
+                <div class="field-group">
+                  <div class="field-label">Why Join Us</div>
+                  <div class="field-value">${formData.additionalInfo.whyJoinUs || '-'}</div>
+                </div>
+                <div class="field-group">
+                  <div class="field-label">References</div>
+                  <div class="field-value">${formData.additionalInfo.references || '-'}</div>
+                </div>
+              </div>
+
+              <div class="footer">
+                SAMKU SERVICE - Franchise Application | Generated on ${new Date().toLocaleDateString()}
+              </div>
             </div>
           </body>
         </html>
       `);
       printWindow.document.close();
-      setTimeout(() => printWindow.print(), 500);
+      setTimeout(() => {
+        printWindow.print();
+        printWindow.close();
+      }, 500);
     }
   }, [formData, photoPreview]);
 
   const validateForm = () => {
     const newErrors = {};
-    // Validation logic remains the same
     if (!formData.personalInfo.fullName.trim()) newErrors['personalInfo.fullName'] = 'Full name is required';
     if (!formData.personalInfo.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) newErrors['personalInfo.email'] = 'Valid email is required';
     if (!formData.personalInfo.phone.match(/^\d{10}$/)) newErrors['personalInfo.phone'] = 'Valid 10-digit phone number is required';
@@ -364,7 +343,7 @@ const FranchiseApplication = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 py-4 px-2  sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 py-4 px-2 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto container">
         <div ref={formRef} className="bg-white shadow-2xl rounded-2xl relative">
           <button
