@@ -62,11 +62,12 @@ const FranchiseApplication = () => {
       .field-grid { grid-template-columns: 1fr; gap: 0.75rem; }
       .input-group { margin-bottom: 1rem; }
       .photo-container { margin: 1rem auto; width: 100%; max-width: 150px; }
-      .buttons-container { flex-direction: column; gap: 0.75rem; }
-      .button { width: 100%; padding: 0.75rem; font-size: 0.875rem; }
+      .buttons-container { flex-direction: column; gap: 1rem; }
+      .button { width: 100%; padding: 1rem; font-size: 0.875rem; }
       .header-logo { height: 2.5rem; }
       .header-title { font-size: 1.25rem; }
       .header-subtitle { font-size: 0.75rem; }
+      .investment-field { padding-bottom: 1rem; }
     }
 
     /* Tablet and above */
@@ -74,13 +75,16 @@ const FranchiseApplication = () => {
       .container { padding: 1.5rem; }
       .form-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
       .section { padding: 1.5rem; }
-      .button { padding: 0.75rem 1.5rem; }
+      .button { padding: 1rem 2rem; }
+      .investment-field { padding-bottom: 1.25rem; }
     }
 
     /* Desktop */
     @media (min-width: 1025px) {
       .form-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
       .section { padding: 2rem; }
+      .button { padding: 1rem 2.5rem; }
+      .investment-field { padding-bottom: 1.5rem; }
     }
   `;
 
@@ -555,7 +559,7 @@ const FranchiseApplication = () => {
                           placeholder="Enter your GST number"
                         />
                       </div>
-                      <div>
+                      <div className="investment-field">
                         <label className="block text-sm font-medium text-gray-700 mb-1">Investment Capacity *</label>
                         <select
                           required
