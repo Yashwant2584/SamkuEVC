@@ -197,19 +197,19 @@ const SliderPage = () => {
                     </div>
                     
                     <div className="flex justify-center gap-4 mt-6">
-                      <Button 
-                        className="bg-blue-800 hover:bg-blue-700 shadow-md"
-                        onClick={() => handleInterested()}
-                      >
-                        I'm Interested
-                      </Button>
-                      <Button 
-                        className="bg-green-600 hover:bg-green-700 shadow-md"
-                        onClick={() => navigate("/contact")}
-                      >
-                        Learn More
-                      </Button>
-                    </div>
+  <Button 
+    className="bg-blue-800 hover:bg-blue-700 shadow-md"
+    onClick={() => handleInterested()}
+  >
+    I'm Interested
+  </Button>
+  <Button 
+    className="bg-green-600 hover:bg-green-700 shadow-md"
+    onClick={() => navigate("/stationcanopymodel")}
+  >
+    Learn More
+  </Button>
+</div>
                   </Card>
                 </div>
               </SwiperSlide>

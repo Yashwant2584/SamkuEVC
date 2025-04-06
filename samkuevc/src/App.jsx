@@ -14,7 +14,7 @@ import FranchiseApplication from './landingpage/FranchiseApplication';
 import ChargingStationApplication from './landingpage/ChargingStationApplication';
 import Franchise from './landingpage/Franchise';
 import Dashboard from "./admin/admin-dashboard.jsx"
-
+import StationCanopyModel from './landingpage/StationCanopyModel'
 
 const App = () => {
   return (
@@ -36,7 +36,7 @@ const App = () => {
         <Route path="/ChargingStationApplication" element={<ChargingStationApplication />} />
         <Route path="/Franchise" element={<Franchise />} />
         <Route path="/admin" element={<Dashboard />} />
-        
+        <Route path="/stationcanopymodel" element={<StationCanopyModel />} />
 
 
       </Routes>
