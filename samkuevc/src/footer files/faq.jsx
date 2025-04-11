@@ -1,6 +1,5 @@
 import React from "react";
 import Navbar from '../landingpage/Navbar';
-import Footer from '../landingpage/Footer';
 
 const FAQ = () => {
   return (
@@ -178,7 +177,6 @@ const FAQ = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React from "react";
 import Navbar from '../landingpage/Navbar';
-import Footer from '../landingpage/Footer';
+
 
 const Refund = () => {
   return (
@@ -78,7 +78,6 @@ const Refund = () => {
           </p>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

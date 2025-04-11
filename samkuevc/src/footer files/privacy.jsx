@@ -1,6 +1,6 @@
 import React from "react";
 import Navbar from '../landingpage/Navbar';
-import Footer from '../landingpage/Footer';
+
 
 const Privacy = () => {
   return (
@@ -109,7 +109,6 @@ const Privacy = () => {
           </p>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };
