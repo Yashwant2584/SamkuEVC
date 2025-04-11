@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 
 const ChargingStationApplication = () => {
   const navigate = useNavigate();
-  // Keep all existing state and handler functions exactly the same
   const formRef = useRef();
   const [formData, setFormData] = useState({
     personalInfo: {
@@ -48,12 +47,11 @@ const ChargingStationApplication = () => {
   const [photoPreview, setPhotoPreview] = useState(null);
   const [errors, setErrors] = useState({});
 
-  // Update the input classes to include outline-none to remove default focus border
   const inputClasses = "w-full px-4 py-2 rounded-lg border border-gray-300 outline-none hover:ring-2 hover:ring-green-100 hover:border-green-500 focus:ring-2 focus:ring-green-100 focus:border-green-500 transition-all";
   const textareaClasses = "w-full px-4 py-2 rounded-lg border border-gray-300 outline-none hover:ring-2 hover:ring-green-100 hover:border-green-500 focus:ring-2 focus:ring-green-100 focus:border-green-500 transition-all resize-none";
+  // Added selectClasses for dropdown with blue focus ring
+  const selectClasses = "w-full px-4 py-2 rounded-lg border border-gray-300 outline-none hover:ring-2 hover:ring-blue-100 hover:border-blue-500 focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition-all";
 
-
-  // Keep all existing handler functions exactly the same
   const handleInputChange = (section, field, value) => {
     setFormData(prev => ({
       ...prev,
@@ -135,7 +133,6 @@ const ChargingStationApplication = () => {
       try {
         const formDataToSubmit = new FormData();
         
-        // Append all form data
         Object.keys(formData).forEach(section => {
           Object.keys(formData[section]).forEach(field => {
             if (field === 'photo' && formData[section][field]) {
@@ -156,7 +153,6 @@ const ChargingStationApplication = () => {
         if (response.ok) {
           console.log('Form submitted:', result);
           alert('Application submitted successfully!');
-          // Reset form if needed
           setFormData({
             personalInfo: { fullName: '', email: '', phone: '', address: '', city: '', state: '', pincode: '', photo: null },
             businessInfo: { businessExperience: '', gstNumber: '', investmentCapacity: '', preferredLocation: '', propertySize: '', companyName: '' },
@@ -178,17 +174,16 @@ const ChargingStationApplication = () => {
     }
   };
 
-  // Add media queries for responsiveness
   const styles = `
   @media (max-width: 768px) {
     .field-grid {
-      display: block; // Stack fields vertically
+      display: block;
     }
     .field-group {
       margin-bottom: 20px;
-      width: 100%; // Ensure full width on mobile
+      width: 100%;
       display: flex;
-      flex-direction: column; // Stack fields vertically
+      flex-direction: column;
     }
     .signature-grid {
       grid-template-columns: 1fr;
@@ -200,27 +195,26 @@ const ChargingStationApplication = () => {
       font-size: 10pt;
     }
     .text-sm {
-      font-size: 14px; // Increase text size for better readability
+      font-size: 14px;
     }
     .px-6, .px-8 {
-      padding-left: 1rem; // Increase padding for buttons
+      padding-left: 1rem;
       padding-right: 1rem;
     }
     .py-3 {
-      padding-top: 0.75rem; // Increase padding for buttons
+      padding-top: 0.75rem;
       padding-bottom: 0.75rem;
     }
     .section {
-      margin-bottom: 30px; // Add margin between sections
+      margin-bottom: 30px;
     }
     .grid {
       display: flex;
-      flex-direction: column; // Stack all grid items vertically on mobile
+      flex-direction: column;
     }
   }
   `;
 
-  // Add the styles to the document head
   useEffect(() => {
     const styleSheet = document.createElement("style");
     styleSheet.type = "text/css";
@@ -574,10 +568,9 @@ const ChargingStationApplication = () => {
   }, [formRef, formData, photoPreview, logo]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 py-8 px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 py-8 px-6 lg:px-8 pt-20">
       <div className="max-w-7xl mx-auto">
-        <div ref={formRef} className="bg-white shadow-2xl mt-11 rounded-2xl p-8 relative">
-          {/* Close button */}
+        <div ref={formRef} className="bg-white shadow-2xl rounded-2xl p-8 relative">
           <button
             onClick={() => navigate(-1)}
             className="absolute top-4 right-4 p-2 text-gray-500 hover:text-gray-700 rounded-full hover:bg-gray-100 transition-colors"
@@ -585,8 +578,7 @@ const ChargingStationApplication = () => {
             <X className="w-6 h-6" />
           </button>
 
-          {/* Header - Enhanced styling */}
-          <div className="flex items-center justify-between  mb-8 border-b border-gray-100 pb-6">
+          <div className="flex items-center justify-between mb-8 border-b border-gray-100 pb-6">
             <div className="flex items-center space-x-6">
               <img src={logo} alt="SAMKU SERVICE Logo" className="h-14 object-contain" />
               <div>
@@ -599,24 +591,23 @@ const ChargingStationApplication = () => {
           </div>
 
           <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-8">
-            {/* Left Column */}
             <div className="space-y-8">
-              {/* Personal Information Section */}
               <section className="bg-gray-50 p-6 rounded-xl shadow-sm">
                 <div className="flex items-center space-x-2 text-green-700 mb-6"> 
                   <h2 className="text-xl font-semibold">Personal Information</h2>
                 </div>
                 
-                {/* Update input fields with new classes */}
                 <div className="grid grid-cols-2 gap-6">
                   <div className="space-y-5 col-span-1">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Full Name <span className="text-red-500">*</span>
+                      </label>
                       <input
                         type="text"
                         required
                         value={formData.personalInfo.fullName}
-                        onChange={(e) => handleInputChange('personalInfo', 'fullName', e.target.value.replace(/[^a-zA-Z\s]/g, ''))} // Allow only letters and spaces
+                        onChange={(e) => handleInputChange('personalInfo', 'fullName', e.target.value.replace(/[^a-zA-Z\s]/g, ''))}
                         className={inputClasses}
                         placeholder="Enter your full name"
                       />
@@ -624,7 +615,7 @@ const ChargingStationApplication = () => {
 
                     <div>
                       <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                        Email *
+                        Email <span className="text-red-500">*</span>
                       </label>
                       <input
                         id="email"
@@ -638,21 +629,22 @@ const ChargingStationApplication = () => {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Phone *</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Phone <span className="text-red-500">*</span>
+                      </label>
                       <input
                         type="tel"
                         required
                         maxLength={10}
                         value={formData.personalInfo.phone}
-                        onChange={(e) => handleInputChange('personalInfo', 'phone', e.target.value.replace(/[^0-9]/g, ''))} // Allow only digits
+                        onChange={(e) => handleInputChange('personalInfo', 'phone', e.target.value.replace(/[^0-9]/g, ''))}
                         className={inputClasses}
                         placeholder="Enter your phone number"
                       />
                     </div>
                   </div>
 
-                  {/* Photo upload section - Enhanced styling */}
-                  <div className="flex flex-col items-center justify-start md:mt-10"> {/* Added md:mt-10 for desktop */}
+                  <div className="flex flex-col items-center justify-start md:mt-10">
                     <div className="w-36 h-36 relative group">
                       {photoPreview ? (
                         <div className="relative w-full h-full rounded-lg overflow-hidden shadow-md">
@@ -688,9 +680,10 @@ const ChargingStationApplication = () => {
                   </div>                  
                 </div>
 
-                
                 <div className="mt-4">
-                  <label className="block text-sm font-medium text-gray-700">Address *</label>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Address <span className="text-red-500">*</span>
+                  </label>
                   <div className="flex space-x-2">
                     <button
                       type="button"
@@ -723,7 +716,7 @@ const ChargingStationApplication = () => {
                       required
                       value={formData.personalInfo.address}
                       onChange={(e) => handleInputChange('personalInfo', 'address', e.target.value)}
-                      className={`${textareaClasses}  rounded-md flex-1`}
+                      className={`${textareaClasses} rounded-md flex-1`}
                       rows="2"
                       placeholder="Enter your complete address"
                     />
@@ -732,20 +725,23 @@ const ChargingStationApplication = () => {
 
                 <div className="grid grid-cols-3 gap-4 mt-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">City *</label>
+                    <label className="block text-sm font-medium text-gray-700">
+                      City <span className="text-red-500">*</span>
+                    </label>
                     <input
                       type="text"
                       required
                       value={formData.personalInfo.city}
-                      onChange={(e) => handleInputChange('personalInfo', 'city', e.target.value.replace(/[^a-zA-Z\s]/g, ''))} // Allow only letters and spaces
+                      onChange={(e) => handleInputChange('personalInfo', 'city', e.target.value.replace(/[^a-zA-Z\s]/g, ''))}
                       className={inputClasses}
                       placeholder="Enter your city"
                     />
                   </div>
 
-
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">State *</label>
+                    <label className="block text-sm font-medium text-gray-700">
+                      State <span className="text-red-500">*</span>
+                    </label>
                     <input
                       type="text"
                       required
@@ -757,50 +753,52 @@ const ChargingStationApplication = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">Pincode *</label>
+                    <label className="block text-sm font-medium text-gray-700">
+                      Pincode <span className="text-red-500">*</span>
+                    </label>
                     <input
                       type="text"
                       required
                       maxLength={6}
                       value={formData.personalInfo.pincode}
-                      onChange={(e) => handleInputChange('personalInfo', 'pincode', e.target.value.replace(/[^0-9]/g, ''))} // Only allow numbers
+                      onChange={(e) => handleInputChange('personalInfo', 'pincode', e.target.value.replace(/[^0-9]/g, ''))}
                       className={inputClasses}
                       placeholder="Enter your pincode"
                     />
                   </div> 
                 </div>
-             </section>
+              </section>
 
-              {/* Business Information */}
               <section className="bg-gray-50 p-6 rounded-xl shadow-sm">
                 <h2 className="text-xl font-semibold text-green-700 mb-4">Business Information</h2>
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-2 gap-6">
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">GST Number</label>
-                        <input
-                          type="text"
-                          maxLength={15}
-                          className={inputClasses}
-                          value={formData.businessInfo.gstNumber}
-                          onChange={(e) => {
-                            // Only allow letters and digits, convert to uppercase, and limit to 15 characters
-                            const alphanumericOnly = e.target.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase().slice(0, 15);
-                            handleInputChange('businessInfo', 'gstNumber', alphanumericOnly);
-                          }}
-                          style={{textTransform: 'uppercase'}}
-                          placeholder="Enter your GST number"
-                        />
-                      </div>
+                <div className="space-y-4">
+                  <div className="grid grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Investment Capacity *</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">GST Number</label>
+                      <input
+                        type="text"
+                        maxLength={15}
+                        className={inputClasses}
+                        value={formData.businessInfo.gstNumber}
+                        onChange={(e) => {
+                          const alphanumericOnly = e.target.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase().slice(0, 15);
+                          handleInputChange('businessInfo', 'gstNumber', alphanumericOnly);
+                        }}
+                        style={{textTransform: 'uppercase'}}
+                        placeholder="Enter your GST number"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Investment Capacity <span className="text-red-500">*</span>
+                      </label>
                       <select
                         required
-                        className={inputClasses}
+                        className={selectClasses}
                         value={formData.businessInfo.investmentCapacity}
                         onChange={(e) => handleInputChange('businessInfo', 'investmentCapacity', e.target.value)}
                       >
-                        <option value="">Select Investment Capacity</option>
+                        <option value="" className="text-gray-400">Select Investment Capacity</option>
                         <option value="1L to 5L">1L to 5L</option>
                         <option value="5L to 15L">5L to 15L</option>
                         <option value="15L to 30L">15L to 30L</option>
@@ -811,7 +809,7 @@ const ChargingStationApplication = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Company Name </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Company Name</label>
                     <textarea
                       className={textareaClasses}
                       rows="1"
@@ -822,7 +820,9 @@ const ChargingStationApplication = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Business Experience *</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Business Experience <span className="text-red-500">*</span>
+                    </label>
                     <textarea
                       required
                       className={textareaClasses}
@@ -836,14 +836,14 @@ const ChargingStationApplication = () => {
               </section>
             </div>
 
-            {/* Right Column */}
             <div className="space-y-8">
-              {/* Technical Information */}
               <section className="bg-gray-50 p-6 rounded-xl shadow-sm">
                 <h2 className="text-xl font-semibold text-green-700 mb-4">Technical Information</h2>
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Electrical Infrastructure Details *</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Electrical Infrastructure Details <span className="text-red-500">*</span>
+                    </label>
                     <textarea
                       required
                       className={textareaClasses}
@@ -855,7 +855,9 @@ const ChargingStationApplication = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Grid Connectivity Status *</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Grid Connectivity Status <span className="text-red-500">*</span>
+                    </label>
                     <div className="flex space-x-4 mt-1">
                       <label className="inline-flex items-center">
                         <input
@@ -885,7 +887,9 @@ const ChargingStationApplication = () => {
                   <div className="grid grid-cols-2 gap-6">
                     {formData.technicalInfo.gridConnectivity === "Yes" && (
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Power Availability (kVA) *</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Power Availability (kVA) <span className="text-red-500">*</span>
+                        </label>
                         <input
                           type="number"
                           required
@@ -893,16 +897,17 @@ const ChargingStationApplication = () => {
                           value={formData.technicalInfo.powerAvailability}
                           onChange={(e) => handleInputChange('technicalInfo', 'powerAvailability', e.target.value)}
                           onInput={(e) => {
-                          // Remove any non-numeric characters and prevent letter input
-                          e.target.value = e.target.value.replace(/[^0-9]/g, '');
-                        }}
+                            e.target.value = e.target.value.replace(/[^0-9]/g, '');
+                          }}
                           placeholder="Enter your power availability"
                         />
                       </div>
                     )}
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Property Size (sq. ft.) *</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Property Size (sq. ft.) <span className="text-red-500">*</span>
+                      </label>
                       <input
                         type="text" 
                         required
@@ -911,7 +916,6 @@ const ChargingStationApplication = () => {
                         value={formData.businessInfo.propertySize}
                         onChange={(e) => handleInputChange('businessInfo', 'propertySize', e.target.value)}
                         onInput={(e) => {
-                          // Remove any non-numeric characters and prevent letter input
                           e.target.value = e.target.value.replace(/[^0-9]/g, '');
                         }}
                         placeholder="Enter your property size"
@@ -921,12 +925,11 @@ const ChargingStationApplication = () => {
                 </div>
               </section>
 
-              {/* Additional Information */}
               <section className="bg-gray-50 p-6 rounded-xl shadow-sm">
                 <h2 className="text-xl font-semibold text-green-700 mb-4">Additional Information</h2>
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Why do you want to join SAMKU EVC? </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Why do you want to join SAMKU EVC?</label>
                     <textarea
                       className={textareaClasses}
                       rows="2"
@@ -961,7 +964,6 @@ const ChargingStationApplication = () => {
               </section>
             </div>
 
-            {/* Form Actions - Enhanced styling */}
             <div className="col-span-2 flex justify-end space-x-4 pt-8 border-t border-gray-100">
               <motion.button
                 type="button"
