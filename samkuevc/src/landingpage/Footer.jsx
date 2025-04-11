@@ -98,7 +98,7 @@ const Footer = () => {
                 </span>
               </li>
               <li className="flex items-center">
-              <span className="text-blue-600 mr-2 md:mr-3 flex-shrink-0">📞</span>
+              <FaPhone className="text-blue-600 mr-2 md:mr-3 flex-shrink-0 transform scale-x-[-1]" />
                 <a href="tel:+919561137963" className="hover:text-navy-700 transition-colors">
                   +91 9561137963
                 </a>
