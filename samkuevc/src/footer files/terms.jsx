@@ -1,6 +1,6 @@
 import React from "react";
 import Navbar from '../landingpage/Navbar';
-import Footer from '../landingpage/Footer';
+
 
 const Terms = () => {
   return (
@@ -73,7 +73,6 @@ const Terms = () => {
           </p>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Navbar from '../landingpage/Navbar';
-import Footer from '../landingpage/Footer';
 
 const Careers = () => {
   const [formData, setFormData] = useState({
@@ -180,7 +179,6 @@ const Careers = () => {
           </form>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };
