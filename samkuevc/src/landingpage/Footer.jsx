@@ -65,7 +65,7 @@ const Footer = () => {
                 Electric Vehicle Care
               </span>
             </div>
-            <div className="flex space-x-3 md:space-x-4">
+            {/* <div className="flex space-x-3 md:space-x-4">
               {socialLinks.map((social, index) => (
                 <a key={index} href={social.link} target="_blank" rel="noopener noreferrer" aria-label={social.label}>
                   <div className="w-8 h-8 md:w-9 md:h-9 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:text-white hover:bg-blue-600 transition-all duration-300">
@@ -73,7 +73,7 @@ const Footer = () => {
                   </div>
                 </a>
               ))}
-            </div>
+            </div> */}
           </div>
 
           <div>
