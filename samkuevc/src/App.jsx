@@ -15,6 +15,12 @@ import ChargingStationApplication from './landingpage/ChargingStationApplication
 import Franchise from './landingpage/Franchise';
 import Dashboard from "./admin/admin-dashboard.jsx"
 import StationCanopyModel from './landingpage/StationCanopyModel'
+// Import footer components
+import Careers from './footer files/careers';
+import FAQ from './footer files/faq';
+import Privacy from './footer files/privacy';
+import Refund from './footer files/refund';
+import Terms from './footer files/terms';
 
 const App = () => {
   return (
@@ -37,6 +43,12 @@ const App = () => {
         <Route path="/Franchise" element={<Franchise />} />
         <Route path="/admin" element={<Dashboard />} />
         <Route path="/stationcanopymodel" element={<StationCanopyModel />} />
+        {/* Footer routes */}
+        <Route path="/careers" element={<Careers />} />
+        <Route path="/faq" element={<FAQ />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/refund" element={<Refund />} />
+        <Route path="/terms" element={<Terms />} />
 
 
       </Routes>
