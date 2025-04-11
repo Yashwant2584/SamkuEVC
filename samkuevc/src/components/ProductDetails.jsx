@@ -164,7 +164,13 @@ const ProductDetails = () => {
     const colorMap = {
       green: '#22c55e',
       orange: '#f97316',
-      pink: '#ec4899'
+      pink: '#ec4899',
+      blue: '#3b82f6',
+      yellow: '#f59e0b',
+      red: '#ef4444',
+      black: '#000000',
+      white: '#ffffff',
+      gray: '#9ca3af',
     };
     return { backgroundColor: colorMap[color.toLowerCase()] || '#gray-500' };
   };

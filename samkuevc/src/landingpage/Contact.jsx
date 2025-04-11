@@ -10,12 +10,11 @@ const Contact = () => {
   });
 
   const validateForm = () => {
-    // Basic validation to ensure all fields are filled
+    // Updated validation to make message optional
     return (
       formData.name.trim() !== '' &&
       formData.email.trim() !== '' &&
       formData.subject.trim() !== '' &&
-      formData.message.trim() !== '' &&
       /\S+@\S+\.\S+/.test(formData.email) // Simple email validation
     );
   };
@@ -57,7 +56,7 @@ const Contact = () => {
         alert('Error submitting message. Please try again.');
       }
     } else {
-      alert('Please fill all fields correctly.');
+      alert('Please fill all required fields correctly.');
     }
   };
 
@@ -203,7 +202,9 @@ const Contact = () => {
             
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                Full Name <span className="text-red-600">*</span>
+                </label>
                 <input
                   type="text"
                   id="name"
@@ -217,7 +218,9 @@ const Contact = () => {
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                Email Address <span className="text-red-600">*</span>
+                </label>
                 <input
                   type="email"
                   id="email"
@@ -225,13 +228,15 @@ const Contact = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  placeholder="your.email@example.com"
+                  placeholder="Enter your email address"
                   className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-200"
                 />
               </div>
 
               <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">Subject</label>
+                <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
+                Subject <span className="text-red-600">*</span>
+                </label>
                 <input
                   type="text"
                   id="subject"
@@ -245,15 +250,16 @@ const Contact = () => {
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                  Message
+                </label>
                 <textarea
                   id="message"
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
                   rows={4}
-                  required
-                  placeholder="Tell us more about your inquiry..."
+                  placeholder="Tell us more about your inquiry (optional)"
                   className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-200 resize-none"
                 />
               </div>
@@ -266,7 +272,7 @@ const Contact = () => {
               </button>
 
               <p className="text-xs text-center text-gray-500 mt-4">
-                We'll get back to you within 24 hours
+                Fields marked with <span className="text-red-600">*</span> are required
               </p>
             </form>
           </motion.div>
