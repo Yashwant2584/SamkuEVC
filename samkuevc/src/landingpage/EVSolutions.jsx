@@ -55,14 +55,6 @@ const EVSolutions = () => {
                   <h3 className="text-xl font-bold text-blue-800">{card.title}</h3>
                 </div>
                 <p className="text-gray-700 text-sm flex-grow">{card.description}</p>
-                <div className="mt-4 pt-4 border-t border-gray-100">
-                  <button className="text-sm font-medium text-blue-600 hover:text-blue-800 flex items-center">
-                    Learn more
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </button>
-                </div>
               </motion.div>
             ))}
           </div>
@@ -114,14 +106,6 @@ const EVSolutions = () => {
                     <h3 className="text-xl font-bold text-blue-800">{charger.power} Charger</h3>
                   </div>
                   <p className="text-gray-700 flex-grow">{charger.description}</p>
-                  <div className="mt-4 pt-4 border-t border-gray-100">
-                    <button className="text-sm font-medium text-blue-600 hover:text-blue-800 flex items-center">
-                      Learn more
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </button>
-                  </div>
                 </motion.div>
               ))}
             </div>
@@ -206,14 +190,6 @@ const EVSolutions = () => {
                     <h3 className={`text-lg font-bold ${feature.color === 'blue' ? 'text-blue-800' : 'text-green-700'}`}>{feature.title}</h3>
                   </div>
                   <p className="text-gray-700 text-sm mt-2 flex-grow">{feature.description}</p>
-                  <div className="mt-4 pt-4 border-t border-gray-100">
-                    <button className={`text-sm font-medium ${feature.color === 'blue' ? 'text-blue-600 hover:text-blue-800' : 'text-green-600 hover:text-green-800'} flex items-center`}>
-                      Learn more
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </button>
-                  </div>
                 </motion.div>
               ))}
             </div>
