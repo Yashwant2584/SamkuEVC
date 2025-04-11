@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { X } from "lucide-react";
-import { motion } from "framer-motion"; // Import motion from framer-motion
+import { motion } from "framer-motion";
+import Navbar from '../landingpage/Navbar';
+import Footer from '../landingpage/Footer';
 
-const CareersModal = ({ isOpen, onClose }) => {
-  const [scrollPosition, setScrollPosition] = useState(0);
+const Careers = () => {
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -14,11 +14,6 @@ const CareersModal = ({ isOpen, onClose }) => {
     photo: null,
   });
   const [errors, setErrors] = useState({});
-
-  const handleScroll = (e) => {
-    const position = e.target.scrollTop;
-    setScrollPosition(position);
-  };
 
   const validateForm = () => {
     let tempErrors = {};
@@ -63,36 +58,24 @@ const CareersModal = ({ isOpen, onClose }) => {
     if (validateForm()) {
       console.log("Form submitted:", formData);
       alert("Application submitted successfully!");
-      onClose();
     }
   };
 
-  // Define input classes from FranchiseApplication
   const inputClasses = "w-full px-4 py-2 rounded-lg border border-gray-300 outline-none hover:ring-2 hover:ring-blue-100 hover:border-blue-500 focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition-all";
 
-  if (!isOpen) return null;
-
   return (
-    <div className="fixed inset-0 bg-white-500 bg-opacity-30 backdrop-blur-md flex items-center justify-center z-50">
-      <div className="bg-white rounded-xl shadow-2xl w-[95%] md:w-[70%] lg:w-[55%] max-h-[95vh] flex flex-col overflow-hidden">
-        {/* Header */}
-        <div className="flex justify-between items-center p-4 bg-gradient-to-r from-blue-600 to-blue-400 text-white">
-          <h2 className="text-xl font-bold tracking-tight">Careers at SAMKU</h2>
-          <button 
-            onClick={onClose} 
-            className="p-2 rounded-full transition-colors duration-200"
-          >
-            <X size={20} />
-          </button>
-        </div>
-
-        {/* Scrollable Content Area */}
-        <div className="flex-1 overflow-y-auto p-6 scrollbar-thin scrollbar-thumb-blue-200 scrollbar-track-gray-100">
-          <div className="mb-6">
-            <h3 className="text-lg font-semibold text-blue-700 mb-2">We Are Hiring!</h3>
-            <p className="text-gray-600 text-sm leading-relaxed">
-              Join our innovative team at SAMKU EV POWERING PVT. LTD. and drive the future of electric vehicles! We seek passionate professionals to deliver exceptional EV services.
-            </p>
+    <div className="min-h-screen bg-gray-50">
+      <Navbar />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="bg-white rounded-xl shadow-2xl p-8">
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold text-gray-900 mb-4">Careers at SAMKU</h1>
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold text-blue-700 mb-2">We Are Hiring!</h3>
+              <p className="text-gray-600">
+                Join our innovative team at SAMKU EV POWERING PVT. LTD. and drive the future of electric vehicles! We seek passionate professionals to deliver exceptional EV services.
+              </p>
+            </div>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -122,22 +105,21 @@ const CareersModal = ({ isOpen, onClose }) => {
                 />
                 {errors.email && <p className="text-red-500 text-xs mt-1 animate-pulse">{errors.email}</p>}
               </div>
-            
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number <span className="text-red-500">*</span></label>
-              <input
-                type="tel"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                className={inputClasses}
-                placeholder="Enter your 10-digit phone number"
-                maxLength={10}
-              />
-              {errors.phone && <p className="text-red-500 text-xs mt-1 animate-pulse">{errors.phone}</p>}
-            </div>
-           
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number <span className="text-red-500">*</span></label>
+                <input
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  className={inputClasses}
+                  placeholder="Enter your 10-digit phone number"
+                  maxLength={10}
+                />
+                {errors.phone && <p className="text-red-500 text-xs mt-1 animate-pulse">{errors.phone}</p>}
+              </div>
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Applying for Position <span className="text-red-500">*</span></label>
                 <select
@@ -171,7 +153,7 @@ const CareersModal = ({ isOpen, onClose }) => {
                 </select>
                 {errors.experience && <p className="text-red-500 text-xs mt-1 animate-pulse">{errors.experience}</p>}
               </div>
-           
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Upload Resume (PDF/DOC/DOCX, max 2MB) <span className="text-red-500">*</span></label>
                 <input
@@ -179,7 +161,7 @@ const CareersModal = ({ isOpen, onClose }) => {
                   name="resume"
                   onChange={handleChange}
                   accept=".pdf,.doc,.docx"
-                  className={inputClasses} // Apply the same inputClasses for consistency
+                  className={inputClasses}
                 />
                 {errors.resume && <p className="text-red-500 text-xs mt-1 animate-pulse">{errors.resume}</p>}
               </div>
@@ -198,8 +180,9 @@ const CareersModal = ({ isOpen, onClose }) => {
           </form>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
 
-export default CareersModal;
+export default Careers;

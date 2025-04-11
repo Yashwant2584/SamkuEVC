@@ -1,20 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube, FaMapMarkerAlt, FaPhone, FaEnvelope, FaArrowRight } from "react-icons/fa";
-import PrivacyPolicyModal from "../footer files/privacy";
-import RefundPolicyModal from "../footer files/refund";
-import TermsAndConditionsModal from "../footer files/terms";
-import CareersModal from "../footer files/careers";
-import FAQModal from "../footer files/faq";
 import name from '../images/samkuEVC.png';
 import logo from '../images/logo.png';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const navigate = useNavigate();
-  const [modals, setModals] = useState({ privacy: false, refund: false, terms: false, careers: false, faq: false });
-
-  const toggleModal = (modalName, isOpen) => setModals((prev) => ({ ...prev, [modalName]: isOpen }));
 
   const handleNavigation = (path) => {
     navigate(path);
@@ -25,11 +17,11 @@ const Footer = () => {
     { name: "Products", path: "/products" },
     { name: "About Us", path: "/about" },
     { name: "Locations", path: "/location" },
-    { name: "Careers", modal: "careers" },
-    { name: "FAQ", modal: "faq" },
-    { name: "Terms of Service", modal: "terms" },
-    { name: "Privacy Policy", modal: "privacy" },
-    { name: "Refund Policy", modal: "refund" },
+    { name: "Careers", path: "/careers" },
+    { name: "FAQ", path: "/faq" },
+    { name: "Terms of Service", path: "/terms" },
+    { name: "Privacy Policy", path: "/privacy" },
+    { name: "Refund Policy", path: "/refund" },
   ];
 
   const socialLinks = [
@@ -81,22 +73,13 @@ const Footer = () => {
             <ul className="grid grid-cols-2 gap-2 md:grid-cols-2 md:gap-x-4 md:gap-y-4">
               {quickLinks.map((link) => (
                 <li key={link.name} className="flex">
-                  {link.modal ? (
-                    <button 
-                      onClick={() => toggleModal(link.modal, true)}
-                      className="text-gray-700 hover:text-green-700 transition-colors duration-300 flex items-center text-sm md:text-base md:whitespace-nowrap"
-                    >
-                      <FaArrowRight className="text-blue-600 text-xs mr-2" /> {link.name}
-                    </button>
-                  ) : (
-                    <Link 
-                      to={link.path}
-                      onClick={() => handleNavigation(link.path)}
-                      className="text-gray-700 hover:text-green-700 transition-colors duration-300 flex items-center text-sm md:text-base md:whitespace-nowrap"
-                    >
-                      <FaArrowRight className="text-blue-600 text-xs mr-2" /> {link.name}
-                    </Link>
-                  )}
+                  <Link 
+                    to={link.path}
+                    onClick={() => handleNavigation(link.path)}
+                    className="text-gray-700 hover:text-green-700 transition-colors duration-300 flex items-center text-sm md:text-base md:whitespace-nowrap"
+                  >
+                    <FaArrowRight className="text-blue-600 text-xs mr-2" /> {link.name}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -167,12 +150,6 @@ const Footer = () => {
           </p>
         </div>
       </div>
-
-      {modals.privacy && <PrivacyPolicyModal isOpen={true} onClose={() => toggleModal("privacy", false)} />}
-      {modals.refund && <RefundPolicyModal isOpen={true} onClose={() => toggleModal("refund", false)} />}
-      {modals.terms && <TermsAndConditionsModal isOpen={true} onClose={() => toggleModal("terms", false)} />}
-      {modals.careers && <CareersModal isOpen={true} onClose={() => toggleModal("careers", false)} />}
-      {modals.faq && <FAQModal isOpen={true} onClose={() => toggleModal("faq", false)} />}
     </footer>
   );
 };
