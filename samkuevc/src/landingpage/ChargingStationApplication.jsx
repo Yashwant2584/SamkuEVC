@@ -688,7 +688,35 @@ const ChargingStationApplication = () => {
                     <button
                       type="button"
                       className="px-3 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 border border-gray-300 rounded-md focus:outline-none flex items-center"
-                      onClick={() => {/* Add your location getting logic here */}}
+                      onClick={() => {
+                        if (navigator.geolocation) {
+                          navigator.geolocation.getCurrentPosition(
+                            (position) => {
+                              const latitude = position.coords.latitude;
+                              const longitude = position.coords.longitude;
+                              console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+                              
+                              // Do something with the coordinates
+                              // For example, store them in state:
+                              // setLocation({ lat: latitude, lng: longitude });
+                            },
+                            (error) => {
+                              console.error("Error getting location:", error.message);
+                              // Handle errors here
+                              // For example: setLocationError(error.message);
+                            },
+                            {
+                              enableHighAccuracy: true,
+                              timeout: 5000,
+                              maximumAge: 0
+                            }
+                          );
+                        } else {
+                          console.error("Geolocation is not supported by this browser.");
+                          // Handle lack of support
+                          // For example: setLocationError("Geolocation not supported");
+                        }
+                      }}
                     >
                       <svg
                         className="w-5 h-5 mr-1"

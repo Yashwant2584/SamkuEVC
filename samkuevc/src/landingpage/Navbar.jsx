@@ -6,6 +6,8 @@ import name from '../images/samkuEVC.png';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const [prevScrollPos, setPrevScrollPos] = useState(0);
   const location = useLocation();
 
   // Scroll to top when route changes
@@ -15,6 +17,22 @@ const Navbar = () => {
       behavior: 'smooth' // Optional: adds a smooth scrolling effect
     });
   }, [location.pathname]); // Trigger effect when path changes
+
+  // Handle scroll behavior for navbar visibility
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollPos = window.pageYOffset;
+      
+      // Make navbar visible when scrolling up or at the top
+      const isVisible = prevScrollPos > currentScrollPos || currentScrollPos < 10;
+      
+      setPrevScrollPos(currentScrollPos);
+      setVisible(isVisible);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [prevScrollPos]);
 
   const navItems = [
     { path: '/', label: 'Home' },
@@ -28,7 +46,11 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="bg-white shadow-lg fixed w-full z-50">
+    <nav 
+      className={`bg-white shadow-lg fixed w-full z-50 transition-transform duration-300 ${
+        visible ? 'translate-y-0' : '-translate-y-full'
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
