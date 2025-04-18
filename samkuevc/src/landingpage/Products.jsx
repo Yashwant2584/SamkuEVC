@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { chargers } from '../data/chargers.js';
 import ProductCard from '../components/ProductCard';
 import { ChevronLeft, Filter, Search } from 'lucide-react';
@@ -17,53 +17,81 @@ const Products = () => {
   const [isAnimating, setIsAnimating] = useState(false);
   const [sortBy, setSortBy] = useState('default');
   const [error, setError] = useState(null);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const categories = [
     {
       title: 'E-Bike Chargers',
       description: 'Efficient charging solutions for electric bikes',
-      image: bike
+      image: bike,
+      path: '/products/e-bike-chargers'
     },
     {
       title: 'AC Chargers',
       description: 'Reliable AC charging for all electric vehicles',
-      image: ac_charge
+      image: ac_charge,
+      path: '/products/ac-chargers'
     },
     {
       title: 'DC Chargers',
       description: 'High-power DC fast charging solutions',
-      image: dc_charge
+      image: dc_charge,
+      path: '/products/dc-chargers'
     },
     {
       title: 'EV Accessories',
       description: 'Essential accessories for your EV charging needs',
-      image: '/accessories.jpg'
+      image: '/accessories.jpg',
+      path: '/products/ev-accessories'
     },
     {
       title: 'Electric Cycles',
       description: 'Specialized chargers for electric cycles',
-      image: cycle
+      image: cycle,
+      path: '/products/electric-cycles'
     },   
     {
       title: 'Public EV Chargers',
       description: 'Specialized chargers for parking lots and public spaces',
-      image: public_charge
+      image: public_charge,
+      path: '/products/public-ev-chargers'
     },
     {
       title: 'LEV DC Chargers',
       description: 'Coming soon!',
-      image: lev_dc
+      image: lev_dc,
+      path: '/products/lev-dc-chargers'
     }
   ];
 
   useEffect(() => {
+    // Check if URL matches a category route
+    const pathSegments = location.pathname.split('/');
+    if (pathSegments.length >= 3 && pathSegments[1] === 'products') {
+      const slug = pathSegments[2];
+      const category = categories.find(cat => 
+        cat.path.split('/').pop() === slug
+      );
+      
+      if (category) {
+        setSelectedCategory(category.title);
+      }
+    } else if (location.pathname === '/products') {
+      setSelectedCategory(null);
+    }
+    
     // Scroll to top when category changes
     window.scrollTo(0, 0);
-  }, [selectedCategory]);
+  }, [location.pathname, categories]);
 
   const handleCategorySelect = (categoryTitle) => {
     setIsAnimating(true);
     setTimeout(() => {
+      const category = categories.find(cat => cat.title === categoryTitle);
+      if (category) {
+        navigate(category.path);
+      }
       setSelectedCategory(categoryTitle);
       setIsAnimating(false);
     }, 300);
@@ -72,6 +100,7 @@ const Products = () => {
   const handleBackToCategories = () => {
     setIsAnimating(true);
     setTimeout(() => {
+      navigate('/products');
       setSelectedCategory(null);
       setSearchTerm('');
       setSortBy('default');
@@ -115,10 +144,14 @@ const Products = () => {
             // Show categories when no category is selected
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
               {categories.map((category, index) => (
-                <div 
+                <Link 
                   key={index} 
+                  to={category.path}
                   className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-                  onClick={() => handleCategorySelect(category.title)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleCategorySelect(category.title);
+                  }}
                 >
                   <div className="relative">
                     <img 
@@ -132,16 +165,16 @@ const Products = () => {
                   <div className="p-5 md:p-6">
                     <h3 className="text-lg md:text-xl font-semibold mb-2">{category.title}</h3>
                     <p className="text-gray-600 mb-4 text-sm md:text-base">{category.description}</p>
-                    <button
+                    <span
                       className="text-green-600 hover:text-green-700 font-medium inline-flex items-center text-sm md:text-base"
                     >
                       View Products
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                       </svg>
-                    </button>
+                    </span>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           ) : (

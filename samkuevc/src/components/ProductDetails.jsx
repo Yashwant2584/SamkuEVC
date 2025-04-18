@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
 import { ArrowLeft, Battery, Zap, Check, Heart, Share2, ChevronLeft, ChevronRight } from 'lucide-react';
 import { chargers } from '../data/chargers';
 
 const ProductDetails = () => {
   const { id } = useParams();
+  const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [relatedProducts, setRelatedProducts] = useState([]);
@@ -15,6 +16,7 @@ const ProductDetails = () => {
   const navigate = useNavigate();
   const [displayImages, setDisplayImages] = useState([]);
   const [currentPrice, setCurrentPrice] = useState('');
+  const [categoryPath, setCategoryPath] = useState('/products');
 
   const charger = chargers.find((c) => c.id === id);
 
@@ -34,6 +36,17 @@ const ProductDetails = () => {
     '180kW': ['300A'],
   };
  
+  // Get category slug from URL path or product category
+  useEffect(() => {
+    const pathSegments = location.pathname.split('/');
+    if (pathSegments.length >= 3 && pathSegments[1] === 'products') {
+      setCategoryPath(`/products/${pathSegments[2]}`);
+    } else if (charger && charger.category) {
+      const categorySlug = charger.category.toLowerCase().replace(/\s+/g, '-');
+      setCategoryPath(`/products/${categorySlug}`);
+    }
+  }, [location.pathname, charger]);
+
   const updateImagesBasedOnPower = (power) => {
     if (!charger) return;
     
@@ -149,21 +162,41 @@ const ProductDetails = () => {
   }, [id]);
 
   const handlePrevious = () => {
-    navigate(`/product/${getPreviousProductId()}`);
+    if (!charger || !charger.category) return;
+    
+    const categoryProducts = chargers.filter(c => c.category === charger.category);
+    const currentIndex = categoryProducts.findIndex(c => c.id === id);
+    if (currentIndex === -1) return;
+    
+    const prevProduct = currentIndex > 0 
+      ? categoryProducts[currentIndex - 1] 
+      : categoryProducts[categoryProducts.length - 1];
+    
+    navigate(`${categoryPath}/${prevProduct.id}`);
   };
 
   const handleNext = () => {
-    navigate(`/product/${getNextProductId()}`);
+    if (!charger || !charger.category) return;
+    
+    const categoryProducts = chargers.filter(c => c.category === charger.category);
+    const currentIndex = categoryProducts.findIndex(c => c.id === id);
+    if (currentIndex === -1) return;
+    
+    const nextProduct = currentIndex < categoryProducts.length - 1 
+      ? categoryProducts[currentIndex + 1] 
+      : categoryProducts[0];
+    
+    navigate(`${categoryPath}/${nextProduct.id}`);
   };
 
-  const getPreviousProductId = () => {
-    const currentIndex = chargers.findIndex(c => c.id === id);
-    return currentIndex > 0 ? chargers[currentIndex - 1].id : chargers[chargers.length - 1].id;
-  };
-
-  const getNextProductId = () => {
-    const currentIndex = chargers.findIndex(c => c.id === id);
-    return currentIndex < chargers.length - 1 ? chargers[currentIndex + 1].id : chargers[0].id;
+  const formatCategoryName = (pathName) => {
+    if (!pathName || !pathName.includes('/')) return 'Products';
+    
+    const categorySlug = pathName.split('/').pop();
+    return categorySlug
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
   };
 
   const getColorStyle = (color) => {
@@ -207,8 +240,8 @@ const ProductDetails = () => {
     <div className="min-h-screen bg-gray-50 py-12 pt-24 transition-opacity duration-300">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between mb-6">
-          <Link to="/products" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium transition-colors">
-            <ArrowLeft size={18} /> Back to Products
+          <Link to={categoryPath} className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium transition-colors">
+            <ArrowLeft size={18} /> Back to {formatCategoryName(categoryPath)}
           </Link>
           <div className="flex items-center gap-2">
             <button onClick={handlePrevious} className="p-2 border rounded-full hover:bg-gray-100 transition-colors" aria-label="Previous product">
@@ -398,7 +431,7 @@ const ProductDetails = () => {
               {relatedProducts.map((product) => (
                 <Link
                   key={product.id}
-                  to={`/product/${product.id}`}
+                  to={`${categoryPath}/${product.id}`}
                   className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-200"
                 >
                   <div className="h-48 overflow-hidden">

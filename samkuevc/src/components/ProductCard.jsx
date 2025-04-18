@@ -3,11 +3,23 @@ import { ArrowRight, Battery, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const ProductCard = ({ charger }) => {
+  // Create URL path based on category
+  const getCategoryPath = (category) => {
+    if (!category) return '/products';
+    
+    // Convert category name to URL slug
+    const slug = category.toLowerCase().replace(/\s+/g, '-');
+    return `/products/${slug}`;
+  };
+
+  // Build product detail URL
+  const productDetailUrl = `${getCategoryPath(charger.category)}/${charger.id}`;
+
   return (
     <div 
       className="bg-white rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:shadow-xl h-full flex flex-col"
     >
-      <Link to={`/product/${charger.id}`} className="block relative overflow-hidden h-48">
+      <Link to={productDetailUrl} className="block relative overflow-hidden h-48">
         <img
           src={charger.image[0] || 'https://via.placeholder.com/800x500?text=No+Image'}
           alt={charger.name}
@@ -40,7 +52,7 @@ const ProductCard = ({ charger }) => {
           <div className="flex items-center justify-between mt-2">
             <span className="text-blue-600 font-semibold text-lg">{charger.price}</span>
             <Link
-              to={`/product/${charger.id}`}
+              to={productDetailUrl}
               className="inline-flex items-center gap-1 bg-blue-600 text-white px-3 py-1.5 rounded-lg transition-colors hover:bg-blue-700 text-sm font-medium"
               aria-label={`View details for ${charger.name}`}
             >
