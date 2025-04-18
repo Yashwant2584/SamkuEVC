@@ -28,7 +28,7 @@ const Footer = () => {
     { icon: <FaFacebook size={16} />, bgColor: "bg-blue-600", link: "https://www.facebook.com/share/1GiTeUp6tb/", label: "Facebook" },
     { icon: <FaInstagram size={16} />, bgColor: "bg-pink-600", link: "https://www.instagram.com/samkuev?igsh=eGxwNWNvcmIyZGRh", label: "Instagram" },
     { icon: <FaLinkedin size={16} />, bgColor: "bg-blue-700", link: "https://www.linkedin.com/in/mahesh-shingare-225151176/", label: "LinkedIn" },
-    { icon: <FaYoutube size={16} />, bgColor: "bg-red-600", link: "www.youtube.com/@samkuevc8267", label: "YouTube" },
+    { icon: <FaYoutube size={16} />, bgColor: "bg-red-600", link: "https://www.youtube.com/@samkuevc8267", label: "YouTube" },
   ];
 
   return (
