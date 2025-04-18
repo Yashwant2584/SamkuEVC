@@ -5,13 +5,19 @@ import { useLocation } from 'react-router-dom';
 const Enquiry = () => {
   const location = useLocation();
   const productData = location.state?.product;
+  
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
     product: productData?.name || '',
+    productCategory: productData?.category || '',
+    powerOutput: productData?.power || '',  // Changed from powerOptions to power
+    ratedCurrent: productData?.ratedCurrent || '',
+    productPrice: productData?.price || '',  // Changed from combinedPrices to price
     message: ''
   });
+  
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
@@ -40,6 +46,10 @@ const Enquiry = () => {
         formDataToSubmit.append('email', formData.email);
         formDataToSubmit.append('phone', formData.phone);
         formDataToSubmit.append('product', formData.product);
+        formDataToSubmit.append('productCategory', formData.productCategory);
+        formDataToSubmit.append('powerOutput', formData.powerOutput);
+        formDataToSubmit.append('ratedCurrent', formData.ratedCurrent);
+        formDataToSubmit.append('productPrice', formData.productPrice);
         formDataToSubmit.append('message', formData.message);
   
         const response = await fetch('https://samku-evc-backend.vercel.app/api/enquiry', {
@@ -59,6 +69,10 @@ const Enquiry = () => {
               email: '',
               phone: '',
               product: productData?.name || '',
+              productCategory: productData?.category || '',
+              powerOutput: productData?.power || '',
+              ratedCurrent: productData?.ratedCurrent || '',
+              productPrice: productData?.price || '',
               message: '',
             });
             setSubmitSuccess(false);
@@ -208,25 +222,75 @@ const Enquiry = () => {
                     <label htmlFor="product" className="block text-sm font-medium text-gray-700 mb-2">
                       Product Interest
                     </label>
-                    <select
+                    <input
+                      type="text"
                       id="product"
                       name="product"
                       value={formData.product}
-                      onChange={handleChange}
-                      required
-                      className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-all duration-200"
-                    >
-                      <option value="">{productData ? formData.product : "Select a product"}</option>
-                      {!productData && (
-                        <>
-                          <option value="ev-bike-charger">EV Bike Charger</option>
-                          <option value="ac-charger">AC Charger</option>
-                          <option value="dc-charger">DC Charger</option>
-                          <option value="accessories">EV Accessories</option>
-                          <option value="cycle-charger">EV Cycle Charger</option>
-                        </>
-                      )}
-                    </select>
+                      readOnly
+                      className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-all duration-200 py-3 px-4 bg-gray-50"
+                    />
+                  </div>
+                </div>
+
+                {/* Additional Product Details */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="productCategory" className="block text-sm font-medium text-gray-700 mb-2">
+                      Product Category
+                    </label>
+                    <input
+                      type="text"
+                      id="productCategory"
+                      name="productCategory"
+                      value={formData.productCategory}
+                      readOnly
+                      className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-all duration-200 py-3 px-4 bg-gray-50"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="powerOutput" className="block text-sm font-medium text-gray-700 mb-2">
+                      Power Output
+                    </label>
+                    <input
+                      type="text"
+                      id="powerOutput"
+                      name="powerOutput"
+                      value={formData.powerOutput}
+                      readOnly
+                      className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-all duration-200 py-3 px-4 bg-gray-50"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="ratedCurrent" className="block text-sm font-medium text-gray-700 mb-2">
+                      Rated Current
+                    </label>
+                    <input
+                      type="text"
+                      id="ratedCurrent"
+                      name="ratedCurrent"
+                      value={formData.ratedCurrent}
+                      readOnly
+                      className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-all duration-200 py-3 px-4 bg-gray-50"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="productPrice" className="block text-sm font-medium text-gray-700 mb-2">
+                      Product Price
+                    </label>
+                    <input
+                      type="text"
+                      id="productPrice"
+                      name="productPrice"
+                      value={formData.productPrice}
+                      readOnly
+                      className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-all duration-200 py-3 px-4 bg-gray-50"
+                    />
                   </div>
                 </div>
 

@@ -1,12 +1,12 @@
 import React from "react";
 import Navbar from '../landingpage/Navbar';
-import Footer from '../landingpage/Footer';
+
 
 const Terms = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 pt-25">
         <div className="bg-white rounded-xl shadow-2xl p-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-6">Terms of Service</h1>
           
@@ -65,7 +65,7 @@ const Terms = () => {
               samkuevservices@gmail.com
             </a>
             <br />
-            <strong>Phone:</strong> +91 1234567890
+            <strong>Phone:</strong> +91 9561137963
           </p>
           
           <p className="text-sm text-gray-500 italic">
@@ -73,7 +73,6 @@ const Terms = () => {
           </p>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

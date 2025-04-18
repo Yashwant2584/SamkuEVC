@@ -95,7 +95,6 @@ const ProductDetails = () => {
           power: selectedPower,
           ratedCurrent: selectedRatedCurrent,
           price: currentPrice,
-          id: charger.id,
         },
       }
     });

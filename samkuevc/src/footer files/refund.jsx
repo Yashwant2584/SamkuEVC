@@ -1,12 +1,12 @@
 import React from "react";
 import Navbar from '../landingpage/Navbar';
-import Footer from '../landingpage/Footer';
+
 
 const Refund = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 pt-25">
         <div className="bg-white rounded-xl shadow-2xl p-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-6">Refund Policy</h1>
           
@@ -70,7 +70,7 @@ const Refund = () => {
               samkuevservices@gmail.com
             </a>
             <br />
-            <strong>Phone:</strong> +91 1234567890
+            <strong>Phone:</strong> +91 9561137963
           </p>
           
           <p className="text-sm text-gray-500 italic">
@@ -78,7 +78,6 @@ const Refund = () => {
           </p>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

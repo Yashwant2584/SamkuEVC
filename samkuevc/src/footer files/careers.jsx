@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Navbar from '../landingpage/Navbar';
-import Footer from '../landingpage/Footer';
 
 const Careers = () => {
   const [formData, setFormData] = useState({
@@ -66,7 +65,7 @@ const Careers = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
-      <div className="max-w-7xl mx-auto px-4n sm:px-6 lg:px-8 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="bg-white rounded-xl shadow-2xl p-8">
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-gray-900 mb-4">Careers at SAMKU</h1>
@@ -180,7 +179,6 @@ const Careers = () => {
           </form>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };
