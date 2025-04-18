@@ -32,6 +32,20 @@ const App = () => {
         <Route path="/about" element={<About />} />
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<Products />} />
+        <Route path="/products/e-bike-chargers" element={<Products />} />
+        <Route path="/products/ac-chargers" element={<Products />} />
+        <Route path="/products/dc-chargers" element={<Products />} />
+        <Route path="/products/ev-accessories" element={<Products />} />
+        <Route path="/products/electric-cycles" element={<Products />} />
+        <Route path="/products/public-ev-chargers" element={<Products />} />
+        <Route path="/products/lev-dc-chargers" element={<Products />} />
+        <Route path="/products/e-bike-chargers/:id" element={<ProductDetails />} />
+        <Route path="/products/ac-chargers/:id" element={<ProductDetails />} />
+        <Route path="/products/dc-chargers/:id" element={<ProductDetails />} />
+        <Route path="/products/ev-accessories/:id" element={<ProductDetails />} />
+        <Route path="/products/electric-cycles/:id" element={<ProductDetails />} />
+        <Route path="/products/public-ev-chargers/:id" element={<ProductDetails />} />
+        <Route path="/products/lev-dc-chargers/:id" element={<ProductDetails />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/location" element={<LocationsSection />} />
         <Route path="/enquiry" element={<Enquiry />} />
