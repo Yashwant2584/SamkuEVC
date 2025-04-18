@@ -8,6 +8,7 @@ import ac_charge from '../images/C-Images/ac_chargers.png';
 import dc_charge from '../images/C-Images/dc_chargers.png';
 import cycle from '../images/C-Images/cycle.png';
 import public_charge from '../images/C-Images/public_chaege.png';
+import lev_dc from '../images/C-Images/LEV.png';
 
 
 const Products = () => {
@@ -45,8 +46,13 @@ const Products = () => {
     },   
     {
       title: 'Public EV Chargers',
-      description: 'Specialized chargers for electric cycles',
+      description: 'Specialized chargers for parking lots and public spaces',
       image: public_charge
+    },
+    {
+      title: 'LEV DC Chargers',
+      description: 'Coming soon!',
+      image: lev_dc
     }
   ];
 
