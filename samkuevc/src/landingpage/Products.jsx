@@ -137,7 +137,10 @@ const Products = () => {
   return (
     <div className="py-16 pt-24 min-h-screen transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12 transition-all">Our Products</h1>
+        {/* Only show main heading when no category is selected */}
+        {!selectedCategory && (
+          <h1 className="text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12 transition-all">Our Products</h1>
+        )}
         
         <div className={`transition-opacity duration-300 ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>
           {!selectedCategory ? (
@@ -180,21 +183,24 @@ const Products = () => {
           ) : (
             // Show filtered products for the selected category
             <div>
-              <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 md:mb-8 gap-4">
-                <div className="flex items-center">
+              {/* Category heading now positioned BEFORE the controls */}
+              <h2 className="text-2xl md:text-3xl font-bold text-center mb-6">{selectedCategory}</h2>
+              
+              {/* Controls row with back button and filters - fixed spacing between controls */}
+              <div className="flex justify-between items-center mb-6">
+                <div>
                   <button 
                     onClick={handleBackToCategories}
-                    className="flex items-center text-blue-600 hover:text-blue-700 font-medium transition-colors mr-4"
+                    className="flex items-center text-blue-600 hover:text-blue-700 font-medium transition-colors"
                     aria-label="Back to categories"
                   >
                     <ChevronLeft className="h-5 w-5 mr-1" />
-                    <span className="text-sm md:text-base">Back</span>
+                    <span>Back</span>
                   </button>
-                  <h2 className="text-2xl md:text-3xl font-bold">{selectedCategory}</h2>
                 </div>
                 
-                <div className="flex flex-col md:flex-row gap-3">
-                  <div className="relative">
+                <div className="flex space-x-4"> {/* Fixed space between search and sort */}
+                  <div className="relative w-64">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                       <Search className="h-4 w-4 text-gray-400" />
                     </div>
@@ -207,7 +213,7 @@ const Products = () => {
                     />
                   </div>
                   
-                  <div className="relative">
+                  <div className="relative w-44">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                       <Filter className="h-4 w-4 text-gray-400" />
                     </div>
@@ -231,18 +237,9 @@ const Products = () => {
                   <p className="text-xl text-red-600 mb-2">An error occurred: {error.message}</p>
                 </div>
               ) : sortedProducts.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
-                  {sortedProducts.map((product, index) => (
-                    <div 
-                      key={product.id}
-                      className="transform transition-all duration-300"
-                      style={{ 
-                        animationDelay: `${index * 100}ms`,
-                        animationName: 'fadeIn',
-                        animationDuration: '500ms',
-                        animationFillMode: 'both' 
-                      }}
-                    >
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {sortedProducts.map((product) => (
+                    <div key={product.id} className="transform transition-all duration-300">
                       <ProductCard charger={product} />
                     </div>
                   ))}
