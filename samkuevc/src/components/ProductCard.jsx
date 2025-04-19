@@ -3,6 +3,18 @@ import { ArrowRight, Battery, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const ProductCard = ({ charger }) => {
+  // Create URL path based on category
+  const getCategoryPath = (category) => {
+    if (!category) return '/products';
+
+    // Convert category name to URL slug
+    const slug = category.toLowerCase().replace(/\s+/g, '-');
+    return `/products/${slug}`;
+  };
+
+  // Build product detail URL
+  const productDetailUrl = `${getCategoryPath(charger.category)}/${charger.id}`;
+
   return (
     <div 
       className="bg-white rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:shadow-xl h-full flex flex-col"
