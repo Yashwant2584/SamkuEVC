@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
-import { ArrowLeft, Battery, Zap, Check, Heart, Share2, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft, Battery, Zap, Check, Heart, Share2, ChevronLeft, ChevronRight, Copy, X } from 'lucide-react';
 import { chargers } from '../data/chargers';
 
 const ProductDetails = () => {
@@ -17,6 +17,9 @@ const ProductDetails = () => {
   const [displayImages, setDisplayImages] = useState([]);
   const [currentPrice, setCurrentPrice] = useState('');
   const [categoryPath, setCategoryPath] = useState('/products');
+  const [showShareModal, setShowShareModal] = useState(false);
+  const [shareUrl, setShareUrl] = useState('');
+  const [copySuccess, setCopySuccess] = useState(false);
 
   const charger = chargers.find((c) => c.id === id);
 
@@ -47,6 +50,9 @@ const ProductDetails = () => {
       const categorySlug = charger.category.toLowerCase().replace(/\s+/g, '-');
       setCategoryPath(`/products/${categorySlug}`);
     }
+    
+    // Set share URL to current page URL
+    setShareUrl(window.location.href);
   }, [location.pathname, charger]);
 
   const updateImagesBasedOnPower = (power) => {
@@ -124,6 +130,59 @@ const ProductDetails = () => {
 
   const handleContactSalesClick = () => {
     navigate('/contact');
+  };
+
+  // Share functionality
+  const handleShareClick = () => {
+    if (navigator.share) {
+      // Use Web Share API if available
+      navigator.share({
+        title: `${charger.name} - ${charger.category}`,
+        text: `Check out the ${charger.name} - ${selectedPower} ${selectedRatedCurrent}`,
+        url: window.location.href
+      })
+      .catch(error => {
+        console.log('Error sharing:', error);
+        // Fallback to modal if share fails
+        setShowShareModal(true);
+      });
+    } else {
+      // Fallback for browsers that don't support Web Share API
+      setShowShareModal(true);
+    }
+  };
+
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(shareUrl).then(() => {
+      setCopySuccess(true);
+      setTimeout(() => setCopySuccess(false), 2000);
+    });
+  };
+
+  const shareToSocialMedia = (platform) => {
+    const url = encodeURIComponent(shareUrl);
+    const text = encodeURIComponent(`Check out the ${charger.name} - ${selectedPower} ${selectedRatedCurrent}`);
+    
+    let shareUrl;
+    switch (platform) {
+      case 'facebook':
+        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+        break;
+      case 'twitter':
+        shareUrl = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+        break;
+      case 'linkedin':
+        shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+        break;
+      case 'whatsapp':
+        shareUrl = `https://api.whatsapp.com/send?text=${text}%20${url}`;
+        break;
+      default:
+        return;
+    }
+    
+    window.open(shareUrl, '_blank', 'width=600,height=400');
+    setShowShareModal(false);
   };
 
   useEffect(() => {
@@ -278,7 +337,11 @@ const ProductDetails = () => {
                   <button className="bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition-colors" aria-label="Add to favorites">
                     <Heart size={20} className="text-gray-600" />
                   </button>
-                  <button className="bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition-colors" aria-label="Share product">
+                  <button 
+                    onClick={handleShareClick}
+                    className="bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition-colors" 
+                    aria-label="Share product"
+                  >
                     <Share2 size={20} className="text-gray-600" />
                   </button>
                 </div>
@@ -453,6 +516,85 @@ const ProductDetails = () => {
           </div>
         )}
       </div>
+
+      {/* Share Modal */}
+      {showShareModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl shadow-lg max-w-md w-full p-6 relative">
+            <button 
+              onClick={() => setShowShareModal(false)}
+              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+              aria-label="Close modal"
+            >
+              <X size={20} />
+            </button>
+            
+            <h3 className="text-xl font-bold mb-4">Share this Product</h3>
+            
+            <div className="mb-6">
+              <div className="flex items-center justify-between bg-gray-50 p-3 rounded-lg mb-2">
+                <span className="text-sm text-gray-600 truncate pr-2">{shareUrl}</span>
+                <button 
+                  onClick={handleCopyLink}
+                  className="text-blue-600 hover:text-blue-700 p-1 rounded-md hover:bg-blue-50 transition-colors"
+                  aria-label="Copy link"
+                >
+                  {copySuccess ? <Check size={18} className="text-green-600" /> : <Copy size={18} />}
+                </button>
+              </div>
+              {copySuccess && (
+                <p className="text-xs text-green-600">Link copied to clipboard!</p>
+              )}
+            </div>
+            
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <button 
+                onClick={() => shareToSocialMedia('facebook')}
+                className="flex flex-col items-center justify-center gap-1 p-3 bg-blue-100 hover:bg-blue-200 rounded-lg transition-colors"
+              >
+                <svg className="w-6 h-6 text-blue-800" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
+                </svg>
+                <span className="text-xs font-medium">Facebook</span>
+              </button>
+              <button 
+                onClick={() => shareToSocialMedia('twitter')}
+                className="flex flex-col items-center justify-center gap-1 p-3 bg-blue-100 hover:bg-blue-200 rounded-lg transition-colors"
+              >
+                <svg className="w-6 h-6 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723 10.054 10.054 0 01-3.127 1.184 4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
+                </svg>
+                <span className="text-xs font-medium">Twitter</span>
+              </button>
+              <button 
+                onClick={() => shareToSocialMedia('linkedin')}
+                className="flex flex-col items-center justify-center gap-1 p-3 bg-blue-100 hover:bg-blue-200 rounded-lg transition-colors"
+              >
+                <svg className="w-6 h-6 text-blue-700" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                </svg>
+                <span className="text-xs font-medium">LinkedIn</span>
+              </button>
+              <button 
+                onClick={() => shareToSocialMedia('whatsapp')}
+                className="flex flex-col items-center justify-center gap-1 p-3 bg-green-100 hover:bg-green-200 rounded-lg transition-colors"
+              >
+                <svg className="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                </svg>
+                <span className="text-xs font-medium">WhatsApp</span>
+              </button>
+            </div>
+            
+            <button 
+              onClick={() => setShowShareModal(false)}
+              className="w-full mt-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium rounded-lg transition-colors"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
 
       <style jsx>{`
         select {
