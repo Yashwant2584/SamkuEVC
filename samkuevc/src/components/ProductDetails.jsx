@@ -29,11 +29,13 @@ const ProductDetails = () => {
     '72V': ['6A', '8A', '10A', '12A'],
     '3.3kW': ['16A'],
     '7.4kW': ['32A'],
-    '11kW': ['32A'],
+    '11kW': ['16A'],
     '22kW': ['32A'],
-    '60kW': ['80A'],
-    '120kW': ['150A'],
+    '30kW': ['80A'],
+    '60kW': ['80A', '150A'],
+    '120kW': ['200A'],
     '180kW': ['300A'],
+    '240kW': ['250A']
   };
  
   // Get category slug from URL path or product category
