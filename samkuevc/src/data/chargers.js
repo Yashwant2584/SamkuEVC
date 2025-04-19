@@ -11,14 +11,27 @@ import DC_Charger_180KW from "../images/C-Images/DC_Charger_180KW.png"
 import DC_Charger_60_120_180KW from "../images/C-Images/DC_Charger_60-120-180KW.png"
 
 
+
+import ACevse from "../images/C-Images/evse.png"
+import ACrfid from "../images/C-Images/rfid evse.png"
+import ACevse1 from "../images/C-Images/EVSE3k3.png"
+import smart from "../images/C-Images/SMART.png"
+import point3k3R from "../images/C-Images/HOMECR.png"
+import point3k3G from "../images/C-Images/HOMECG.png"
+import homecB from "../images/C-Images/HOMECB.png"
+import dualG from "../images/C-Images/DUALG.png"
+
 import detailimages360DC from "../images/C-Images/360-720-DC-d.png"
 import detailimages360DC2 from "../images/C-Images/30DC2.png"
+import dc360 from "../images/C-Images/DC360kw.png"
+import dc720 from "../images/C-Images/DC720.png"
 
 import li_Ion_battery from "../images/C-Images/li-Ion-battery.png"
 import life_po_battery from "../images/C-Images/life-po-battery.png"
 import ThreeK3 from "../images/C-Images/3K3.png" 
 import ac_point_02gun from "../images/C-Images/ac-point-02gun.png"
 import lightning from "../images/C-Images/lightning.png"
+import lightning1 from "../images/C-Images/lightning1.png"
 import AC3k3ocpp from "../images/C-Images/AC3k3ocpp.png"
 import AC3k3ocpp1 from "../images/C-Images/AC3k3ocpp1.jpeg"
 import cargo_e_bike from "../images/C-Images/Cargo_bike.png"
@@ -169,12 +182,12 @@ export const chargers = [
     name: "AC EVSE Point 3K3-01",
     description: "A basic AC charger designed for home and small commercial charging with a 3.5 kW output and essential safety features.",
     detailedDescription: "The SAMKU AC EVSE POINT 3K3-01 delivers reliable charging with a 3.3kW output through a 16A Indian socket, powered by a single-phase input (170-260V, 16A). It boasts an impressive ≥99.9% efficiency and features a seven-segment display for easy monitoring. With IP54 protection, it’s suitable for indoor and outdoor use, supported by natural convection cooling. Offline operation with manual authentication ensures straightforward access. Compact in design (228x105x228mm) and lightweight (1-3kg), it comes with a 1-year warranty.",
-    image: [ThreeK3],
+    image: [ACevse1, ACevse],
     price: "₹4,000",
     powerImages: {
       "3.3kW": {
-        main: ThreeK3, 
-        additional: []
+        main: ACevse1, 
+        additional: [ACevse]
       }
     },
     powerPrices: {
@@ -191,11 +204,11 @@ export const chargers = [
     name: "AC EVSE RFID-3K3-01",
     description: "A basic AC charger designed for home and small commercial charging with a 3.5 kW output and essential safety features.",
     detailedDescription: "The SAMKU AC EVSE RFID 3K3-01 delivers reliable charging with a 3.3kW output through a 16A Indian socket, powered by a single-phase input (170-260V, 16A). It boasts an impressive ≥99.9% efficiency and features a seven-segment display for easy monitoring. With IP54 protection, it’s suitable for indoor and outdoor use, supported by natural convection cooling. Offline operation with manual authentication ensures straightforward access. Compact in design (228x105x228mm) and lightweight (1-3kg), it comes with a 1-year warranty.",
-    image: [ThreeK3],
+    image: [ACrfid],
     price: "₹4,800",
     powerImages: {
       "3.3kW": {
-        main: ThreeK3, 
+        main: ACrfid, 
         additional: []
       }
     },
@@ -213,11 +226,11 @@ export const chargers = [
     name: "SMART Charging Safety Box",
     description: "​The SMART Charging Safety Box is a high-performance charging solution designed to be compatible with multiple electric vehicles (EVs). It offers efficient and rapid charging capabilities, ensuring your EV,s safety",
     detailedDescription: "Engineered to support charging capacities ranging from 30kW to 240kW, the SMART Charging Safety Box accommodates diverse charging requirements. Its ergonomic design facilitates easy handling and storage, making it suitable for both personal and commercial use. The charging unit incorporates advanced safety features, including overvoltage, overcurrent, and short-circuit protection, ensuring a secure and reliable charging experience.​",
-    image: ["/smart.jpg", "/smart1.jpg", "/smart2.jpg"],
+    image: [smart],
     price: "₹5,200",
     powerImages: {
       "4kW": {
-        main: "/smart.jpg", 
+        main: smart, 
         additional: []
       }
     },
@@ -257,11 +270,11 @@ export const chargers = [
     name: "AC POINT-3K3-16A-01-OCPP",
     description: "An OCPP-enabled AC charger with Ethernet and Wi-Fi support, suitable for smart charging networks.",
     detailedDescription: "The SAMKU AC EVSE POINT-3K3-OCPP-16A-01 offers efficient charging with a 3.3kW output via a 16A socket, driven by a single-phase input (170-260V, 16A). It achieves ≥99.9% efficiency and features an LCD display with OCPP 1.6J support for smart connectivity. Authentication methods include RFID, app, and plug-and-charge for secure and convenient access. With IP54 protection and natural convection cooling, it’s ideal for indoor and outdoor use. Compact at 250x130x300mm and weighing 3kg, it comes with a 1-year warranty.",
-    image: [AC3k3ocpp, AC3k3ocpp1],
+    image: [point3k3R, point3k3G],
     powerImages: {
       "3.3kW": {
-        main: AC3k3ocpp, 
-        additional: [AC3k3ocpp1]
+        main: point3k3R, 
+        additional: [point3k3G]
       }
     },
     powerPrices: {
@@ -279,20 +292,20 @@ export const chargers = [
     name: "AC Lightning EV Charger",
     description: "The SAMKU AC Lightning EV Charger delivers 7.4kW to 22kW power for residential and commercial use. With a sleek design, Type 2 connectors, multi-user authentication, and IP54 protection, it ensures reliable indoor and outdoor charging.",
     detailedDescription: "The SAMKU AC Lightning EV Charger offers flexible charging with power options of 7.4kW, 11kW, and 22kW, supporting single or three-phase input (190-415V, 16-32A). Equipped with a Type 2 connector and a 5m cable, it features an LCD display and OCPP 1.6J for smart connectivity. Secure access is ensured through RFID, app, or plug-and-charge authentication methods. With IP54 protection and natural convection cooling, it’s designed for dependable indoor and outdoor use. The charger measures 267x130x369mm, weighs 3.5kg, and includes a 1-year warranty.",
-    image: [lightning],
+    image: [lightning, lightning1],
     price: "₹49,000",
     powerImages: {
       "7.4kW": {
         main: lightning, 
-        additional: []
+        additional: [lightning1]
       },
       "11kW": {
         main: lightning, 
-        additional: []
+        additional: [lightning1]
       },
       "22kW": {
         main: lightning, 
-        additional: []
+        additional: [lightning1]
       },
     },
     powerPrices: {
@@ -333,19 +346,19 @@ export const chargers = [
     name: "AC-POINT-TYP2-01 (Home Charger)",
     description: "The SAMKU AC-POINT-7k4-TYP2-01 delivers 7.4kW to 22kW power for residential use. With a sleek design, Type 2 connectors, multi-user authentication, and IP54 protection, it ensures reliable indoor and outdoor charging.",
     detailedDescription: "The SAMKU AC-POINT-7k4-TYP2-01 offers flexible charging with power options of 7.4kW, 11kW, and 22kW, supporting single or three-phase input (190-415V, 16-32A). Equipped with a Type 2 connector and a 5m cable, it features an LCD display and OCPP 1.6J for smart connectivity. Secure access is ensured through RFID, app, or plug-and-charge authentication methods. With IP54 protection and natural convection cooling, it’s designed for dependable indoor and outdoor use. The charger measures 267x130x369mm, weighs 3.5kg, and includes a 1-year warranty.",
-    image: [lightning],
+    image: [homecB],
     price: "₹26,800",
     powerImages: {
       "3.3kW": {
-        main: lightning, 
+        main: homecB, 
         additional: []
       },
       "7.4kW": {
-        main: lightning, 
+        main: homecB, 
         additional: []
       },
       "22kW": {
-        main: lightning, 
+        main: homecB, 
         additional: []
       }
     },
@@ -365,11 +378,11 @@ export const chargers = [
     name: "AC POINT-7k4-TYP2-02",
     description: "The SAMKU AC POINT-7.4KW-Type-2-02Gun is a dual-gun AC EV charger delivering 15kW (7.5kW per gun). It supports Type 2 connectors, smart authentication (RFID, app, plug-and-charge), and OCPP connectivity for remote monitoring and management.",
     detailedDescription: "The SAMKU AC POINT-7.4KW-Type-2-02Gun provides powerful charging with a 15kW total output, split between two Type 2 guns (7.5kW, 32A each), powered by a three-phase input (380-415V). It features an LCD display and supports OCPP 1.6J for seamless smart connectivity. Authentication options include RFID, app, and plug-and-charge for secure and convenient access. With IP54 protection and natural convection cooling, it’s built for reliable indoor and outdoor operation. Each gun comes with a 5m cable, and the unit measures 378x150x598mm, weighing 4.5kg, with a 1-year warranty.",
-    image: [ac_point_02gun],
+    image: [dualG],
     price: "₹75,600",
     powerImages: {
       "15kW": {
-        main: ac_point_02gun, 
+        main: dualG, 
         additional: []
       }
     },
@@ -471,11 +484,11 @@ export const chargers = [
     price: "₹32,16,000",
     powerImages: {
       "360kW": {
-        main:"/360-720-DC.png", 
+        main:dc360, 
         additional: [detailimages120DC2b, detailimages120DC]
       },
       "720kW": {
-        main: DC_Charger_180KW, 
+        main: dc720, 
         additional: [detailimages120DC2b, detailimages120DC]
       }
     },
