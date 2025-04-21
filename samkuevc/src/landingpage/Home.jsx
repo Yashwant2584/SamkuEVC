@@ -113,10 +113,74 @@ const Home = () => {
         </motion.div>
       </section>
 
-      {/* Marquee Section */}
-      <Marquee />
+
 
       <Modelslider />
+
+       {/* Products Preview Section */}
+       <section className="py-12 md:py-16 bg-white overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div 
+            ref={productsAnimation.ref}
+            initial={{ opacity: 0, y: 20 }}
+            animate={productsAnimation.controls}
+            className="text-center mb-12 md:mb-16"
+          >
+            <h2 className="text-2xl md:text-3xl font-bold text-blue-800 mb-4">Our <span className="text-green-600">Products</span></h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-green-500 mx-auto mb-6 rounded-full"></div>
+          </motion.div>
+          
+          <motion.div 
+            ref={productsAnimation.ref}
+            initial={{ opacity: 0 }}
+            animate={productsAnimation.controls}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
+          >
+            {[
+              {
+                title: 'EV Bike Chargers',
+                image: bike,
+                description: 'Efficient charging solutions for electric bikes with smart connectivity features.'
+              },
+              {
+                title: 'DC Fast Chargers',
+                image: dc_charge,
+                description: 'High-power DC charging for quick turnaround when you need to get back on the road fast.'
+              },
+              {
+                title: 'EV Accessories',
+                image: ev_accessories,
+                description: 'Convenient and safe charging at home that integrates seamlessly with your lifestyle.'
+              }
+            ].map((product, index) => (
+              <motion.div 
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                animate={productsAnimation.controls}
+                transition={{ delay: 0.1 * index }}
+                className="bg-white rounded-xl shadow-md overflow-hidden border-t-4 border-blue-600 hover:shadow-xl transition duration-300"
+              >
+                <img 
+                  src={product.image} 
+                  alt={product.title}
+                  className="w-full h-40 md:h-48 object-cover"
+                />
+                <div className="p-4 md:p-6">
+                  <h3 className="text-lg md:text-xl font-bold text-blue-800 mb-2">{product.title}</h3>
+                  <p className="text-sm md:text-base text-gray-700 mb-4">{product.description}</p>
+                  <Link
+                    to="/products"
+                    className="text-green-600 hover:text-green-700 font-medium inline-flex items-center text-sm md:text-base"
+                  >
+                    Learn More
+                    <ChevronRight className="ml-1 h-3 w-3 md:h-4 md:w-4" />
+                  </Link>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
 
       {/* Features Section */}
       <section className="py-12 md:py-16 bg-white overflow-hidden">
@@ -182,70 +246,10 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Products Preview Section */}
-      <section className="py-12 md:py-16 bg-white overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div 
-            ref={productsAnimation.ref}
-            initial={{ opacity: 0, y: 20 }}
-            animate={productsAnimation.controls}
-            className="text-center mb-12 md:mb-16"
-          >
-            <h2 className="text-2xl md:text-3xl font-bold text-blue-800 mb-4">Our <span className="text-green-600">Products</span></h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-green-500 mx-auto mb-6 rounded-full"></div>
-          </motion.div>
-          
-          <motion.div 
-            ref={productsAnimation.ref}
-            initial={{ opacity: 0 }}
-            animate={productsAnimation.controls}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
-          >
-            {[
-              {
-                title: 'EV Bike Chargers',
-                image: bike,
-                description: 'Efficient charging solutions for electric bikes with smart connectivity features.'
-              },
-              {
-                title: 'DC Fast Chargers',
-                image: dc_charge,
-                description: 'High-power DC charging for quick turnaround when you need to get back on the road fast.'
-              },
-              {
-                title: 'EV Accessories',
-                image: ev_accessories,
-                description: 'Convenient and safe charging at home that integrates seamlessly with your lifestyle.'
-              }
-            ].map((product, index) => (
-              <motion.div 
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                animate={productsAnimation.controls}
-                transition={{ delay: 0.1 * index }}
-                className="bg-white rounded-xl shadow-md overflow-hidden border-t-4 border-blue-600 hover:shadow-xl transition duration-300"
-              >
-                <img 
-                  src={product.image} 
-                  alt={product.title}
-                  className="w-full h-40 md:h-48 object-cover"
-                />
-                <div className="p-4 md:p-6">
-                  <h3 className="text-lg md:text-xl font-bold text-blue-800 mb-2">{product.title}</h3>
-                  <p className="text-sm md:text-base text-gray-700 mb-4">{product.description}</p>
-                  <Link
-                    to="/products"
-                    className="text-green-600 hover:text-green-700 font-medium inline-flex items-center text-sm md:text-base"
-                  >
-                    Learn More
-                    <ChevronRight className="ml-1 h-3 w-3 md:h-4 md:w-4" />
-                  </Link>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
+      {/* Marquee Section */}
+      <Marquee />
+
+     
 
       {/* Product Catalogs Download Section */}
       <section className="py-12 md:py-16 bg-gray-50 overflow-hidden">
