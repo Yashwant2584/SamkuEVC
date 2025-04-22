@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import logo from '../images/logo.png'; // Changed from '../../assets/logo.png'
 import { Upload, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { API_BASE_URL } from "../../config";
 
 const FranchiseApplication = () => {
   const navigate = useNavigate();
@@ -521,15 +522,70 @@ const FranchiseApplication = () => {
     e.preventDefault();
     if (validateForm()) {
       try {
-        // Here you would send the data to your backend
-        console.log('Form submitted:', formData);
-        alert('Application submitted successfully!');
+        // Create FormData object for file upload
+        const formDataToSubmit = new FormData();
+
+        // Add photo if uploaded
+        if (formData.personalInfo.photo) {
+          formDataToSubmit.append("photo", formData.personalInfo.photo);
+        }
+
+        // Add application type
+        formDataToSubmit.append("applicationType", "ServiceCenter");
+
+        // Add JSON data for each section
+        formDataToSubmit.append(
+          "personalInfo",
+          JSON.stringify({
+            fullName: formData.personalInfo.fullName,
+            email: formData.personalInfo.email,
+            phone: formData.personalInfo.phone,
+            address: formData.personalInfo.address,
+            city: formData.personalInfo.city,
+            state: formData.personalInfo.state,
+            pincode: formData.personalInfo.pincode,
+          })
+        );
+
+        formDataToSubmit.append(
+          "businessInfo",
+          JSON.stringify(formData.businessInfo)
+        );
+        formDataToSubmit.append(
+          "technicalInfo",
+          JSON.stringify(formData.technicalInfo)
+        );
+        formDataToSubmit.append(
+          "additionalInfo",
+          JSON.stringify(formData.additionalInfo)
+        );
+ 
+        // Submit the form data to the backend API
+        const response = await fetch(`${API_BASE_URL}/api/applications/service-center`, {
+          method: "POST",
+          body: formDataToSubmit,
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to submit application");
+        }
+
+        const result = await response.json();
+        console.log("Application submitted successfully:", result);
+
+        // Show success message
+        alert(
+          `Application submitted successfully! Your application ID is: ${result.applicationId}`
+        );
+
+        // Redirect to home page or thank you page
+        navigate("/");
       } catch (error) {
-        console.error('Submission error:', error);
-        alert('Error submitting application. Please try again.');
+        console.error("Submission error:", error);
+        alert("Error submitting application. Please try again.");
       }
     } else {
-      alert('Please fill all required fields correctly.');
+      alert("Please fill all required fields correctly.");
     }
   };
 

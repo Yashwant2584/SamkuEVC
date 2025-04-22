@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { API_BASE_URL } from "../../config";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -8,55 +9,69 @@ const Contact = () => {
     subject: '',
     message: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
 
   const validateForm = () => {
-    // Updated validation to make message optional
     return (
       formData.name.trim() !== '' &&
       formData.email.trim() !== '' &&
       formData.subject.trim() !== '' &&
-      /\S+@\S+\.\S+/.test(formData.email) // Simple email validation
+      /\S+@\S+\.\S+/.test(formData.email)
     );
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      try {
-        const formDataToSubmit = new FormData();
-        
-        // Append form data matching backend keys
-        formDataToSubmit.append('name', formData.name);
-        formDataToSubmit.append('email', formData.email);
-        formDataToSubmit.append('subject', formData.subject);
-        formDataToSubmit.append('message', formData.message);
-
-        const response = await fetch('https://samku-evc-backend.vercel.app/api/contact', {
-          method: 'POST',
-          body: formDataToSubmit,
-        });
-  
-        const result = await response.json();
-        
-        if (response.ok) {
-          console.log('Form submitted:', result);
-          alert('Message sent successfully!');
-          // Reset form
-          setFormData({
-            name: '',
-            email: '',
-            subject: '',
-            message: '',
-          });
-        } else {
-          throw new Error(result.error || 'Submission failed');
-        }
-      } catch (error) {
-        console.error('Submission error:', error);
-        alert('Error submitting message. Please try again.');
+    
+    if (!validateForm()) {
+      setSubmitError('Please fill all required fields correctly');
+      return;
+    }
+    
+    setIsSubmitting(true);
+    setSubmitError(null);
+    
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/applications/contact-query`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: `Subject: ${formData.subject}\n\n${formData.message || 'No additional message provided'}`
+        })
+      });
+      
+      // Check if response is JSON
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new Error('Server returned non-JSON response');
       }
-    } else {
-      alert('Please fill all required fields correctly.');
+
+      const result = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to submit contact form');
+      }
+      
+      console.log('Contact form submitted successfully:', result);
+      
+      setSubmitSuccess(true);
+      setFormData({ name: '', email: '', subject: '', message: '' });
+      
+      // Show success message for 3 seconds
+      setTimeout(() => {
+        setSubmitSuccess(false);
+      }, 3000);
+    } catch (error) {
+      console.error('Submission error:', error);
+      setSubmitError(`Error submitting form: ${error.message}`);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -66,6 +81,10 @@ const Contact = () => {
       ...prev,
       [name]: value
     }));
+    // Clear error when user starts typing
+    if (submitError) {
+      setSubmitError(null);
+    }
   };
 
   return (
@@ -200,81 +219,119 @@ const Contact = () => {
               <h2 className="text-2xl font-bold text-blue-800">Send us a Message</h2>
             </div>
             
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                Full Name <span className="text-red-600">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  placeholder="Your name"
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-200"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                Email Address <span className="text-red-600">*</span>
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  placeholder="Enter your email address"
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-200"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
-                Subject <span className="text-red-600">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  required
-                  placeholder="How can we help you?"
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-200"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows={4}
-                  placeholder="Tell us more about your inquiry (optional)"
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-200 resize-none"
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-green-500 text-white font-medium rounded-lg hover:from-blue-700 hover:to-green-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+            {submitSuccess ? (
+              <motion.div 
+                className="text-center py-10"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
               >
-                Send Message
-              </button>
+                <div className="mx-auto flex items-center justify-center h-20 w-20 rounded-full bg-green-100 mb-4">
+                  <svg className="h-10 w-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                </div>
+                <h2 className="text-2xl font-bold text-blue-800 mb-2">Thank You!</h2>
+                <p className="text-gray-600 text-lg">Your message has been submitted successfully. We'll get back to you soon.</p>
+              </motion.div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                    Full Name <span className="text-red-600">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    placeholder="Your name"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-200"
+                  />
+                </div>
 
-              <p className="text-xs text-center text-gray-500 mt-4">
-                Fields marked with <span className="text-red-600">*</span> are required
-              </p>
-            </form>
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                    Email Address <span className="text-red-600">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    placeholder="Enter your email address"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-200"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
+                    Subject <span className="text-red-600">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="subject"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    required
+                    placeholder="How can we help you?"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-200"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                    Message
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    rows={4}
+                    placeholder="Tell us more about your inquiry (optional)"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-200 resize-none"
+                  />
+                </div>
+
+                {submitError && (
+                  <p className="text-red-500 text-sm text-center">{submitError}</p>
+                )}
+
+                <motion.button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className={`w-full px-6 py-3 text-white font-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 ${
+                    isSubmitting
+                      ? 'bg-gray-400 cursor-not-allowed'
+                      : 'bg-gradient-to-r from-blue-600 to-green-500 hover:from-blue-700 hover:to-green-600'
+                  }`}
+                  whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
+                  whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
+                >
+                  {isSubmitting ? (
+                    <span className="flex items-center justify-center">
+                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Sending...
+                    </span>
+                  ) : (
+                    'Send Message'
+                  )}
+                </motion.button>
+
+                <p className="text-xs text-center text-gray-500 mt-4">
+                  Fields marked with <span className="text-red-600">*</span> are required
+                </p>
+              </form>
+            )}
           </motion.div>
         </div>
       </div>

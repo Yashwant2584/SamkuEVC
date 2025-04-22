@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Navbar from '../landingpage/Navbar';
+import { API_BASE_URL } from "../../config";
 
 const Careers = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +14,7 @@ const Careers = () => {
     photo: null,
   });
   const [errors, setErrors] = useState({});
+  const [submitted, setSubmitted] = useState(false);
 
   const validateForm = () => {
     let tempErrors = {};
@@ -52,11 +54,49 @@ const Careers = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      console.log("Form submitted:", formData);
-      alert("Application submitted successfully!");
+      try {
+        const formDataToSubmit = new FormData();
+        formDataToSubmit.append("fullName", formData.fullName);
+        formDataToSubmit.append("email", formData.email);
+        formDataToSubmit.append("phone", formData.phone);
+        formDataToSubmit.append("position", formData.position);
+        formDataToSubmit.append("experience", formData.experience);
+        if (formData.resume) formDataToSubmit.append("resume", formData.resume);
+        if (formData.photo) formDataToSubmit.append("photo", formData.photo);
+
+        const response = await fetch(
+          `${API_BASE_URL}/api/applications/recruitment`,
+          {
+            method: "POST",
+            body: formDataToSubmit,
+          }
+        );
+
+        const result = await response.json();
+        if (response.ok) {
+          console.log("Form submitted:", result);
+          alert(`Application submitted successfully! Your application ID is: ${result.applicationId}`);
+          setSubmitted(true);
+          // Removed the onClose() call that was causing the error
+          setFormData({
+            fullName: "",
+            email: "",
+            phone: "",
+            position: "",
+            experience: "",
+            resume: null,
+            photo: null,
+          });
+        } else {
+          throw new Error(result.error || "Submission failed");
+        }
+      } catch (error) {
+        console.error("Submission error:", error);
+        alert("Error submitting application. Please try again.");
+      }
     }
   };
 
@@ -77,106 +117,133 @@ const Careers = () => {
             </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Full Name <span className="text-red-500">*</span></label>
-                <input
-                  type="text"
-                  name="fullName"
-                  value={formData.fullName}
-                  onChange={handleChange}
-                  className={inputClasses}
-                  placeholder="Enter your full name"
-                />
-                {errors.fullName && <p className="text-red-500 text-xs mt-1 animate-pulse">{errors.fullName}</p>}
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Email <span className="text-red-500">*</span></label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className={inputClasses}
-                  placeholder="Enter your email"
-                />
-                {errors.email && <p className="text-red-500 text-xs mt-1 animate-pulse">{errors.email}</p>}
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number <span className="text-red-500">*</span></label>
-                <input
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  className={inputClasses}
-                  placeholder="Enter your 10-digit phone number"
-                  maxLength={10}
-                />
-                {errors.phone && <p className="text-red-500 text-xs mt-1 animate-pulse">{errors.phone}</p>}
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Applying for Position <span className="text-red-500">*</span></label>
-                <select
-                  name="position"
-                  value={formData.position}
-                  onChange={handleChange}
-                  className={inputClasses}
-                >
-                  <option value="">Select a position</option>
-                  <option value="EV Technician">EV Technician</option>
-                  <option value="Service Advisor">Service Advisor</option>
-                  <option value="Charging Station Manager">Charging Station Manager</option>
-                  <option value="Customer Support">Customer Support</option>
-                </select>
-                {errors.position && <p className="text-red-500 text-xs mt-1 animate-pulse">{errors.position}</p>}
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Years of Experience <span className="text-red-500">*</span></label>
-                <select
-                  name="experience"
-                  value={formData.experience}
-                  onChange={handleChange}
-                  className={inputClasses}
-                >
-                  <option value="">Select experience level</option>
-                  <option value="0-1">0-1 years</option>
-                  <option value="1-3">1-3 years</option>
-                  <option value="3-5">3-5 years</option>
-                  <option value="5+">5+ years</option>
-                </select>
-                {errors.experience && <p className="text-red-500 text-xs mt-1 animate-pulse">{errors.experience}</p>}
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Upload Resume (PDF/DOC/DOCX, max 2MB) <span className="text-red-500">*</span></label>
-                <input
-                  type="file"
-                  name="resume"
-                  onChange={handleChange}
-                  accept=".pdf,.doc,.docx"
-                  className={inputClasses}
-                />
-                {errors.resume && <p className="text-red-500 text-xs mt-1 animate-pulse">{errors.resume}</p>}
-              </div>
-            </div>
-
-            <div className="pt-6 border-t border-gray-200">
+          {submitted ? (
+            <div className="text-center p-8">
+              <h2 className="text-2xl font-bold text-green-600 mb-4">Application Submitted!</h2>
+              <p className="text-gray-600 mb-6">Thank you for your interest in joining SAMKU EV. We will review your application and contact you soon.</p>
               <motion.button
-                type="submit"
+                onClick={() => setSubmitted(false)}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-colors flex items-center justify-center space-x-2 shadow-sm"
+                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
               >
-                <span>Submit Application</span>
+                Submit Another Application
               </motion.button>
             </div>
-          </form>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Full Name <span className="text-red-500">*</span></label>
+                  <input
+                    type="text"
+                    name="fullName"
+                    value={formData.fullName}
+                    onChange={handleChange}
+                    className={inputClasses}
+                    placeholder="Enter your full name"
+                  />
+                  {errors.fullName && <p className="text-red-500 text-xs mt-1 animate-pulse">{errors.fullName}</p>}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Email <span className="text-red-500">*</span></label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className={inputClasses}
+                    placeholder="Enter your email"
+                  />
+                  {errors.email && <p className="text-red-500 text-xs mt-1 animate-pulse">{errors.email}</p>}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number <span className="text-red-500">*</span></label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    className={inputClasses}
+                    placeholder="Enter your 10-digit phone number"
+                    maxLength={10}
+                  />
+                  {errors.phone && <p className="text-red-500 text-xs mt-1 animate-pulse">{errors.phone}</p>}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Applying for Position <span className="text-red-500">*</span></label>
+                  <select
+                    name="position"
+                    value={formData.position}
+                    onChange={handleChange}
+                    className={inputClasses}
+                  >
+                    <option value="">Select a position</option>
+                    <option value="EV Technician">EV Technician</option>
+                    <option value="Service Advisor">Service Advisor</option>
+                    <option value="Charging Station Manager">Charging Station Manager</option>
+                    <option value="Customer Support">Customer Support</option>
+                  </select>
+                  {errors.position && <p className="text-red-500 text-xs mt-1 animate-pulse">{errors.position}</p>}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Years of Experience <span className="text-red-500">*</span></label>
+                  <select
+                    name="experience"
+                    value={formData.experience}
+                    onChange={handleChange}
+                    className={inputClasses}
+                  >
+                    <option value="">Select experience level</option>
+                    <option value="0-1">0-1 years</option>
+                    <option value="1-3">1-3 years</option>
+                    <option value="3-5">3-5 years</option>
+                    <option value="5+">5+ years</option>
+                  </select>
+                  {errors.experience && <p className="text-red-500 text-xs mt-1 animate-pulse">{errors.experience}</p>}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Upload Resume (PDF/DOC/DOCX, max 2MB) <span className="text-red-500">*</span></label>
+                  <input
+                    type="file"
+                    name="resume"
+                    onChange={handleChange}
+                    accept=".pdf,.doc,.docx"
+                    className={inputClasses}
+                  />
+                  {errors.resume && <p className="text-red-500 text-xs mt-1 animate-pulse">{errors.resume}</p>}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Upload Photo (Optional) (JPG/JPEG/PNG, max 1MB)</label>
+                  <input
+                    type="file"
+                    name="photo"
+                    onChange={handleChange}
+                    accept=".jpg,.jpeg,.png"
+                    className={inputClasses}
+                  />
+                  {errors.photo && <p className="text-red-500 text-xs mt-1 animate-pulse">{errors.photo}</p>}
+                </div>
+              </div>
+
+              <div className="pt-6 border-t border-gray-200">
+                <motion.button
+                  type="submit"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-colors flex items-center justify-center space-x-2 shadow-sm"
+                >
+                  <span>Submit Application</span>
+                </motion.button>
+              </div>
+            </form>
+          )}
         </div>
       </div>
     </div>
