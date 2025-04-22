@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
+import { APPLICATION_ENDPOINTS } from '../../config';
 
 const Enquiry = () => {
   const location = useLocation();
@@ -12,9 +13,9 @@ const Enquiry = () => {
     phone: '',
     product: productData?.name || '',
     productCategory: productData?.category || '',
-    powerOutput: productData?.power || '',  // Changed from powerOptions to power
+    powerOutput: productData?.power || '',
     ratedCurrent: productData?.ratedCurrent || '',
-    productPrice: productData?.price || '',  // Changed from combinedPrices to price
+    productPrice: productData?.price || '',
     message: ''
   });
   
@@ -39,24 +40,31 @@ const Enquiry = () => {
     if (validateForm()) {
       setIsSubmitting(true);
       try {
-        const formDataToSubmit = new FormData();
-        
-        // Append all form data
-        formDataToSubmit.append('name', formData.name);
-        formDataToSubmit.append('email', formData.email);
-        formDataToSubmit.append('phone', formData.phone);
-        formDataToSubmit.append('product', formData.product);
-        formDataToSubmit.append('productCategory', formData.productCategory);
-        formDataToSubmit.append('powerOutput', formData.powerOutput);
-        formDataToSubmit.append('ratedCurrent', formData.ratedCurrent);
-        formDataToSubmit.append('productPrice', formData.productPrice);
-        formDataToSubmit.append('message', formData.message);
-  
-        const response = await fetch('https://samku-evc-backend.vercel.app/api/enquiry', {
+        // Create a simple object instead of FormData to ensure field names match exactly
+        const response = await fetch(APPLICATION_ENDPOINTS.SUBMIT_ENQUIRY, {
           method: 'POST',
-          body: formDataToSubmit,
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            product: formData.product,
+            productCategory: formData.productCategory,
+            powerOutput: formData.powerOutput,
+            ratedCurrent: formData.ratedCurrent,
+            productPrice: formData.productPrice,
+            message: formData.message
+          })
         });
   
+        // Check if response is JSON
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+          throw new Error('Server returned non-JSON response');
+        }
+
         const result = await response.json();
         
         if (response.ok) {
@@ -82,7 +90,7 @@ const Enquiry = () => {
         }
       } catch (error) {
         console.error('Submission error:', error);
-        alert('Error submitting enquiry. Please try again.');
+        alert(`Error submitting enquiry: ${error.message}`);
       } finally {
         setIsSubmitting(false);
       }
@@ -340,8 +348,10 @@ const Enquiry = () => {
           </div>
         </motion.div>
         
+        {/* Rest of the component remains the same */}
         {/* Additional Information Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+          {/* Why Choose Us card */}
           <motion.div 
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
@@ -396,6 +406,7 @@ const Enquiry = () => {
             </ul>
           </motion.div>
           
+          {/* What to Expect card */}
           <motion.div 
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}

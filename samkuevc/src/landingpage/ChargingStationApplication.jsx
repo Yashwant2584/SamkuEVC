@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import logo from '../images/logo.png';
 import { Upload, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { API_BASE_URL } from "../../config";
 
 const ChargingStationApplication = () => {
   const navigate = useNavigate();
@@ -131,48 +132,125 @@ const ChargingStationApplication = () => {
     e.preventDefault();
     if (validateForm()) {
       try {
+        // Create FormData object to handle file uploads
         const formDataToSubmit = new FormData();
-        
-        Object.keys(formData).forEach(section => {
-          Object.keys(formData[section]).forEach(field => {
-            if (field === 'photo' && formData[section][field]) {
-              formDataToSubmit.append(`${section}.${field}`, formData[section][field]);
-            } else {
-              formDataToSubmit.append(`${section}.${field}`, formData[section][field]);
-            }
-          });
-        });
-  
-        const response = await fetch('http://localhost:5000/api/charging-station-application', {
-          method: 'POST',
-          body: formDataToSubmit,
-        });
-  
-        const result = await response.json();
-        
-        if (response.ok) {
-          console.log('Form submitted:', result);
-          alert('Application submitted successfully!');
-          setFormData({
-            personalInfo: { fullName: '', email: '', phone: '', address: '', city: '', state: '', pincode: '', photo: null },
-            businessInfo: { businessExperience: '', gstNumber: '', investmentCapacity: '', preferredLocation: '', propertySize: '', companyName: '' },
-            technicalInfo: { electricalInfrastructure: '', gridConnectivity: '', powerAvailability: '', certifications: '' },
-            financialInfo: { expectedInvestment: '', fundingSource: '', timelineToStart: '' },
-            additionalInfo: { whyJoinUs: '', additionalComments: '', references: '' }
-          });
-          setPhotoPreview(null);
-        } else {
-          throw new Error(result.error || 'Submission failed');
+
+        // Append application type
+        formDataToSubmit.append("applicationType", "charging-station");
+
+        // Add photo if uploaded
+        if (formData.personalInfo.photo) {
+          formDataToSubmit.append("photo", formData.personalInfo.photo);
         }
+
+        // Append personal info as JSON
+        formDataToSubmit.append(
+          "personalInfo",
+          JSON.stringify({
+            fullName: formData.personalInfo.fullName,
+            email: formData.personalInfo.email,
+            phone: formData.personalInfo.phone,
+            address: formData.personalInfo.address,
+            city: formData.personalInfo.city,
+            state: formData.personalInfo.state,
+            pincode: formData.personalInfo.pincode,
+          })
+        );
+
+        // Append business info as JSON
+        formDataToSubmit.append(
+          "businessInfo",
+          JSON.stringify({
+            businessExperience: formData.businessInfo.businessExperience,
+            companyName: formData.businessInfo.companyName || "",
+            gstNumber: formData.businessInfo.gstNumber || "",
+            investmentCapacity: formData.businessInfo.investmentCapacity,
+            preferredLocation: formData.businessInfo.preferredLocation || "",
+            propertySize: formData.businessInfo.propertySize,
+          })
+        );
+
+        // Append technical info as JSON
+        formDataToSubmit.append(
+          "technicalInfo",
+          JSON.stringify({
+            electricalInfrastructure:
+              formData.technicalInfo.electricalInfrastructure,
+            gridConnectivity: formData.technicalInfo.gridConnectivity || "",
+            powerAvailability: formData.technicalInfo.powerAvailability || "",
+            evKnowledge: formData.technicalInfo.evKnowledge || "",
+          })
+        );
+
+        // Append additional info as JSON
+        formDataToSubmit.append(
+          "additionalInfo",
+          JSON.stringify({
+            whyJoinUs: formData.additionalInfo.whyJoinUs || "",
+            references: formData.additionalInfo.references || "",
+            additionalComments:
+              formData.additionalInfo.additionalComments || "",
+          })
+        );
+
+        console.log(
+          "Submitting charging station application to:",
+          `${API_BASE_URL}/api/applications/charging-station`
+        );
+
+        // Send POST request to backend API with simplified options
+        const response = await fetch(
+          `${API_BASE_URL}/api/applications/charging-station`,
+          {
+            method: "POST",
+            body: formDataToSubmit,
+            headers: {
+              // Don't set Content-Type with FormData - browser sets it automatically with boundary
+              Accept: "application/json",
+            },
+            // Remove credentials and timeout which could cause issues
+            mode: "cors", // Explicitly enable CORS
+          }
+        );
+
+        if (!response.ok) {
+          let errorMessage = `HTTP error! Status: ${response.status}`;
+          try {
+            const errorData = await response.json();
+            errorMessage = errorData.error || errorMessage;
+          } catch (e) {
+            // JSON parsing failed, use default error message
+          }
+          throw new Error(errorMessage);
+        }
+
+        const data = await response.json();
+
+        // Show success message
+        alert(
+          `Application submitted successfully! Your application ID is: ${data.applicationId}`
+        );
+
+        // Reset form or redirect to home/thanks page
+        window.location.href = "/";
       } catch (error) {
-        console.error('Submission error:', error);
-        alert('Error submitting application. Please try again.');
+        console.error("Submission error:", error);
+        if (error.name === "TypeError" && error.message === "Failed to fetch") {
+          alert(
+            "Network error - please check if the backend server is running at " +
+              API_BASE_URL +
+              " and try again later."
+          );
+        } else {
+          alert(`Error submitting application: ${error.message}`);
+        }
       }
     } else {
       const firstError = Object.values(errors)[0];
-      alert(firstError || 'Please fill all required fields correctly.');
+      alert(firstError || "Please fill all required fields correctly.");
     }
   };
+
 
   const styles = `
   @media (max-width: 768px) {
