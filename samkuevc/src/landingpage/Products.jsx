@@ -39,17 +39,17 @@ const Products = () => {
       path: '/products/dc-chargers'
     },
     {
+      title: 'LEV DC Chargers',
+      description: 'Coming soon!',
+      image: lev_dc,
+      path: '/products/lev-dc-chargers'
+    },
+    {
       title: 'EV Accessories',
       description: 'Essential accessories for your EV charging needs',
       image: '/accessories.jpg',
       path: '/products/ev-accessories'
-    },
-    {
-      title: 'Electric Cycles',
-      description: 'Specialized chargers for electric cycles',
-      image: cycle,
-      path: '/products/electric-cycles'
-    },   
+    },  
     {
       title: 'Public EV Chargers',
       description: 'Specialized chargers for parking lots and public spaces',
@@ -57,10 +57,10 @@ const Products = () => {
       path: '/products/public-ev-chargers'
     },
     {
-      title: 'LEV DC Chargers',
-      description: 'Coming soon!',
-      image: lev_dc,
-      path: '/products/lev-dc-chargers'
+      title: 'Electric Cycles',
+      description: 'Specialized chargers for electric cycles',
+      image: cycle,
+      path: '/products/electric-cycles'
     }
   ];
 
