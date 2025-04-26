@@ -37,6 +37,11 @@ import AC3k3ocpp1 from "../images/C-Images/AC3k3ocpp1.jpeg"
 import cargo_e_bike from "../images/C-Images/Cargo_bike.png"
 import cargo_e_bike1 from "../images/C-Images/Cargo_bike1.png"
 
+
+import leva from "../images/C-Images/lev1.png"
+import evseline from "../images/C-Images/evseline.png"
+import line from "../images/C-Images/line-model.png"
+
 export const chargers = [
   {
     id: "li-Ion-battery-charger",
@@ -448,7 +453,7 @@ export const chargers = [
 
     price: "₹8,32,000",
     powerOptions: ["60kW", "120kW", "180kW"],
-    ratedCurrent: ["80A", "150A", "300A"],
+    ratedCurrent: ["80A", "150A", "250A"],
     features: ["Dual-gun charging system", "Fast charging capability", "Durable and weather-resistant", "Enhanced safety protocols", "User-friendly interface"],
     category: "DC Chargers",
     colours: []
@@ -700,5 +705,134 @@ export const chargers = [
     category: "EV Accessories",
     colours: []
   },
-  
+  {
+    id: "lev-dc-typ06-01",
+    name: "LEV-DC-TYP06-01",
+    description: "The LEV-DC-TYP06-01 is a compact DC fast charger for light electric vehicles, offering 3kW and 6kW options. It features a Type 6 connector, IP54 protection, smart connectivity, and advanced safety features, making it ideal for indoor and outdoor use.",
+    detailedDescription: "Designed for 2- and 3-wheel EVs, the LEV-DC-TYP06-01 supports 40–68V DC output and up to 50A current per output. With modular scalability (3kW/6kW), it includes a 4.3” touchscreen, OCPP 1.6J support, RFID authentication, and Wi-Fi/4G/Ethernet connectivity. Safety features include surge, overvoltage, short-circuit, and over-temp protection. The unit meets IP54 and IK08 standards, weighs approx. 15kg, and supports wall, pole, or floor mounting. Made in India, it ensures reliable, high-efficiency charging in all environments.",
+    image: [leva],
+    price: "",
+    powerImages: {
+      "3kW": {
+        main: [leva], 
+        additional: []
+      },
+      "6kW": {
+        main: [leva], 
+        additional: []
+      }
+    },
+    powerPrices: {
+      "3kW": "",
+      "6kW": ""
+    },
+    powerOptions: ["3kW", "6kW"],
+    ratedCurrent: ["50A", "120A"],
+    features: ["Versatile Power Output", "Smart Connectivity", "Advanced Safety Features", "IP54-rated"],
+    category: "LEV DC Chargers",
+    colours: []
+  },
+  {
+    id: "lev-dc-typ07-01",
+    name: "LEV-DC-TYP07-01",
+    description: "The LEV-DC-TYP07-01 is a compact DC fast charger designed for light electric vehicles (LEVs), offering 3kW and 6kW power options. It features a Type 6 connector, IP54-rated enclosure, smart connectivity, and advanced safety features, ensuring reliable charging for both indoor and outdoor applications.",
+    detailedDescription: "Tailored for two- and three-wheeled electric vehicles, the LEV-DC-TYP07-01 delivers efficient DC charging with modular scalability between 3kW and 6kW. It supports DC output voltages ranging from 40V to 68V and provides up to 50A current per output. The charger includes a 4.3-inch touchscreen display, supports OCPP 1.6J protocol, and offers multiple connectivity options such as Wi-Fi, Ethernet, and 4G. User authentication is facilitated through RFID and plug-and-charge methods. Safety features encompass protections against overvoltage, overcurrent, short circuits, grounding issues, surges, and over-temperature conditions. With an IP54 and IK08-rated enclosure, the charger is suitable for various mounting options, including wall, pole, or floor installations. Manufactured in India, it provides a reliable and efficient charging solution for the growing LEV market.",
+    image: [leva],
+    price: "",
+    powerImages: {
+      "3kW": {
+        main: [leva], 
+        additional: []
+      },
+      "6kW": {
+        main: [leva], 
+        additional: []
+      }
+    },
+    powerPrices: {
+      "3kW": "",
+      "6kW": ""
+    },
+    powerOptions: ["3kW", "6kW"],
+    ratedCurrent: ["50A", "120A"],
+    features: ["Versatile Power Output", "Smart Connectivity", "Advanced Safety Features", "IP54-rated"],
+    category: "LEV DC Chargers",
+    colours: []
+  },
+  {
+    id: "lev-dc-typ06-02",
+    name: "LEV-DC-TYP06-02",
+    description: "The LEV-DC-TYP06-02 is a robust DC fast charger designed for light electric vehicles (LEVs), offering scalable power options of 6kW and 12kW. Equipped with Type 6 connectors, IP54-rated enclosure, and smart connectivity features, it ensures efficient and reliable charging for both indoor and outdoor applications.",
+    detailedDescription: "Tailored for two- and three-wheeled electric vehicles, the LEV-DC-TYP06-02 delivers efficient DC charging with modular scalability between 6kW and 12kW. It supports DC output voltages ranging from 40V to 68V and provides up to 50A current per output. The charger includes a 4.3-inch touchscreen display, supports OCPP 1.6J protocol, and offers multiple connectivity options such as Wi-Fi, Ethernet, and 4G. User authentication is facilitated through RFID and plug-and-charge methods. Safety features encompass protections against overvoltage, overcurrent, short circuits, grounding issues, surges, and over-temperature conditions. With an IP54 and IK08-rated enclosure, the charger is suitable for various mounting options, including wall, pole, or floor installations. Manufactured in India, it provides a reliable and efficient charging solution for the growing LEV market.",
+    image: [leva],
+    price: "",
+    powerImages: {
+      "6kW": {
+        main: [leva], 
+        additional: []
+      },
+      "12kW": {
+        main: [leva], 
+        additional: []
+      }
+    },
+    powerPrices: {
+      "6kW": "",
+      "12kW": ""
+    },
+    powerOptions: ["6kW", "12kW"],
+    ratedCurrent: ["50A", "120A"],
+    features: ["Versatile Power Output", "Smart Connectivity", "Advanced Safety Features", "IP54-rated"],
+    category: "LEV DC Chargers",
+    colours: []
+  },
+  {
+    id: "lev-dc-typ07-02",
+    name: "LEV-DC-TYP07-02",
+    description: "The LEV-DC-TYP07-02 is a compact DC fast charger designed for light electric vehicles (LEVs), offering a 6kW power output. It features a Type 6 connector, IP54-rated enclosure, smart connectivity, and advanced safety features, ensuring reliable charging for both indoor and outdoor applications.",
+    detailedDescription: "Tailored for two- and three-wheeled electric vehicles, the LEV-DC-TYP07-02 delivers efficient DC charging with a 6kW power output. It supports DC output voltages ranging from 40V to 68V and provides up to 50A current per output. The charger includes a 4.3-inch touchscreen display, supports OCPP 1.6J protocol, and offers multiple connectivity options such as Wi-Fi, Ethernet, and 4G. User authentication is facilitated through RFID and plug-and-charge methods. Safety features encompass protections against overvoltage, overcurrent, short circuits, grounding issues, surges, and over-temperature conditions. With an IP54 and IK08-rated enclosure, the charger is suitable for various mounting options, including wall, pole, or floor installations. Manufactured in India, it provides a reliable and efficient charging solution for the growing LEV market.",
+    image: [leva],
+    price: "",
+    powerImages: {
+      "6kW": {
+        main: [leva], 
+        additional: []
+      }
+    },
+    powerPrices: {
+      "6kW": ""
+    },
+    powerOptions: ["6kW"],
+    ratedCurrent: ["120A"],
+    features: ["Versatile Power Output", "Smart Connectivity", "Advanced Safety Features", "IP54-rated"],
+    category: "LEV DC Chargers",
+    colours: []
+  },
+  {
+    id: "evse-line-model",
+    name: "EVSE Line Model",
+    description: "SAMKU EV's OCPP 1.6J CMS based EVSE (Electric Vehicle Supply Equipment) Charging Station in the Building/Society Parking Area. Designed to Efficiently Charge Electric Cars, 3 Wheelers and Electric Bikes, This Charging Station offers from 05 to 30 outputs of 3.3 kW each and includes Advanced Billing and Load Management features through CMS (Charging Management System) Panel.",
+    detailedDescription: "",
+    image: [line],
+    price: [],
+    powerImages: {
+      "40kW": {
+        main: [line], 
+        additional: [evseline]
+      },
+      "44kW": {
+        main: [line], 
+        additional: [evseline]
+      },
+      "56kW": {
+        main: [line], 
+        additional: [evseline]
+      }
+    },
+    powerOptions: ["40kW", "44kW", "56kW"],
+    ratedCurrent: ["16A", "32A"],
+    features: ["Dual Compatibility", "Intelligent Billing", "Remote Management", "Safety and Reliability"],
+    category: "Public EV Chargers",
+    colours: []
+  }
 ];
