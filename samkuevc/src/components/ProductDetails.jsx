@@ -25,6 +25,8 @@ const ProductDetails = () => {
 
   // Define the mapping between power options and their available rated currents
   const powerToRatedCurrentMap = {
+    '3kW': ['50A'],
+    '6kW': ['120A'],
     '24V': ['3A', '5A'],
     '36V': ['5A', '8A', '10A'],
     '48V': ['8A', '10A'],
@@ -37,8 +39,8 @@ const ProductDetails = () => {
     '30kW': ['80A'],
     '60kW': ['80A', '150A'],
     '120kW': ['200A'],
-    '180kW': ['300A'],
-    '240kW': ['250A']
+    '180kW': ['250A'],
+    '240kW': ['300A']
   };
  
   // Get category slug from URL path or product category
