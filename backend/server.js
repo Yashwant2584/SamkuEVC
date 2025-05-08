@@ -17,9 +17,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: ["https://www.samkuev.com", "http://localhost:5173"], // Update with your frontend URL
-    methods: ["GET", "POST", "PATCH"],
-    allowedHeaders: ["Content-Type"],
+    origin: ["https://www.samkuev.com", "https://samkuev.com", "http://localhost:5173"], // Added samkuev.com without www
+    methods: ["GET", "POST", "PATCH", "OPTIONS"], // Added OPTIONS for preflight requests
+    allowedHeaders: ["Content-Type", "Authorization"], // Added Authorization header
     credentials: true,
   })
 );
