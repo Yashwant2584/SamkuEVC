@@ -116,7 +116,7 @@ const Marquee = () => {
       </div>
 
       {/* CSS for the marquee */}
-      <style jsx>{`
+      <style jsx="true">{`
         .marquee-container {
           width: 100%;
           overflow: hidden;

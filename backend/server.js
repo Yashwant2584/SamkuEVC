@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: ["http://localhost:5173"], // Update with your frontend URL
+    origin: ["https://www.samkuev.com", "http://localhost:5173"], // Update with your frontend URL
     methods: ["GET", "POST", "PATCH"],
     allowedHeaders: ["Content-Type"],
     credentials: true,

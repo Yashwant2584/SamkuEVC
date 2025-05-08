@@ -10,20 +10,24 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 const mongoose = require("mongoose");
+const cloudinary = require("cloudinary").v2;
 
-// Ensure upload directories exist
+// Configure Cloudinary with credentials from environment variables
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+// Ensure upload directories exist for temporary storage
 const ensureDirectoryExists = (dirPath) => {
   if (!fs.existsSync(dirPath)) {
     fs.mkdirSync(dirPath, { recursive: true });
   }
 };
 
-const uploadsDir = path.join(__dirname, "../Uploads");
+const uploadsDir = path.join(__dirname, "../temp_uploads");
 ensureDirectoryExists(uploadsDir);
-ensureDirectoryExists(path.join(uploadsDir, "servicecenter"));
-ensureDirectoryExists(path.join(uploadsDir, "chargingstation"));
-ensureDirectoryExists(path.join(uploadsDir, "recruitment"));
-ensureDirectoryExists(path.join(uploadsDir, "general"));
 
 // Generate unique application ID
 const generateApplicationId = async (prefix) => {
@@ -34,26 +38,13 @@ const generateApplicationId = async (prefix) => {
   return `${prefix}${year}${month}-${random}`;
 };
 
-// Multer storage configuration
+// Configure multer for temporary file storage
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    let uploadPath;
-    const url = req.originalUrl.toLowerCase();
-    if (url.includes("charging-station")) {
-      uploadPath = path.join(__dirname, "../Uploads/chargingstation");
-    } else if (url.includes("service-center")) {
-      uploadPath = path.join(__dirname, "../Uploads/servicecenter");
-    } else if (url.includes("recruitment")) {
-      uploadPath = path.join(__dirname, "../Uploads/recruitment");
-    } else {
-      uploadPath = path.join(__dirname, "../Uploads/general");
-    }
-    ensureDirectoryExists(uploadPath);
-    cb(null, uploadPath);
+    cb(null, uploadsDir);
   },
   filename: (req, file, cb) => {
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    // Fixed: Use originalname (lowercase) instead of originalName
     const extension = file.originalname ? path.extname(file.originalname) : '.bin';
     const fileName = `${file.fieldname}-${uniqueSuffix}${extension}`;
     cb(null, fileName);
@@ -65,7 +56,7 @@ const fileFilter = (req, file, cb) => {
   console.log("Processing file:", {
     fieldname: file.fieldname,
     mimetype: file.mimetype,
-    originalname: file.originalname, // Fixed: Use originalname (lowercase)
+    originalname: file.originalname,
   });
 
   if (file.fieldname === "resume") {
@@ -101,6 +92,32 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
 });
 
+// Function to upload file to Cloudinary
+const uploadToCloudinary = async (filePath, folder) => {
+  try {
+    if (!filePath) return null;
+    const result = await cloudinary.uploader.upload(filePath, {
+      folder: `SAMKU_EVC/${folder}`,
+      resource_type: "auto"
+    });
+    
+    // Delete the temporary file after upload
+    fs.unlinkSync(filePath);
+    
+    return {
+      url: result.secure_url,
+      public_id: result.public_id
+    };
+  } catch (error) {
+    console.error("Error uploading to Cloudinary:", error);
+    // Try to delete the temporary file if it exists
+    if (filePath && fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath);
+    }
+    return null;
+  }
+};
+
 // Submit Service Center Application
 exports.submitServiceCenterApplication = async (req, res) => {
   try {
@@ -133,8 +150,13 @@ exports.submitServiceCenterApplication = async (req, res) => {
         return res.status(400).json({ error: "Preferred location is required" });
       }
 
+      // Upload photo to Cloudinary if it exists
       if (req.file) {
-        parsedPersonalInfo.photoUrl = `/Uploads/servicecenter/${req.file.filename}`;
+        const photoResult = await uploadToCloudinary(req.file.path, "servicecenter");
+        if (photoResult) {
+          parsedPersonalInfo.photoUrl = photoResult.url;
+          parsedPersonalInfo.photoPublicId = photoResult.public_id;
+        }
       }
 
       const application = new ServiceCenterApplication({
@@ -149,20 +171,22 @@ exports.submitServiceCenterApplication = async (req, res) => {
       await application.save();
 
       // Send WebSocket notification
-      global.sendNotificationWs({
-        type: "application",
-        targetRole: "admin",
-        notification: {
-          title: "New Service Center Application",
-          message: `New service center application from ${parsedPersonalInfo.fullName || "Applicant"}`,
-          data: {
-            applicationId,
-            applicationType: "service-center",
-            applicantName: parsedPersonalInfo.fullName,
-            location: parsedBusinessInfo.businessAddress || parsedPersonalInfo.address,
+      if (global.sendNotificationWs) {
+        global.sendNotificationWs({
+          type: "application",
+          targetRole: "admin",
+          notification: {
+            title: "New Service Center Application",
+            message: `New service center application from ${parsedPersonalInfo.fullName || "Applicant"}`,
+            data: {
+              applicationId,
+              applicationType: "service-center",
+              applicantName: parsedPersonalInfo.fullName,
+              location: parsedBusinessInfo.businessAddress || parsedPersonalInfo.address,
+            },
           },
-        },
-      });
+        });
+      }
 
       res.status(201).json({
         message: "Service Center application submitted successfully",
@@ -208,8 +232,13 @@ exports.submitChargingStationApplication = async (req, res) => {
         parsedBusinessInfo.preferredLocation = "Not specified";
       }
 
+      // Upload photo to Cloudinary if it exists
       if (req.file) {
-        parsedPersonalInfo.photoUrl = `/Uploads/chargingstation/${req.file.filename}`;
+        const photoResult = await uploadToCloudinary(req.file.path, "chargingstation");
+        if (photoResult) {
+          parsedPersonalInfo.photoUrl = photoResult.url;
+          parsedPersonalInfo.photoPublicId = photoResult.public_id;
+        }
       }
 
       const application = new ChargingStationApplication({
@@ -224,20 +253,22 @@ exports.submitChargingStationApplication = async (req, res) => {
       await application.save();
 
       // Send WebSocket notification
-      global.sendNotificationWs({
-        type: "application",
-        targetRole: "admin",
-        notification: {
-          title: "New Charging Station Application",
-          message: `New charging station application from ${parsedPersonalInfo.fullName || "Applicant"}`,
-          data: {
-            applicationId,
-            applicationType: "charging-station",
-            applicantName: parsedPersonalInfo.fullName,
-            location: parsedBusinessInfo.businessAddress || parsedPersonalInfo.address,
+      if (global.sendNotificationWs) {
+        global.sendNotificationWs({
+          type: "application",
+          targetRole: "admin",
+          notification: {
+            title: "New Charging Station Application",
+            message: `New charging station application from ${parsedPersonalInfo.fullName || "Applicant"}`,
+            data: {
+              applicationId,
+              applicationType: "charging-station",
+              applicantName: parsedPersonalInfo.fullName,
+              location: parsedBusinessInfo.businessAddress || parsedPersonalInfo.address,
+            },
           },
-        },
-      });
+        });
+      }
 
       res.status(201).json({
         message: "Charging Station application submitted successfully",
@@ -274,13 +305,23 @@ exports.submitRecruitmentApplication = async (req, res) => {
       }
 
       const applicationId = await generateApplicationId("RC");
-      let resumeUrl, photoUrl;
+      let resumeUrl, resumePublicId, photoUrl, photoPublicId;
+      
+      // Upload files to Cloudinary
       if (req.files) {
         if (req.files.resume) {
-          resumeUrl = `/Uploads/recruitment/${req.files.resume[0].filename}`;
+          const resumeResult = await uploadToCloudinary(req.files.resume[0].path, "recruitment");
+          if (resumeResult) {
+            resumeUrl = resumeResult.url;
+            resumePublicId = resumeResult.public_id;
+          }
         }
         if (req.files.photo) {
-          photoUrl = `/Uploads/recruitment/${req.files.photo[0].filename}`;
+          const photoResult = await uploadToCloudinary(req.files.photo[0].path, "recruitment");
+          if (photoResult) {
+            photoUrl = photoResult.url;
+            photoPublicId = photoResult.public_id;
+          }
         }
       }
 
@@ -292,26 +333,30 @@ exports.submitRecruitmentApplication = async (req, res) => {
         position: req.body.position,
         experience: req.body.experience,
         resumeUrl,
+        resumePublicId,
         photoUrl,
+        photoPublicId
       });
 
       await application.save();
 
       // Send WebSocket notification
-      global.sendNotificationWs({
-        type: "application",
-        targetRole: "admin",
-        notification: {
-          title: "New Recruitment Application",
-          message: `New recruitment application from ${req.body.fullName || "Applicant"}`,
-          data: {
-            applicationId,
-            applicationType: "recruitment",
-            applicantName: req.body.fullName,
-            position: req.body.position,
+      if (global.sendNotificationWs) {
+        global.sendNotificationWs({
+          type: "application",
+          targetRole: "admin",
+          notification: {
+            title: "New Recruitment Application",
+            message: `New recruitment application from ${req.body.fullName || "Applicant"}`,
+            data: {
+              applicationId,
+              applicationType: "recruitment",
+              applicantName: req.body.fullName,
+              position: req.body.position,
+            },
           },
-        },
-      });
+        });
+      }
 
       res.status(201).json({
         message: "Recruitment application submitted successfully",
